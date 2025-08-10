@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import uploadRoutes from "./routes/admin.route.js";
 import contactRoutes from "./routes/contact.route.js";
+import userRoutes from "./routes/user.route.js";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use(uploadRoutes);
 app.use(contactRoutes);
+app.use(userRoutes);
 
 const startServer = async () => {
   await connectDB();
