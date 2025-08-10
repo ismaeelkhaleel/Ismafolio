@@ -20,6 +20,7 @@ import {
   createAdminProfile,
   updateAdminProfile,
 } from "../controllers/admin.controller.js";
+import { getMessage } from "../controllers/contact.controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
 const router = express.Router();
@@ -73,5 +74,6 @@ router.put(
   ]),
   updateAdminProfile
 );
+router.get("/get-contact-message", verifyToken, getMessage);
 
 export default router;

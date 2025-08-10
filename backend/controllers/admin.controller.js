@@ -11,6 +11,7 @@ import ContactMessage from "../models/contactMessage.model.js";
 export const login = async (req, res) => {
   const { username, password } = req.body;
   try {
+    console.log(req);
     const user = await User.findOne({ username });
     if (!user) return res.status(401).json({ message: "Invalid username" });
 
