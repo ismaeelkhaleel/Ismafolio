@@ -4,6 +4,9 @@ import Experience from "../models/experience.model.js";
 import Project from "../models/project.model.js";
 import Skill from "../models/skill.model.js";
 import Profile from "../models/profile.model.js";
+import LeetCodeState from "../models/leetcodeState.model.js";
+import LeetcodeProblem from "../models/leetcodeProblem.model.js";
+import LeetcodeHeatmap from "../models/leetcodeHeatmap.model.js";
 
 export const getProfile = async (req, res) => {
   try {
@@ -74,5 +77,47 @@ export const getBlogs = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Can not be fetched blogs details right now" });
+  }
+};
+
+export const getLeetcodeSate = async (req, res) => {
+  try {
+    const leetcodeState = await LeetCodeState.find();
+    return res
+      .status(201)
+      .json({ message: "LeetCode State fetched", leetcodeState });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Can not be fetched LeetCode State details right now" });
+  }
+};
+
+export const getLeetcodeProblems = async (req, res) => {
+  try {
+    const leetcodeProblems = await LeetcodeProblem.find();
+    return res
+      .status(201)
+      .json({ message: "LeetCode Problems fetched", leetcodeProblems });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Can not be fetched LeetCode Problems details right now",
+    });
+  }
+};
+
+export const getLeetcodeHeatmap = async (req, res) => {
+  try {
+    const leetcodeHeatmap = await LeetcodeHeatmap.find();
+    return res
+      .status(201)
+      .json({ message: "LeetCode Heatmap fetched", leetcodeHeatmap });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Can not be fetched LeetCode Heatmap details right now ",
+    });
   }
 };
