@@ -6,11 +6,6 @@ const leetcodeProblemSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    platform: {
-      type: String,
-      default: "LeetCode",
-      required: true,
-    },
     titleSlug: {
       type: String,
       required: true,

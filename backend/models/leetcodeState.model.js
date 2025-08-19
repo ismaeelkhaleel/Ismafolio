@@ -6,11 +6,6 @@ const leetcodeStateSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    platform: {
-      type: String,
-      required: true,
-      default: "Leetcode",
-    },
     point: {
       type: Number,
       required: true,

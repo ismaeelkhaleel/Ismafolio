@@ -7,6 +7,7 @@ import contactRoutes from "./routes/contact.route.js";
 import userRoutes from "./routes/user.route.js";
 import stateRoutes from "./routes/states.route.js";
 import "./controllers/leetcode.controller.js";
+import "./controllers/gfg.controller.js";
 dotenv.config();
 
 const app = express();

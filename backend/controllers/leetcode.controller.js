@@ -3,7 +3,6 @@ import LeetcodeProblem from "../models/leetcodeProblem.model.js";
 import LeetcodeHeatmap from "../models/leetcodeHeatmap.model.js";
 import { LeetCode } from "leetcode-query";
 import cron from "node-cron";
-import mongoose from "mongoose";
 
 const leetcode = new LeetCode();
 const username = "Mohd_Ismaeel";
@@ -47,18 +46,16 @@ const fetchLeetCodeData = async () => {
   const recentSolvedProblems = user.recentSubmissionList;
   for (const problem of recentSolvedProblems) {
     const existingProblem = await LeetcodeProblem.findOne({
-      titleSlug: problem.titleSlug,
+      title: problem.title,
     });
+
+    if (problem.statusDisplay !== "Accepted") {
+      continue;
+    }
 
     const solvedDate = new Date(problem.timestamp * 1000);
 
-    if (existingProblem) {
-      existingProblem.title = problem.title;
-      existingProblem.titleSlug = `https://leetcode.com/problems/${problem.titleSlug}`;
-      existingProblem.solvedOn = solvedDate;
-      existingProblem.status = problem.statusDisplay;
-      await existingProblem.save();
-    } else {
+    if (!existingProblem) {
       const newProblem = new LeetcodeProblem({
         title: problem.title,
         titleSlug: `https://leetcode.com/problems/${problem.titleSlug}`,
@@ -88,6 +85,7 @@ const fetchLeetCodeData = async () => {
     }
   }
 };
+
 cron.schedule(
   "59 7 * * *",
   async () => {
