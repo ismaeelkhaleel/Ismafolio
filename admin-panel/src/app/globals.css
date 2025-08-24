@@ -1,2 +1,20 @@
+/*src/appglobal.css*/
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-gradient:  radial-gradient( circle farthest-corner at 10% 20%,  rgba(226,240,254,1) 0%, rgba(255,247,228,1) 90% );
+  --text-color: #333;
+}
+
+.dark {
+  /* --bg-gradient: linear-gradient(to right, #000000, #434343); */
+  --bg-gradient:linear-gradient( 111.4deg,  rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2% );
+  --text-color: #f0f0f0;
+}
+
+body {
+  background: var(--bg-gradient);  
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
