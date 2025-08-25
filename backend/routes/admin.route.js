@@ -18,13 +18,12 @@ import {
   updateBlog,
   deleteBlog,
   createAdminProfile,
-  updateAdminProfile,
+  updateAdminProfile
 } from "../controllers/admin.controller.js";
 import { getMessage } from "../controllers/contact.controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
 const router = express.Router();
-
 router.post("/login", login);
 router.post("/addSkill", verifyToken, addSkill);
 router.put("/update/skill/:id", verifyToken, updateSkill);
