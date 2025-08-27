@@ -5,8 +5,6 @@ import { loginAPI } from "@/services/api";
 const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
 
   const login = async (username, password) => {
     try {
@@ -18,7 +16,7 @@ export const UserProvider = ({ children }) => {
     }
   };
   return (
-    <UserContext.Provider value={{user, token, login}}>
+    <UserContext.Provider value={{login}}>
         {children}
     </UserContext.Provider>
   )

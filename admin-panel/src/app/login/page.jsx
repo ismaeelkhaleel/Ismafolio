@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from 'react'
-import Button from '@/components/buttons/Button'
+import React, { useState } from 'react';
+import Button from '@/components/buttons/Button';
 import { useUser } from '@/context/UserContext';
 
 function Login() {
@@ -16,7 +16,6 @@ function Login() {
     <div className="flex justify-center items-center min-h-screen">
       <form onSubmit={loginHandler}  className="background-transparent backdrop-blur-lg p-6 rounded-2xl shadow-lg w-80 space-y-4 inset-ring-2 inset-ring-green-700">
         <h1 className="text-xl font-semibold text-center text-white">Login</h1>
-        
         <div>
           <input 
             type="text" 
@@ -47,4 +46,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login;

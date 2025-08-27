@@ -2,7 +2,15 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {UserRoundPen,GraduationCap,Settings,FolderOpenDot,FileText,BriefcaseBusiness,LogIn} from "lucide-react";
+import {
+  UserRoundPen,
+  GraduationCap,
+  Settings,
+  FolderOpenDot,
+  FileText,
+  BriefcaseBusiness,
+  LogIn,
+} from "lucide-react";
 
 function Navbar() {
   const pathname = usePathname();
@@ -19,7 +27,7 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <UserRoundPen/> Profile
+          <UserRoundPen /> Profile
         </Link>
 
         <Link
@@ -30,7 +38,7 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <BriefcaseBusiness/> Experience
+          <BriefcaseBusiness /> Experience
         </Link>
 
         <Link
@@ -41,7 +49,7 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <GraduationCap/> Education
+          <GraduationCap /> Education
         </Link>
 
         <Link
@@ -52,7 +60,7 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <Settings/> Skills
+          <Settings /> Skills
         </Link>
 
         <Link
@@ -63,7 +71,7 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <FolderOpenDot/> Projects
+          <FolderOpenDot /> Projects
         </Link>
 
         <Link
@@ -74,9 +82,18 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <FileText/> Blogs
+          <FileText /> Blogs
         </Link>
-
+        <Link
+          href="/messages"
+          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
+            pathname === "/messages"
+              ? "bg-green-900 text-white"
+              : "hover:bg-green-900 hover:text-white"
+          }`}
+        >
+          <FileText /> Messages
+        </Link>
         <Link
           href="/login"
           className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
@@ -85,7 +102,7 @@ function Navbar() {
               : "hover:bg-green-900 hover:text-white"
           }`}
         >
-         <LogIn/> Login
+          <LogIn /> Login
         </Link>
       </nav>
     </div>
