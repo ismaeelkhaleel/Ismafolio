@@ -1,9 +1,7 @@
-import React from 'react'
-
+"use client";
+import React from "react";
 function page() {
-  return (
-    <div>Projects</div>
-  )
+  return <div>Projects</div>;
 }
 
-export default page
+export default page;

@@ -6,7 +6,5 @@ export const loginAPI = async(username, password) => {
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({username, password}),
     });
-    if(!response.ok) throw new Error("Login failed");
-    console.log(response);
-    return response.json();
+    return response;
 };

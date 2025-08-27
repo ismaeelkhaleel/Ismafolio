@@ -11,7 +11,6 @@ import ContactMessage from "../models/contactMessage.model.js";
 export const login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    console.log(req);
     const user = await User.findOne({ username });
     if (!user) return res.status(401).json({ message: "Invalid username" });
 
@@ -21,10 +20,10 @@ export const login = async (req, res) => {
       expiresIn: "1d",
     });
 
-    return res.json({ token, message: "Login successful" });
+    return res.status(200).json({ token, message: "Login successful" });
   } catch (e) {
     console.error(e);
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Login failed" });
   }
 };
 
@@ -103,7 +102,6 @@ export const addEducation = async (req, res) => {
 
 export const updateEducation = async (req, res) => {
   const { id } = req.params;
-  const { degree, institute, startYear, endYear, description } = req.body;
   try {
     const education = await Education.findByIdAndUpdate(id, req.body, {
       new: true,
