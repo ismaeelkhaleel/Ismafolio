@@ -2,24 +2,37 @@
 import React, { useState } from "react";
 import technologies from "@/data/technologies";
 function page() {
-    const [skillName, setSkillName] = useState("");
+  const [skillName, setSkillName] = useState("");
+  const [skillIcon, setSkillIcon] = useState("");
+  const [skillIndex, setSkillIndex] = useState("");
   return (
     <div>
       <div>
         <form>
           <div>
-             <select value={skillName} onChange={(e)=>setSkillName(e.target.value)}>
-                <option value=""></option>
-              {  technologies.map((item, index)=> (
-                <option key={index} value={item.icon}>
-                    {item.name}
+            <select
+              value={skillIndex}
+              onChange={(e) => {
+                const index = e.target.value;
+                setSkillIndex(index);
+
+                if (index !== "") {
+                  const selected = technologies[index];
+                  setSkillName(selected.name);
+                  setSkillIcon(selected.icon);
+                } else {
+                  setSkillName("");
+                  setSkillIcon("");
+                }
+              }}
+            >
+              <option value="">-- Select Skill --</option>
+              {technologies.map((item, index) => (
+                <option key={index} value={index}>
+                  {item.name}
                 </option>
               ))}
-             </select>
-          </div>
-          <p>{skillName}</p>
-          <div>
-            <input />
+            </select>
           </div>
           <div>
             <input />

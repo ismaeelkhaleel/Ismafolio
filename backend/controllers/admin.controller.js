@@ -28,14 +28,14 @@ export const login = async (req, res) => {
 };
 
 export const addSkill = async (req, res) => {
-  const { name, level, category, icon } = req.body;
+  const { name, level, rating, icon } = req.body;
 
   try {
     if (!name) return res.status(400).json({ message: "Name is required" });
-    if (!category)
-      return res.status(400).json({ message: "Category is required" });
+    if (!rating)
+      return res.status(400).json({ message: "Rating is required" });
 
-    const skill = await Skill.create({ name, level, category, icon });
+    const skill = await Skill.create({ name, level, rating, icon });
 
     return res.status(201).json({ message: "Skill added successfully", skill });
   } catch (e) {
