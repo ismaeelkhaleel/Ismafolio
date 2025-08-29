@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext } from "react";
-import { loginAPI } from "@/services/api";
+import { addSkillAPI, loginAPI } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -23,12 +23,26 @@ export const UserProvider = ({ children }) => {
       toast.error("Login failed");
     }
   };
+  const addSkill = async(name, level, rating, icon) => {
+    try {
+      const res = await addSkillAPI(name, level, rating, icon);
+      const data = await res.json();
+       if(res.ok) {
+        toast.success(data.message || "Skill added");
+        router.push("/skills");
+       } else {
+        toast.error(data.message || "Skill can not be added")
+       }
+    } catch(err) {
+       toast.error("Some error while adding skill");
+    }
+  }
   return (
-    <UserContext.Provider value={{ login }}>
+    <UserContext.Provider value={{ login, addSkill }}>
       {children}
       <Toaster position="top-right"/>
     </UserContext.Provider>
   );
 };
 
-export const useUser = () => useContext(UserContext);
+export const admin = () => useContext(UserContext);

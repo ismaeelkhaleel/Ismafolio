@@ -34,7 +34,10 @@ export const addSkill = async (req, res) => {
     if (!name) return res.status(400).json({ message: "Name is required" });
     if (!rating)
       return res.status(400).json({ message: "Rating is required" });
-
+    const existingSkill = await Skill.findOne({name:name});
+    if(existingSkill) {
+      return res.status(409).json({message:"Skill already exist"});
+    }
     const skill = await Skill.create({ name, level, rating, icon });
 
     return res.status(201).json({ message: "Skill added successfully", skill });
