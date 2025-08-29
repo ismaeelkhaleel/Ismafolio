@@ -11,7 +11,7 @@ import {
 } from "@headlessui/react";
 import "./style.css";
 import Button from "@/components/buttons/Button";
-import { admin } from "@/context/UserContext";
+import { admin } from "@/context/Context";
 
 const rating = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import Button from '@/components/buttons/Button';
-import { admin } from '@/context/UserContext';
+import { admin } from '@/context/Context';
 
 function Login() {
   const[username, setUsername] = useState("");

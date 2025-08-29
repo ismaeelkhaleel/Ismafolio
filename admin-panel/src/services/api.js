@@ -21,3 +21,13 @@ export const addSkillAPI = async (name, level, rating, icon) => {
   });
   return response;
 };
+
+export const getSKillAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-skills`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
