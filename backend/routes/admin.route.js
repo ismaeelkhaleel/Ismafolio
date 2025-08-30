@@ -17,8 +17,7 @@ import {
   createBlog,
   updateBlog,
   deleteBlog,
-  createAdminProfile,
-  updateAdminProfile
+  upsertAdminProfile,
 } from "../controllers/admin.controller.js";
 import { getMessage } from "../controllers/contact.controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
@@ -55,23 +54,14 @@ router.put(
   updateBlog
 );
 router.delete("/delete/blog/:id", verifyToken, deleteBlog);
-router.post(
-  "/create/admin/profile",
-  verifyToken,
-  upload.fields([
-    { name: "resume", maxCount: 1 },
-    { name: "image", maxCount: 1 },
-  ]),
-  createAdminProfile
-);
 router.put(
-  "/update/admin/profile/:id",
+  "/update-profile",
   verifyToken,
   upload.fields([
     { name: "resume", maxCount: 1 },
     { name: "image", maxCount: 1 },
   ]),
-  updateAdminProfile
+  upsertAdminProfile
 );
 router.get("/get-contact-message", verifyToken, getMessage);
 

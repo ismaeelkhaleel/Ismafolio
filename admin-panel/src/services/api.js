@@ -31,3 +31,50 @@ export const getSKillAPI = async () => {
   });
   return response;
 };
+
+export const updateSkillAPI = async (skillId, name, level, rating, icon) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/update/skill/${skillId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, level, rating, icon }),
+  });
+  return response;
+};
+
+export const deleteSkillAPI = async (skillId) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/delete/skill/${skillId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const getProfileAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-profile`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const updateProfileAPI = async (formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/update-profile`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+  return response;
+};

@@ -32,11 +32,10 @@ export const addSkill = async (req, res) => {
 
   try {
     if (!name) return res.status(400).json({ message: "Name is required" });
-    if (!rating)
-      return res.status(400).json({ message: "Rating is required" });
-    const existingSkill = await Skill.findOne({name:name});
-    if(existingSkill) {
-      return res.status(409).json({message:"Skill already exist"});
+    if (!rating) return res.status(400).json({ message: "Rating is required" });
+    const existingSkill = await Skill.findOne({ name: name });
+    if (existingSkill) {
+      return res.status(409).json({ message: "Skill already exist" });
     }
     const skill = await Skill.create({ name, level, rating, icon });
 
@@ -49,11 +48,11 @@ export const addSkill = async (req, res) => {
 
 export const updateSkill = async (req, res) => {
   const { id } = req.params;
-  const { name, level, category, icon } = req.body;
+  const { name, level, rating, icon } = req.body;
   try {
     const skill = await Skill.findByIdAndUpdate(
       id,
-      { name, level, category, icon },
+      { name, level, rating, icon },
       { new: true }
     );
     return res
@@ -208,46 +207,19 @@ export const deleteProject = async (req, res) => {
   }
 };
 
-export const createAdminProfile = async (req, res) => {
+export const upsertAdminProfile = async (req, res) => {
   try {
-    const existingProfile = await Profile.findOne();
-    if (existingProfile) {
-      return res.status(400).json({ message: "Profile already exists" });
-    }
-
     const { name, description, title, email } = req.body;
 
     if (!name || !description || !email) {
       return res.status(400).json({ message: "Required fields missing" });
     }
 
-    const resume = req.files?.resume ? req.files.resume[0].path : "";
-    const image = req.files?.image ? req.files.image[0].path : "";
-
-    const newProfile = new Profile({
+    const updateData = {
       name,
       description,
-      title: Array.isArray(title) ? title : [],
       email,
-      resume,
-      image,
-    });
-
-    const savedProfile = await newProfile.save();
-
-    res
-      .status(201)
-      .json({ message: "Profile created successfully", profile: savedProfile });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-export const updateAdminProfile = async (req, res) => {
-  try {
-    const { name, description, title, email } = req.body;
-    const updateData = { name, description, email };
+    };
 
     if (req.files?.resume) {
       updateData.resume = req.files.resume[0].path;
@@ -261,24 +233,23 @@ export const updateAdminProfile = async (req, res) => {
       updateData.title = Array.isArray(title) ? title : [];
     }
 
+    // Remove undefined values
     Object.keys(updateData).forEach(
       (key) => updateData[key] === undefined && delete updateData[key]
     );
 
-    const updatedProfile = await Profile.findOneAndUpdate({}, updateData, {
+    // Find one profile (because only 1 profile allowed) and update it
+    const profile = await Profile.findOneAndUpdate({}, updateData, {
       new: true,
-      upsert: false,
+      upsert: true, // 🔑 if not exists → create
     });
-
-    if (!updatedProfile) {
-      return res.status(404).json({ message: "Profile not found" });
-    }
 
     res.status(200).json({
-      message: "Profile updated successfully",
-      profile: updatedProfile,
+      message: "Profile saved successfully",
+      profile,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
