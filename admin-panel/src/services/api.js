@@ -78,3 +78,51 @@ export const updateProfileAPI = async (formData) => {
   });
   return response;
 };
+
+export const getEducationAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-education`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const addEducationAPI = async (formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/addEducation`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  });
+  return response;
+};
+
+export const updateEducationAPI = async (educationId, formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/update/education/${educationId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  });
+  return response;
+};
+
+export const deleteEducationAPI = async (educationId) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/delete/education/${educationId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};

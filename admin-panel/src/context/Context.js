@@ -7,7 +7,11 @@ import {
   updateSkillAPI,
   deleteSkillAPI,
   getProfileAPI,
-  updateProfileAPI
+  updateProfileAPI,
+  addEducationAPI,
+  updateEducationAPI,
+  deleteEducationAPI,
+  getEducationAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -105,22 +109,81 @@ export const Provider = ({ children }) => {
     }
   };
   const updateProfile = async (formData) => {
-  try {
-    const res = await updateProfileAPI(formData);
-    const data = await res.json();
+    try {
+      const res = await updateProfileAPI(formData);
+      const data = await res.json();
 
-    if (!res.ok) {
-      toast.error(data.message || "Failed to update profile");
-      return;
+      if (!res.ok) {
+        toast.error(data.message || "Failed to update profile");
+        return;
+      }
+
+      toast.success(data.message || "Profile updated successfully");
+      getProfile();
+    } catch (err) {
+      toast.error("Some error while updating profile");
     }
+  };
 
-    toast.success(data.message || "Profile updated successfully");
-    getProfile();
-  } catch (err) {
-    toast.error("Some error while updating profile");
-  }
-};
-
+  const [education, setEducation] = useState([]);
+  const getEducation = async () => {
+    try {
+      const res = await getEducationAPI();
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Education fetched");
+        setEducation(data.education);
+      } else {
+        toast.error(data.message || "Education can not be fetched");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching education");
+    }
+  };
+  const addEducation = async (formData) => {
+    try {
+      console.log("Called add");
+      const res = await addEducationAPI(formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Education Added");
+        getEducation();
+      } else {
+        toast.error(data.message || "Education can not be added");
+      }
+    } catch (err) {
+      toast.error("Some error while adding Education");
+    }
+  };
+  const updateEducation = async (educationId, formData) => {
+    try {
+      console.log("called update");
+      const res = await updateEducationAPI(educationId, formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Education updated");
+        getEducation();
+      } else {
+        toast.error(data.message || "Education can not be added");
+      }
+    } catch (error) {
+      toast.error("Some error while updating education");
+    }
+  };
+  const deleteEducation = async (educationId) => {
+    try {
+      const res = await deleteEducationAPI(educationId);
+      const data = res.json();
+      if (res.ok) {
+        toast.success(data.message || "Education deleted");
+        getEducation();
+      } else {
+        toast.error(data.message || "Education can not be deleted");
+      }
+    } catch (err) {
+      toast.error("Some error while deleting education");
+    }
+  };
   return (
     <Context.Provider
       value={{
@@ -132,7 +195,12 @@ export const Provider = ({ children }) => {
         deleteSkill,
         getProfile,
         profile,
-        updateProfile
+        updateProfile,
+        getEducation,
+        education,
+        addEducation,
+        updateEducation,
+        deleteEducation,
       }}
     >
       {children}
