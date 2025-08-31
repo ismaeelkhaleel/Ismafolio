@@ -12,6 +12,10 @@ import {
   updateEducationAPI,
   deleteEducationAPI,
   getEducationAPI,
+  getExperienceAPI,
+  addExperienceAPI,
+  updateExperienceAPI,
+  deleteExperienceAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -184,6 +188,63 @@ export const Provider = ({ children }) => {
       toast.error("Some error while deleting education");
     }
   };
+  const [experience, setExperience] = useState([]);
+  const getExperience = async () => {
+    try {
+      const res = await getExperienceAPI();
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Experience fetched");
+        setExperience(data.experience);
+      } else {
+        toast.error(data.message || "Experience can not be fetch");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching experience");
+    }
+  };
+  const addExperience = async (formData) => {
+    try {
+      const res = await addExperienceAPI(formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Experience added");
+        getExperience();
+      } else {
+        toast.error(data.message || "Experience can not be add");
+      }
+    } catch (err) {
+      toast.error("Some error while adding experience");
+    }
+  };
+  const updateExperience = async (experienceId, formData) => {
+    try {
+      const res = await updateExperienceAPI(experienceId, formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Experience updated");
+        getExperience();
+      } else {
+        toast.error(data.message || "Experience can not be update");
+      }
+    } catch (err) {
+      toast.error("Some error while updating experience");
+    }
+  };
+  const deleteExperience = async (experienceId) => {
+    try {
+      const res = await deleteExperienceAPI(experienceId);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Experience deleted");
+        getExperience();
+      } else {
+        toast.error(data.message || "Experience can not be delete");
+      }
+    } catch (err) {
+      toast.error("Some error while deleting experience");
+    }
+  };
   return (
     <Context.Provider
       value={{
@@ -201,6 +262,11 @@ export const Provider = ({ children }) => {
         addEducation,
         updateEducation,
         deleteEducation,
+        getExperience,
+        experience,
+        addExperience,
+        updateExperience,
+        deleteExperience,
       }}
     >
       {children}

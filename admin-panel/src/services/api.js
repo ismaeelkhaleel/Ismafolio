@@ -126,3 +126,57 @@ export const deleteEducationAPI = async (educationId) => {
   });
   return response;
 };
+
+export const getExperienceAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-experience`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const addExperienceAPI = async (formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/create/experience`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  });
+  return response;
+};
+
+export const updateExperienceAPI = async (experienceId, formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(
+    `${BASE_URL}/update/experience/${experienceId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    }
+  );
+  return response;
+};
+
+export const deleteExperienceAPI = async (experienceId) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(
+    `${BASE_URL}/delete/experience/${experienceId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};

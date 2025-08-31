@@ -38,7 +38,7 @@ router.put(
   updateProject
 );
 router.delete("/delete/project/:id", verifyToken, deleteProject);
-router.post("create/experience", verifyToken, createExperience);
+router.post("/create/experience", verifyToken, createExperience);
 router.put("/update/experience/:id", verifyToken, updateExperience);
 router.delete("/delete/experience/:id", verifyToken, deleteExperience);
 router.post(
