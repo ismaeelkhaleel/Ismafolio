@@ -207,30 +207,69 @@ export const addProjectAPI = async (formData) => {
 
 export const updateProjectAPI = async (projectId, formData) => {
   const token = localStorage.getItem("Token");
-  const response = await fetch(
-    `${BASE_URL}/update/project/${projectId}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    }
-  );
+  const response = await fetch(`${BASE_URL}/update/project/${projectId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
   return response;
 };
 
 export const deleteProjectAPI = async (projectId) => {
   const token = localStorage.getItem("Token");
-  const response = await fetch(
-    `${BASE_URL}/delete/project/${projectId}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await fetch(`${BASE_URL}/delete/project/${projectId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const getBlogAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-blogs`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const addBlogAPI = async (formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/create/blog`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+  return response;
+};
+
+export const updateBlogAPI = async (blogId, formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/update/blog/${blogId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+  return response;
+};
+
+export const deleteBlogAPI = async (blogId) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/delete/blog/${blogId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response;
 };

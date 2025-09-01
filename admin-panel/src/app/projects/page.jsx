@@ -124,7 +124,7 @@ function Page() {
         {project?.map((proj, index) => (
           <div
             key={index}
-            className="bg-white shadow-md rounded-2xl p-5 flex flex-col hover:shadow-lg transition"
+            className="bg-emerald-500 shadow-md rounded-2xl p-5 flex flex-col hover:shadow-lg transition"
           >
             {proj.thumbnail && proj.thumbnail !== "" && (
               <img
@@ -142,7 +142,7 @@ function Page() {
             <a
               href={proj.githubUrl}
               target="_blank"
-              className="text-emerald-600 mt-2 inline-block"
+              className="text-black-600 mt-2 font-bold hover:text-white w-auto"
             >
               GitHub
             </a>
@@ -265,8 +265,15 @@ function Page() {
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
 
-            {/* ✅ Thumbnail with preview */}
             <div className="space-y-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setFormData({ ...formData, thumbnail: e.target.files[0] })
+                }
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer"
+              />
               {formData.thumbnail && formData.thumbnail !== "" && (
                 <img
                   src={
@@ -275,18 +282,9 @@ function Page() {
                       : formData.thumbnail
                   }
                   alt="Thumbnail Preview"
-                  className="w-32 h-32 object-cover rounded border"
+                  className="mt-3 w-full h-40 object-cover rounded-lg"
                 />
               )}
-
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setFormData({ ...formData, thumbnail: e.target.files[0] })
-                }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white"
-              />
             </div>
 
             <div className="pt-2 text-center">

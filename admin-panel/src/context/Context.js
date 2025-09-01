@@ -20,6 +20,10 @@ import {
   addProjectAPI,
   updateProjectAPI,
   deleteProjectAPI,
+  getBlogAPI,
+  addBlogAPI,
+  updateBlogAPI,
+  deleteBlogAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -107,7 +111,6 @@ export const Provider = ({ children }) => {
       const res = await getProfileAPI();
       const data = await res.json();
       if (res.ok) {
-        toast.success(data.message || "Profile fetched");
         setProfile(data.profile[0]);
       } else {
         toast.error(data.message || "Profile can not be fetched");
@@ -139,7 +142,6 @@ export const Provider = ({ children }) => {
       const res = await getEducationAPI();
       const data = await res.json();
       if (res.ok) {
-        toast.success(data.message || "Education fetched");
         setEducation(data.education);
       } else {
         toast.error(data.message || "Education can not be fetched");
@@ -198,7 +200,6 @@ export const Provider = ({ children }) => {
       const res = await getExperienceAPI();
       const data = await res.json();
       if (res.ok) {
-        toast.success(data.message || "Experience fetched");
         setExperience(data.experience);
       } else {
         toast.error(data.message || "Experience can not be fetch");
@@ -255,7 +256,6 @@ export const Provider = ({ children }) => {
       const res = await getProjectAPI();
       const data = await res.json();
       if (res.ok) {
-        toast.success(data.message || "Project fetched");
         setProject(data.projects);
       } else {
         toast.error(data.message || "Project can not be fetch");
@@ -307,6 +307,66 @@ export const Provider = ({ children }) => {
       toast.error("Some error while deleting project");
     }
   };
+  const [blog, setBlog] = useState([]);
+  const getBlog = async () => {
+    try {
+      const res = await getBlogAPI();
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "Blog can not be fetched");
+      } else {
+        setBlog(data.blogs);
+      }
+    } catch (err) {
+      toast.error("Some error while fetching blog");
+    }
+  };
+
+  const addBlog = async (formData) => {
+    try {
+      const res = await addBlogAPI(formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Blog created");
+        getBlog();
+      } else {
+        toast.error(data.message || "Blog can not be create");
+      }
+    } catch (err) {
+      toast.error("Some error while creating blog");
+    }
+  };
+
+  const updateBlog = async (blogId, formData) => {
+    try {
+      const res = await updateBlogAPI(blogId, formData);
+      const data = res.json();
+      if (res.ok) {
+        toast.success(data.message || "Blog updated");
+        getBlog();
+      } else {
+        toast.error(data.message || "Blog can not be update");
+      }
+    } catch (err) {
+      toast.error("Some error while updating blog");
+    }
+  };
+
+  const deleteBlog = async (blogId) => {
+    try {
+      const res = await deleteBlogAPI(blogId);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Blog deleted");
+        getBlog();
+      } else {
+        toast.error(data.message || "Blog can not be delete");
+      }
+    } catch (err) {
+      toast.error("Some error while deleting blog");
+    }
+  };
+
   return (
     <Context.Provider
       value={{
@@ -334,6 +394,11 @@ export const Provider = ({ children }) => {
         addProject,
         updateProject,
         deleteProject,
+        getBlog,
+        blog,
+        addBlog,
+        updateBlog,
+        deleteBlog,
       }}
     >
       {children}
