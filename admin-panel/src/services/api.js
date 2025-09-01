@@ -273,3 +273,38 @@ export const deleteBlogAPI = async (blogId) => {
   });
   return response;
 };
+
+export const getNewMessageAPI = async () => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/get-new-contact-message`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+export const getAllMessageAPI = async () => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/get-all-contact-message`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+export const seenMessageAPI = async (messageId) => {
+  const token = localStorage.getItem("Token");
+  console.log(messageId);
+  const response = await fetch(`${BASE_URL}/seen-contact-message/${messageId}`, {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};

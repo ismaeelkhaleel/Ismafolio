@@ -24,6 +24,9 @@ import {
   addBlogAPI,
   updateBlogAPI,
   deleteBlogAPI,
+  getNewMessageAPI,
+  getAllMessageAPI,
+  seenMessageAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -366,6 +369,47 @@ export const Provider = ({ children }) => {
       toast.error("Some error while deleting blog");
     }
   };
+  const [messages, setMessages] = useState([]);
+  const getNewMessage = async () => {
+    try {
+      const res = await getNewMessageAPI();
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        setMessages(data.messages);
+      } else {
+        toast.error(data.message || "New messages can not be fetched");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching new messages");
+    }
+  };
+  const getAllMessage = async () => {
+    try {
+      const res = await getAllMessageAPI();
+      const data = await res.json();
+      if (res.ok) {
+        setMessages(data.messages);
+      } else {
+        toast.error(data.message || "All messages can not be fetched");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching all messages");
+    }
+  };
+  const seenMessage = async (messageId) => {
+    try {
+      const res = await seenMessageAPI(messageId);
+      const data = await res.json();
+      if (res.ok) {
+        getNewMessage();
+      } else {
+        toast.error(data.message || "messages can not be update status");
+      }
+    } catch (err) {
+      toast.error("Some error while updating status");
+    }
+  };
 
   return (
     <Context.Provider
@@ -399,6 +443,10 @@ export const Provider = ({ children }) => {
         addBlog,
         updateBlog,
         deleteBlog,
+        getNewMessage,
+        messages,
+        getAllMessage,
+        seenMessage,
       }}
     >
       {children}

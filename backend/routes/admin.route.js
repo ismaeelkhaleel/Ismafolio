@@ -18,8 +18,10 @@ import {
   updateBlog,
   deleteBlog,
   upsertAdminProfile,
+  getNewMessage,
+  getAllMessage,
+  seenMessage,
 } from "../controllers/admin.controller.js";
-import { getMessage } from "../controllers/contact.controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
 const router = express.Router();
@@ -30,7 +32,12 @@ router.delete("/delete/skill/:id", verifyToken, deleteSkill);
 router.post("/addEducation", verifyToken, addEducation);
 router.put("/update/education/:id", verifyToken, updateEducation);
 router.delete("/delete/education/:id", verifyToken, deleteEducation);
-router.post("/add/project", verifyToken, upload.single("thumbnail"), addProject);
+router.post(
+  "/add/project",
+  verifyToken,
+  upload.single("thumbnail"),
+  addProject
+);
 router.put(
   "/update/project/:id",
   verifyToken,
@@ -63,6 +70,8 @@ router.put(
   ]),
   upsertAdminProfile
 );
-router.get("/get-contact-message", verifyToken, getMessage);
+router.get("/get-new-contact-message", verifyToken, getNewMessage);
+router.get("/get-all-contact-message", verifyToken, getAllMessage);
+router.put("/seen-contact-message/:id", verifyToken, seenMessage);
 
 export default router;

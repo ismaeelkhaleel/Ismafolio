@@ -379,15 +379,42 @@ export const deleteBlog = async (req, res) => {
   }
 };
 
-export const getMessage = async (req, res) => {
+export const getNewMessage = async (req, res) => {
   try {
-    const message = await ContactMessage.aggregate([
-      { $match: { done: false } },
+    const messages = await ContactMessage.aggregate([
+      { $match: { seen: false } },
       { $sort: { createdAt: -1 } },
     ]);
+    res.status(200).json({
+      message: "New messages fetched successfully",
+      messages: messages,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+export const getAllMessage = async (req, res) => {
+  try {
+    const messages = await ContactMessage.find().sort({ createdAt: -1 });
+    res.status(200).json({
+      message: "All messages fetched successfully",
+      messages: messages,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+export const seenMessage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const message = await ContactMessage.findByIdAndUpdate(id, {
+      seen: true,
+      new: true,
+    });
+
     res
       .status(200)
-      .json({ message: "Messages fetched successfully", messages: message });
+      .json({ message: "Messages seen successfully", message: message });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }

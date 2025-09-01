@@ -44,13 +44,3 @@ export const contact = async (req, res) => {
     return res.status(500).json({ message: "Error creating contact message" });
   }
 };
-
-export const getMessage = async (req, res) => {
-  try {
-    const messages = await ContactMessage.find().sort({ createdAt: -1 });
-    res.status(201).json({ messages: "Contatc message fetched", messages});
-  } catch (error) {
-    console.error("Error fetching contact messages:", error);
-    return res.status(500).json({ message: "Error fetching contact messages" });
-  }
-};

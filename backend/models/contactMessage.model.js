@@ -14,7 +14,7 @@ const contactMessageSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    done: {
+    seen: {
       type: Boolean,
       default: false,
     },
