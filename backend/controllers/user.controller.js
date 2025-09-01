@@ -7,6 +7,8 @@ import Profile from "../models/profile.model.js";
 import LeetCodeState from "../models/leetcodeState.model.js";
 import LeetcodeProblem from "../models/leetcodeProblem.model.js";
 import LeetcodeHeatmap from "../models/leetcodeHeatmap.model.js";
+import GfgStats from "../models/gfgState.model.js";
+import GfgProblems from "../models/gfgProblem.model.js";
 
 export const getProfile = async (req, res) => {
   try {
@@ -114,9 +116,32 @@ export const getLeetcodeHeatmap = async (req, res) => {
       .status(201)
       .json({ message: "LeetCode Heatmap fetched", leetcodeHeatmap });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "Can not be fetched LeetCode Heatmap details right now ",
+    });
+  }
+};
+
+export const getGfgStats = async (req, res) => {
+  try {
+    const gfgStats = await GfgStats.find();
+    return res.status(201).json({ message: "Gfg stats fetched", gfgStats });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Can not be fetched gfg stats right now ",
+    });
+  }
+};
+
+export const getGfgProblems = async (req, res) => {
+  try {
+    const gfgProblems = await GfgProblems.find();
+    return res
+      .status(201)
+      .json({ message: "Gfg Problems fetched", gfgProblems });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Can not be fetched gfg Problems details right now",
     });
   }
 };
