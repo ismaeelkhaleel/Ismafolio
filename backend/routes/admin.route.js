@@ -30,7 +30,7 @@ router.delete("/delete/skill/:id", verifyToken, deleteSkill);
 router.post("/addEducation", verifyToken, addEducation);
 router.put("/update/education/:id", verifyToken, updateEducation);
 router.delete("/delete/education/:id", verifyToken, deleteEducation);
-router.post("add/project", verifyToken, upload.single("thumbnail"), addProject);
+router.post("/add/project", verifyToken, upload.single("thumbnail"), addProject);
 router.put(
   "/update/project/:id",
   verifyToken,

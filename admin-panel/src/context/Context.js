@@ -16,6 +16,10 @@ import {
   addExperienceAPI,
   updateExperienceAPI,
   deleteExperienceAPI,
+  getProjectAPI,
+  addProjectAPI,
+  updateProjectAPI,
+  deleteProjectAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -245,6 +249,64 @@ export const Provider = ({ children }) => {
       toast.error("Some error while deleting experience");
     }
   };
+  const [project, setProject] = useState([]);
+  const getProject = async () => {
+    try {
+      const res = await getProjectAPI();
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Project fetched");
+        setProject(data.projects);
+      } else {
+        toast.error(data.message || "Project can not be fetch");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching project");
+    }
+  };
+  const addProject = async (formData) => {
+    try {
+      console.log(formData);
+      const res = await addProjectAPI(formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Project added");
+        getProject();
+      } else {
+        toast.error(data.message || "Project can not be add");
+      }
+    } catch (err) {
+      toast.error("Some error while adding project");
+    }
+  };
+  const updateProject = async (experienceId, formData) => {
+    try {
+      const res = await updateProjectAPI(experienceId, formData);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Project updated");
+        getProject();
+      } else {
+        toast.error(data.message || "Project can not be update");
+      }
+    } catch (err) {
+      toast.error("Some error while updating project");
+    }
+  };
+  const deleteProject = async (experienceId) => {
+    try {
+      const res = await deleteProjectAPI(experienceId);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Project deleted");
+        getProject();
+      } else {
+        toast.error(data.message || "Project can not be delete");
+      }
+    } catch (err) {
+      toast.error("Some error while deleting project");
+    }
+  };
   return (
     <Context.Provider
       value={{
@@ -267,6 +329,11 @@ export const Provider = ({ children }) => {
         addExperience,
         updateExperience,
         deleteExperience,
+        getProject,
+        project,
+        addProject,
+        updateProject,
+        deleteProject,
       }}
     >
       {children}

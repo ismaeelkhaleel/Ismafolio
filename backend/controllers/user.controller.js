@@ -49,7 +49,6 @@ export const getProjects = async (req, res) => {
     const projects = await Project.find();
     return res.status(201).json({ message: "Projects fetched", projects });
   } catch (error) {
-    console.log(error);
     return res
       .status(500)
       .json({ message: "Can not be fetched projects details right now" });

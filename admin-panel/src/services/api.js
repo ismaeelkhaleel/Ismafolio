@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const BASE_URL = "http://localhost:5000";
 
 export const loginAPI = async (username, password) => {
@@ -170,6 +172,58 @@ export const deleteExperienceAPI = async (experienceId) => {
   const token = localStorage.getItem("Token");
   const response = await fetch(
     `${BASE_URL}/delete/experience/${experienceId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};
+
+export const getProjectAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-projects`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const addProjectAPI = async (formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/add/project`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+  return response;
+};
+
+export const updateProjectAPI = async (projectId, formData) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(
+    `${BASE_URL}/update/project/${projectId}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }
+  );
+  return response;
+};
+
+export const deleteProjectAPI = async (projectId) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(
+    `${BASE_URL}/delete/project/${projectId}`,
     {
       method: "DELETE",
       headers: {

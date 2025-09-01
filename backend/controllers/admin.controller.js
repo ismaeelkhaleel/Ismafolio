@@ -133,21 +133,21 @@ export const deleteEducation = async (req, res) => {
 
 export const addProject = async (req, res) => {
   try {
+    console.log(req.body);
     const { title, description, techStack, githubUrl } = req.body;
     if (!title || !description) {
       return res
         .status(400)
         .json({ message: "Title and description are required." });
     }
-
     const thumbnail = req.file ? req.file.path : "";
 
     const newProject = new Project({
       title,
-      thumbnail,
       description,
-      techStack: Array.isArray(techStack) ? techStack : [],
       githubUrl,
+      thumbnail,
+      techStack: Array.isArray(techStack) ? techStack : [techStack],
     });
 
     const savedProject = await newProject.save();
@@ -156,7 +156,7 @@ export const addProject = async (req, res) => {
       .status(201)
       .json({ message: "Project added successfully", project: savedProject });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     return res.status(500).json({ message: "Server error" });
   }
 };
@@ -166,7 +166,6 @@ export const updateProject = async (req, res) => {
     const { id } = req.params;
     const { title, description, techStack, githubUrl } = req.body;
     const updateData = { title, description, githubUrl };
-
     updateData.thumbnail = req.file ? req.file.path : "";
     if (techStack && Array.isArray(techStack)) {
       updateData.techStack = techStack;
