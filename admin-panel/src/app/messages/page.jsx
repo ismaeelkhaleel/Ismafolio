@@ -23,7 +23,7 @@ function Page() {
         <div className="flex gap-3">
           <button
             onClick={() => setAll(true)}
-            className={`px-4 py-2 rounded-lg transition ${
+            className={`cursor-pointer px-4 py-2 rounded-lg transition ${
               all
                 ? "bg-emerald-600 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -33,7 +33,7 @@ function Page() {
           </button>
           <button
             onClick={() => setAll(false)}
-            className={`px-4 py-2 rounded-lg transition ${
+            className={`cursor-pointer px-4 py-2 rounded-lg transition ${
               !all
                 ? "bg-emerald-600 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"

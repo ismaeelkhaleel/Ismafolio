@@ -80,7 +80,7 @@ function Page() {
         <h1 className="text-2xl font-bold">Education</h1>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
+          className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
         >
           <Plus size={18} />
           Add Education
@@ -129,7 +129,7 @@ function Page() {
           <button
             type="button"
             onClick={() => setIsModalOpen(false)}
-            className="fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
+            className="cursor-pointer fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
           >
             <X size={24} />
           </button>

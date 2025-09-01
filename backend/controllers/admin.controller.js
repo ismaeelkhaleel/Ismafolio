@@ -345,8 +345,10 @@ export const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
-    const coverImage = req.file ? req.file.path : "";
-    updates.coverImage = coverImage;
+    if (req.file) {
+      updates.coverImage = req.file.path;
+    }
+
     const updatedBlog = await Blog.findByIdAndUpdate(id, updates, {
       new: true,
     });

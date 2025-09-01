@@ -11,9 +11,9 @@ function Page() {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    coverImage: null,  
+    coverImage: null,
   });
-  const [preview, setPreview] = useState("");  
+  const [preview, setPreview] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -37,9 +37,9 @@ function Page() {
     setFormData({
       title: b.title,
       content: b.content,
-      coverImage: null,  
+      coverImage: b.coverImage,
     });
-    setPreview(b.coverImage || "");  
+    setPreview(b.coverImage || "");
     setIsModalOpen(true);
   };
 
@@ -58,8 +58,11 @@ function Page() {
     const data = new FormData();
     data.append("title", formData.title);
     data.append("content", formData.content);
-    if (formData.coverImage) {
+
+    if (formData.coverImage instanceof File) {
       data.append("coverImage", formData.coverImage);
+    } else if (selectedBlog) {
+      data.append("coverImage", selectedBlog.coverImage);
     }
 
     if (selectedBlog) {
@@ -85,7 +88,7 @@ function Page() {
         <h1 className="text-2xl font-bold">Blogs</h1>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
+          className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
         >
           <Plus size={18} />
           Add Blog
@@ -146,13 +149,13 @@ function Page() {
           <button
             type="button"
             onClick={() => setIsModalOpen(false)}
-            className="fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
+            className="cursor-pointer fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
           >
             <X size={24} />
           </button>
 
           <form
-            className="relative w-96 bg-white rounded-2xl shadow-xl p-6 space-y-5"
+            className="relative w-96 bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
             onSubmit={handleSubmit}
             encType="multipart/form-data"
           >
