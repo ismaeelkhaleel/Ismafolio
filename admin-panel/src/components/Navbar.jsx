@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   UserRoundPen,
   GraduationCap,
@@ -10,100 +10,74 @@ import {
   FileText,
   BriefcaseBusiness,
   LogIn,
+  LogOut,
+  Mail,
 } from "lucide-react";
 
 function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem("Token"));
+    }
+  }, []);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("Token");
+    setToken(null);
+    router.push("/login");
+  };
+
+  const navItems = [
+    { href: "/profile", label: "Profile", icon: <UserRoundPen /> },
+    { href: "/experience", label: "Experience", icon: <BriefcaseBusiness /> },
+    { href: "/education", label: "Education", icon: <GraduationCap /> },
+    { href: "/skills", label: "Skills", icon: <Settings /> },
+    { href: "/projects", label: "Projects", icon: <FolderOpenDot /> },
+    { href: "/blogs", label: "Blogs", icon: <FileText /> },
+    { href: "/messages", label: "Messages", icon: <Mail /> },
+  ];
 
   return (
     <div className="px-5 py-3 backdrop-blur-xl h-full shadow-[4px_0_15px_rgba(0,0,0,0.2)]">
       <h3 className="text-lg font-bold hidden md:block">Ismafolio</h3>
       <nav className="flex flex-col gap-4 mt-6">
-        <Link
-          href="/profile"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/profile"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <UserRoundPen /> Profile
-        </Link>
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
+              pathname === item.href
+                ? "bg-green-900 text-white"
+                : "hover:bg-green-900 hover:text-white"
+            }`}
+          >
+            {item.icon} {item.label}
+          </Link>
+        ))}
 
-        <Link
-          href="/experience"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/experience"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <BriefcaseBusiness /> Experience
-        </Link>
-
-        <Link
-          href="/education"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/education"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <GraduationCap /> Education
-        </Link>
-
-        <Link
-          href="/skills"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/skills"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <Settings /> Skills
-        </Link>
-
-        <Link
-          href="/projects"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/projects"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <FolderOpenDot /> Projects
-        </Link>
-
-        <Link
-          href="/blogs"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/blogs"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <FileText /> Blogs
-        </Link>
-        <Link
-          href="/messages"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/messages"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <FileText /> Messages
-        </Link>
-        <Link
-          href="/login"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-            pathname === "/login"
-              ? "bg-green-900 text-white"
-              : "hover:bg-green-900 hover:text-white"
-          }`}
-        >
-          <LogIn /> Login
-        </Link>
+        {!token ? (
+          <Link
+            href="/login"
+            className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
+              pathname === "/login"
+                ? "bg-green-900 text-white"
+                : "hover:bg-green-900 hover:text-white"
+            }`}
+          >
+            <LogIn /> Login
+          </Link>
+        ) : (
+          <button
+            onClick={logoutHandler}
+            className="flex items-center gap-2 px-3 py-2 rounded-md font-bold hover:bg-green-900 hover:text-white"
+          >
+            <LogOut /> Logout
+          </button>
+        )}
       </nav>
     </div>
   );
