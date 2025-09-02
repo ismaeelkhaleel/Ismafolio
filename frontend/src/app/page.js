@@ -5,6 +5,7 @@ import "./globals.css";
 import { user } from "../context/Context.js";
 import Profile from "@/components/homepage/Profile";
 import Skills from "@/components/homepage/Skills";
+import Experience from "@/components/homepage/Experience";
 export default function Home() {
   const {
     getProfile,
@@ -47,7 +48,8 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-black dark:text-white">
       <Profile profile={profile} />
-      <Skills skills={skills}/>
+      <Skills skills={skills} />
+      <Experience experience={experience} />
     </div>
   );
 }
