@@ -25,7 +25,7 @@ export const Provider = ({ children }) => {
       const res = await getProfileAPI();
       const data = await res.json();
       if (res.ok) {
-        setProfile(data.profile);
+        setProfile(data.profile[0]);
       }
     } catch (err) {
       toast.error("Some error while fetching profile");

@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import "./globals.css";
 import { user } from "../context/Context.js";
+import Profile from "@/components/homepage/Profile";
+import Skills from "@/components/homepage/Skills";
 export default function Home() {
   const {
     getProfile,
@@ -42,16 +44,10 @@ export default function Home() {
     getProjects();
     getSkills();
   }, []);
-  useEffect(() => {
-    console.log("gfgProblems", gfgProblems);
-    console.log("getGfgStats", gfgState);
-    console.log("leetcodeHeatmap", leetcodeHeatmap);
-    console.log("getLeetcodeProblems", leetcodeHeatmap);
-    console.log("getLeetcodeState", leetcodeState);
-  }, [gfgProblems, gfgState, leetcodeHeatmap, leetcodeProblems, leetcodeState]);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-black dark:text-white">
-      <h1 className="text-4xl font-bold mb-6">Hello World</h1>
+      <Profile profile={profile} />
+      <Skills skills={skills}/>
     </div>
   );
 }

@@ -6,7 +6,9 @@ export default {
     "./src/components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      scrollBehavior: ['smooth'],
+    },
   },
   plugins: [],
 };

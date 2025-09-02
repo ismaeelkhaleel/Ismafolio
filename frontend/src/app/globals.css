@@ -14,7 +14,26 @@
 }
 
 body {
-  background: var(--bg-gradient);  
+  background: var(--bg-gradient);
+  background-size: 200% 200%;
+  animation: gradient-x 20s ease infinite;
   color: var(--text-color);
   transition: all 0.3s ease;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 10s ease infinite;
+}
+html {
+  scroll-behavior: smooth;
 }
