@@ -37,3 +37,32 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@keyframes border-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: 1rem;  
+  padding: 2px;  
+  background: linear-gradient(270deg, #10b981, #6366f1, #ec4899);
+  background-size: 600% 600%;
+  animation: border-move 6s linear infinite;
+}
+
+.gradient-border:hover {
+  animation-play-state: paused;
+}
+
+.gradient-border > .inner-card {
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.dark .gradient-border > .inner-card {
+  background: rgba(17, 24, 39, 0.4);
+}

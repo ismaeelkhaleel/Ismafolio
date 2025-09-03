@@ -6,6 +6,8 @@ import { user } from "../context/Context.js";
 import Profile from "@/components/homepage/Profile";
 import Skills from "@/components/homepage/Skills";
 import Experience from "@/components/homepage/Experience";
+import Projects from "@/components/homepage/Projects";
+import Education from "@/components/homepage/Education";
 export default function Home() {
   const {
     getProfile,
@@ -50,6 +52,8 @@ export default function Home() {
       <Profile profile={profile} />
       <Skills skills={skills} />
       <Experience experience={experience} />
+      <Projects projects={projects} />
+      <Education education={education} />
     </div>
   );
 }
