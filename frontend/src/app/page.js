@@ -8,7 +8,8 @@ import Skills from "@/components/homepage/Skills";
 import Experience from "@/components/homepage/Experience";
 import Projects from "@/components/homepage/Projects";
 import Education from "@/components/homepage/Education";
-import Loader from "@/components/buttons/Loader";
+import Stats from "@/components/homepage/Stats";
+
 export default function Home() {
   const {
     getProfile,
@@ -24,6 +25,7 @@ export default function Home() {
       <Experience />
       <Projects />
       <Education />
+      <Stats />
     </div>
   );
 }
