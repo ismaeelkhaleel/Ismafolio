@@ -5,9 +5,6 @@ import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 
 function Profile({ profile }) {
-  useEffect(() => {
-    console.log("Profile data:", profile);
-  }, [profile]);
 
   if (!profile || !profile.image || !profile.name) {
     return null;

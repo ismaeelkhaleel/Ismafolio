@@ -8,52 +8,22 @@ import Skills from "@/components/homepage/Skills";
 import Experience from "@/components/homepage/Experience";
 import Projects from "@/components/homepage/Projects";
 import Education from "@/components/homepage/Education";
+import Loader from "@/components/buttons/Loader";
 export default function Home() {
   const {
     getProfile,
     profile,
-    getEducation,
-    education,
-    getExperience,
-    experience,
-    getProjects,
-    projects,
-    getSkills,
-    skills,
-    getBlogs,
-    blogs,
-    getLeetcodeState,
-    leetcodeState,
-    getLeetcodeProblems,
-    leetcodeProblems,
-    getLeetcodeHeatmap,
-    leetcodeHeatmap,
-    getGfgStats,
-    gfgState,
-    getGfgProblems,
-    gfgProblems,
-    sendContactMessage,
   } = user();
   useEffect(() => {
     getProfile();
-    getBlogs();
-    getEducation();
-    getExperience();
-    getGfgProblems();
-    getGfgStats();
-    getLeetcodeHeatmap();
-    getLeetcodeProblems();
-    getLeetcodeState();
-    getProjects();
-    getSkills();
   }, []);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-black dark:text-white">
       <Profile profile={profile} />
-      <Skills skills={skills} />
-      <Experience experience={experience} />
-      <Projects projects={projects} />
-      <Education education={education} />
+      <Skills />
+      <Experience />
+      <Projects />
+      <Education />
     </div>
   );
 }

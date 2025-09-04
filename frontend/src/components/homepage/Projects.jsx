@@ -1,14 +1,38 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { user } from "../../context/Context";
+import { useInView } from "react-intersection-observer";
+import Loader from "../buttons/Loader";
 
-function Projects({ projects }) {
+function Projects() {
+  const { ref, inView } = useInView({ triggerOnce: true });
+  const { getProjects, projects } = user();
+  const [loading, setLoading] = useState(false);
+  const [fetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    if (inView && !fetched) {
+      setLoading(true);
+      getProjects().finally(() => setLoading(false));
+      console.log("Projects section visible → API call");
+      setFetched(true);
+    }
+  }, [inView, fetched, getProjects]);
   return (
-    <section className="w-full px-6 py-12 bg-transparent transition-colors duration-500">
+    <section
+      ref={ref}
+      className="w-full px-6 py-12 bg-transparent transition-colors duration-500"
+    >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
           Projects
         </h2>
+        {loading && <Loader/>}
+
+        {!loading && projects.length === 0 && (
+          <p className="text-center text-gray-500">No projects data found.</p>
+        )}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (

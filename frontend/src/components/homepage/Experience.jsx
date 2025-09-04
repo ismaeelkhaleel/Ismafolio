@@ -1,19 +1,43 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { user } from "../../context/Context";
+import { useInView } from "react-intersection-observer";
+import Loader from "../buttons/Loader";
 
-function Experience({ experience }) {
+function Experience() {
   const [expanded, setExpanded] = useState({});
 
+  const { ref, inView } = useInView({ triggerOnce: true });
+  const { getExperience, experience } = user();
+  const [loading, setLoading] = useState(false);
+  const [fetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    if (inView && !fetched) {
+      setLoading(true);
+      getExperience().finally(() => setLoading(false));
+      console.log("Experience section visible → API call");
+      setFetched(true);
+    }
+  }, [inView, fetched, getExperience]);
   const toggleExpand = (index) => {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   return (
-    <section className="py-12 px-4 md:px-8 bg-transparent transition-colors duration-300">
+    <section
+      ref={ref}
+      className="py-12 px-4 md:px-8 bg-transparent transition-colors duration-300"
+    >
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
         Experience
       </h2>
+      {loading && <Loader />}
+
+      {!loading && experience.length === 0 && (
+        <p className="text-center text-gray-500">No Experience data found.</p>
+      )}
 
       <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {experience.map((exp, index) => {
