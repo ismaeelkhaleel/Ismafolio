@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { user } from "../../context/Context";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 function Blogs() {
   const { getBlogs, blogs } = user();
@@ -12,12 +11,13 @@ function Blogs() {
   }, []);
 
   return (
+    // Blogs.jsx
     <section className="max-w-6xl mx-auto px-4 py-12">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-emerald-500">
-        Latest Blogs
+        All Blogs
       </h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.slice(0, 3).map((blog) => (
+        {blogs.map((blog) => (
           <div
             key={blog._id}
             className="rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-5 flex flex-col justify-between bg-white dark:bg-gray-900 hover:shadow-lg transition"
@@ -43,14 +43,6 @@ function Blogs() {
             </Link>
           </div>
         ))}
-      </div>
-      <div className="flex justify-end mt-8">
-        <Link
-          href="/blogs"
-          className="flex items-center gap-2 text-emerald-500 font-medium hover:underline"
-        >
-          View All <ArrowRight size={18} />
-        </Link>
       </div>
     </section>
   );

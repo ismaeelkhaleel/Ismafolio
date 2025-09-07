@@ -66,14 +66,14 @@ function Experience() {
                 </h3>
 
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  {exp.startDate.slice(0, 10).replaceAll("-", "/")} -{" "}
-                  {exp.endDate.slice(0, 10).replaceAll("-", "/")}
+                  {exp.startDate?.slice(0, 10).replaceAll("-", "/")} -{" "}
+                  {exp.endDate?.slice(0, 10).replaceAll("-", "/")}
                 </p>
 
                 <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-3 flex-1">
                   {expanded[index] || !isLong
                     ? exp.description
-                    : exp.description.slice(0, 120) + "..."}
+                    : exp.description?.slice(0, 120) + "..."}
                   {isLong && (
                     <button
                       onClick={() => toggleExpand(index)}

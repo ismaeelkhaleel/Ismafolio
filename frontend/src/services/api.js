@@ -112,3 +112,13 @@ export const sendContactMessageAPI = async (name, email, message) => {
   });
   return response;
 };
+
+export const getBlogDetailAPI = async (blogId) => {
+  const response = await fetch(`${BASE_URL}/get-blog-detail/${blogId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};

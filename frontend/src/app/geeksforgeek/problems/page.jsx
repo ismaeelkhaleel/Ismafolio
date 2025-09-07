@@ -85,7 +85,7 @@ export default function GfgPage() {
   return (
     <div className="px-4 py-6 pb-40 min-h-screen bg-transparent text-gray-900 dark:text-gray-100">
       <div className="mx-auto lg:w-[70%] md:w-[85%] sm:w-[95%]">
-        {/* Header with stats and pie chart */}
+       
         <div className="flex items-center gap-3  mb-6 ">
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg"
@@ -222,7 +222,7 @@ export default function GfgPage() {
                       {problem.title}
                     </a>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      Difficulty:{" "}
+                      <span className="font-bold">Difficulty:</span>{" "}
                       <span className="capitalize">{problem.level ?? "-"}</span>
                     </div>
                   </div>

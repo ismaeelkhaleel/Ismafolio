@@ -36,9 +36,7 @@ export const contact = async (req, res) => {
     }
     const newMessage = await ContactMessage.create({ name, email, message });
     sendEmail(email, name);
-    res
-      .status(201)
-      .json({ message: "Message sent successfully", message: newMessage });
+    res.status(201).json({ message: "Message sent successfully", newMessage });
   } catch (error) {
     console.error("Error creating contact message:", error);
     return res.status(500).json({ message: "Error creating contact message" });

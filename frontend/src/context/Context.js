@@ -13,6 +13,7 @@ import {
   getProjectsAPI,
   getSkillsAPI,
   sendContactMessageAPI,
+  getBlogDetailAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -158,9 +159,25 @@ export const Provider = ({ children }) => {
       const data = await res.json();
       if (!res.ok) {
         toast.error(data.message || "Can not send message, try again");
+      } else {
+        toast.success(data.message || "Message sent")
       }
     } catch (err) {
       toast.error("Some error while sending message");
+    }
+  };
+  const [blogDetail, setBlogDetail] = useState([]);
+  const getBlogDetail = async (blogId) => {
+    try {
+      const res = await getBlogDetailAPI(blogId);
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "Can not Fetch detail, try again");
+      } else {
+        setBlogDetail(data.blogDetail);
+      }
+    } catch (err) {
+      toast.error("Some error while fetching blog detail");
     }
   };
   return (
@@ -189,6 +206,8 @@ export const Provider = ({ children }) => {
         getGfgProblems,
         gfgProblems,
         sendContactMessage,
+        getBlogDetail,
+        blogDetail,
       }}
     >
       {children}

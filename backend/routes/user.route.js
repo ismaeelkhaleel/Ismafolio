@@ -11,6 +11,7 @@ import {
   getLeetcodeHeatmap,
   getGfgStats,
   getGfgProblems,
+  getBlogDetail,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -26,5 +27,6 @@ router.get("/get-leetcode-problems", getLeetcodeProblems);
 router.get("/get-leetcode-heatmap", getLeetcodeHeatmap);
 router.get("/get-gfg-stats", getGfgStats);
 router.get("/get-gfg-problems", getGfgProblems);
+router.get("/get-blog-detail/:id", getBlogDetail);
 
 export default router;

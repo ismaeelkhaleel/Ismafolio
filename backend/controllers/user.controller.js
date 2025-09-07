@@ -81,6 +81,21 @@ export const getBlogs = async (req, res) => {
   }
 };
 
+export const getBlogDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const blogDetail = await Blog.findById(id);
+    return res
+      .status(201)
+      .json({ message: "Blog Detail fetched successfully" , blogDetail});
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Can not be fetched blogs details right now" });
+  }
+};
+
 export const getLeetcodeSate = async (req, res) => {
   try {
     const leetcodeState = await LeetCodeState.find();

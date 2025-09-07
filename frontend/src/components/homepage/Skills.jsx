@@ -17,11 +17,9 @@ function Skills() {
     if (inView && !fetched) {
       setLoading(true);
       getSkills().finally(() => setLoading(false));
-      console.log("Skills section visible → API call");
       setFetched(true);
     }
   }, [inView, fetched, getSkills]);
-  if (!skills || skills.length === 0) return null;
 
   const getStars = (rating) => {
     const starsOutOf5 = rating / 2;
@@ -60,13 +58,12 @@ function Skills() {
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
         Skills
       </h2>
-      {loading &&  <Loader/>}
-
-      {!loading && skills.length === 0 && (
+      {loading && <Loader />}
+      {!loading && skills?.length === 0 && (
         <p className="text-center text-gray-500">No skill data found.</p>
       )}
       <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
-        {skills.map((skill, index) => (
+        {skills?.map((skill, index) => (
           <motion.div
             key={skill._id}
             className="gradient-border"
