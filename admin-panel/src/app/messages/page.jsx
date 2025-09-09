@@ -14,6 +14,14 @@ function Page() {
       getNewMessage();
     }
   }, [all]);
+  const seenHandler = async (messageId) => {
+    await seenMessage(messageId);
+    if (all) {
+      getAllMessage();
+    } else {
+      getNewMessage();
+    }
+  };
 
   return (
     <div className="p-6">
@@ -44,8 +52,7 @@ function Page() {
         </div>
       </div>
 
-      {/* Messages List */}
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-4">
         {messages?.length === 0 && (
           <div className="col-span-full text-center text-gray-500">
             No messages found
@@ -81,7 +88,7 @@ function Page() {
                 </span>
               ) : (
                 <button
-                  onClick={() => {seenMessage(msg._id);console.log(msg._id)}}
+                  onClick={() => seenHandler(msg._id)}
                   className="px-3 py-1 bg-emerald-600 text-white text-sm rounded-md hover:bg-emerald-700 transition"
                 >
                   Mark as Seen

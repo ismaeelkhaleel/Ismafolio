@@ -13,7 +13,7 @@ export default function BlogDetailPage() {
   }, [blogId, getBlogDetail]);
 
   return (
-    <section className="max-w-5xl mx-auto px-4 py-12">
+    <section className="max-w-5xl mx-auto px-4 py-12 pb-40">
       {blogDetail?.coverImage && (
         <div className="w-full h-72 md:h-[28rem] mb-8">
           <img
@@ -37,7 +37,7 @@ export default function BlogDetailPage() {
           })}
       </p>
 
-      <div className="prose prose-lg max-w-none text-gray-700 dark:prose-invert leading-relaxed">
+      <div className="prose prose-lg max-w-none text-gray-700 dark:text-white leading-relaxed">
         {blogDetail?.content}
       </div>
     </section>
