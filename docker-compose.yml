@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend_c
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app          # Local folder mount
+      - /app/node_modules       # Node modules ko ignore
+    command: npm run dev        # Dev mode run
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_c
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+    restart: always
+
+  admin-panel:
+    build: ./admin-panel
+    container_name: admin_panel_c
+    ports:
+      - "4000:3000"
+    env_file:
+      - ./admin-panel/.env
+    volumes:
+      - ./admin-panel:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+    restart: always

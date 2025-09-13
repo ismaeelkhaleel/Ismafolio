@@ -12,7 +12,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import Button from "@/components/buttons/Button";
-import { admin } from "@/context/Context";
+import { useAdmin } from "@/context/Context";
 
 const rating = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
@@ -26,7 +26,7 @@ const levels = [
 ];
 
 function Page() {
-  const { getSkill, skills, addSkill, updateSkill, deleteSkill } = admin();
+  const { getSkill, skills, addSkill, updateSkill, deleteSkill } = useAdmin();
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [selectedTech, setSelectedTech] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);

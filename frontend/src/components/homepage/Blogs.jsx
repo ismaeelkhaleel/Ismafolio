@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect } from "react";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 function Blogs() {
-  const { getBlogs, blogs } = user();
+  const { getBlogs, blogs } = useUser();
 
   useEffect(() => {
     getBlogs();
@@ -20,7 +20,7 @@ function Blogs() {
         {blogs.slice(0, 3).map((blog) => (
           <div
             key={blog._id}
-            className="rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-5 flex flex-col justify-between bg-white dark:bg-gray-900 hover:shadow-lg transition"
+            className="rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-5 flex flex-col justify-between bg-white dark:bg-gray-900 hover:shadow-lg"
           >
             <div>
               <h3 className="text-xl font-semibold text-emerald-400 mb-2">

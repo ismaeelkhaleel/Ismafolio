@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
 
 export const getProfileAPI = async () => {
   const response = await fetch(`${BASE_URL}/get-profile`, {

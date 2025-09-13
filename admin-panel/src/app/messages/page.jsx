@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { admin } from "@/context/Context";
+import { useAdmin } from "@/context/Context";
 import { Mail, MailOpen } from "lucide-react";
 
 function Page() {
-  const { getNewMessage, messages, getAllMessage, seenMessage } = admin();
+  const { getNewMessage, messages, getAllMessage, seenMessage } = useAdmin();
   const [all, setAll] = useState(false);
 
   useEffect(() => {

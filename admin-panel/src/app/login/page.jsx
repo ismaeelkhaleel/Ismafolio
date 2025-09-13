@@ -1,13 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import Button from "@/components/buttons/Button";
-import { admin } from "@/context/Context";
+import { useAdmin } from "@/context/Context";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = admin();
-  const token = localStorage.getItem("Token");
+  const { login } = useAdmin();
 
   const loginHandler = (e) => {
     e.preventDefault();

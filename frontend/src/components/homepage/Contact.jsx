@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 
 function Contact() {
-  const { sendContactMessage } = user();
+  const { sendContactMessage } = useUser();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
 

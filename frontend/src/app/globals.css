@@ -1,26 +1,32 @@
-/*src/appglobal.css*/
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg-gradient:  radial-gradient( circle farthest-corner at 10% 20%,  rgba(226,240,254,1) 0%, rgba(255,247,228,1) 90% );
+  --bg-gradient: radial-gradient(circle farthest-corner at 10% 20%, rgba(226,240,254,1) 0%, rgba(255,247,228,1) 90%);
   --text-color: #333;
 }
 
 .dark {
-  /* --bg-gradient: linear-gradient(to right, #000000, #434343); */
-  --bg-gradient:linear-gradient( 111.4deg,  rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2% );
+  --bg-gradient: linear-gradient(111.4deg, rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2%);
   --text-color: #f0f0f0;
 }
 
+/* Main body styles with optimized transitions */
 body {
   background: var(--bg-gradient);
   background-size: 200% 200%;
   animation: gradient-x 20s ease infinite;
   color: var(--text-color);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Class to pause transitions/animations during theme toggle */
+body.theme-toggle-pending {
+  transition: none !important;
+  animation-play-state: paused !important;
+}
+
+/* Gradient animation */
 @keyframes gradient-x {
   0%, 100% {
     background-position: 0% 50%;
@@ -34,35 +40,57 @@ body {
   background-size: 200% 200%;
   animation: gradient-x 10s ease infinite;
 }
+
+/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
+/* Border animation */
 @keyframes border-move {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+/* Gradient border with animation */
 .gradient-border {
   position: relative;
-  border-radius: 1rem;  
-  padding: 2px;  
+  border-radius: 1rem;
+  padding: 2px;
   background: linear-gradient(270deg, #10b981, #6366f1, #ec4899);
   background-size: 600% 600%;
   animation: border-move 6s linear infinite;
+  transition: background-color 0.3s ease;
 }
 
-.gradient-border:hover {
+/* Pause border animation on hover and during theme toggle */
+.gradient-border:hover,
+.gradient-border.theme-toggle-pending {
   animation-play-state: paused;
 }
 
+/* Inner card with backdrop blur, optimized for toggle */
 .gradient-border > .inner-card {
   border-radius: 0.9rem;
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
 }
 
+/* Dark mode inner card styles */
 .dark .gradient-border > .inner-card {
   background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(6px);
+}
+
+/* Optional: reduce blur during toggle for better performance */
+body.theme-toggle-pending .gradient-border > .inner-card {
+  backdrop-filter: none !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark.body.theme-toggle-pending .gradient-border > .inner-card {
+  background: rgba(17, 24, 39, 0.7) !important;
+  backdrop-filter: none !important;
 }

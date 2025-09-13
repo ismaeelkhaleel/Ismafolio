@@ -455,4 +455,4 @@ export const Provider = ({ children }) => {
   );
 };
 
-export const admin = () => useContext(Context);
+export const useAdmin = () => useContext(Context);

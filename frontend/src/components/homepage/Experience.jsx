@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
 import Loader from "../buttons/Loader";
 
@@ -9,7 +9,7 @@ function Experience() {
   const [expanded, setExpanded] = useState({});
 
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getExperience, experience } = user();
+  const { getExperience, experience } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 

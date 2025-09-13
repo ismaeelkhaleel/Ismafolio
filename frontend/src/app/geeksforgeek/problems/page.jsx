@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { user } from "../../../context/Context";
+import { useUser } from "../../../context/Context";
 import Image from "next/image";
 import {
   PieChart,
@@ -12,12 +12,12 @@ import {
 } from "recharts";
 
 export default function GfgPage() {
-  const { getGfgStats, gfgState, getGfgProblems, gfgProblems } = user();
+  const { getGfgStats, gfgState, getGfgProblems, gfgProblems } = useUser();
 
   useEffect(() => {
     getGfgStats();
     getGfgProblems();
-  }, []);
+  }, [getGfgProblems, getGfgStats]);
 
   const ITEMS_PER_PAGE = 10;
   const [page, setPage] = useState(1);

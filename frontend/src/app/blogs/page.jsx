@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect } from "react";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 import Link from "next/link";
 
 function Blogs() {
-  const { getBlogs, blogs } = user();
+  const { getBlogs, blogs } = useUser();
 
   useEffect(() => {
     getBlogs();
-  }, []);
+  }, [getBlogs]);
 
   return (
     // Blogs.jsx

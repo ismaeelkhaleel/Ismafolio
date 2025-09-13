@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
 import Loader from "../buttons/Loader";
 
 function Projects() {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getProjects, projects } = user();
+  const { getProjects, projects } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 

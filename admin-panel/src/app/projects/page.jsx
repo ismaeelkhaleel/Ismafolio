@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
-import { admin } from "@/context/Context";
+import { useAdmin } from "@/context/Context";
 import technologies from "@/data/technologies";
 
 function Page() {
   const { getProject, project, addProject, updateProject, deleteProject } =
-    admin();
+    useAdmin();
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [formData, setFormData] = useState({

@@ -216,4 +216,4 @@ export const Provider = ({ children }) => {
   );
 };
 
-export const user = () => useContext(Context);
+export const useUser = () => useContext(Context);

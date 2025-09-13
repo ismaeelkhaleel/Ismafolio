@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
-import { admin } from "@/context/Context";
+import { useAdmin } from "@/context/Context";
 
 function Page() {
   const {
@@ -11,7 +11,7 @@ function Page() {
     updateExperience,
     deleteExperience,
     addExperience,
-  } = admin();
+  } = useAdmin();
 
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [formData, setFormData] = useState({

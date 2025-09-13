@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect } from "react";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 import { motion } from "framer-motion";
 import { Trophy, Star, Code2, Flame, User } from "lucide-react";
 import Image from "next/image";
 
 function Stats() {
-  const { getLeetcodeState, leetcodeState, getGfgStats, gfgState } = user();
+  const { getLeetcodeState, leetcodeState, getGfgStats, gfgState } = useUser();
 
   useEffect(() => {
     getGfgStats();
     getLeetcodeState();
-  }, []);
+  }, [getGfgStats,getLeetcodeState]);
 
   return (
     <section className="w-full flex flex-col items-center p-6">
@@ -23,7 +23,7 @@ function Stats() {
         {/* LeetCode Card */}
         <motion.div
           whileHover={{ scale: 1.02 }}
-          className="w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-md p-5 bg-white dark:bg-neutral-900 transition-colors flex flex-col justify-between"
+          className="w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-md p-5 bg-white dark:bg-neutral-900 flex flex-col justify-between"
         >
           <div>
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-neutral-800 dark:text-neutral-200">
@@ -77,7 +77,7 @@ function Stats() {
         {/* GFG Card */}
         <motion.div
           whileHover={{ scale: 1.02 }}
-          className="w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-md p-5 bg-white dark:bg-neutral-900 transition-colors flex flex-col justify-between"
+          className="w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-md p-5 bg-white dark:bg-neutral-900 flex flex-col justify-between"
         >
           <div>
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-neutral-800 dark:text-neutral-200">

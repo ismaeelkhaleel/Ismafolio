@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
-import { user } from "../../context/Context";
+import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
 import Loader from "../buttons/Loader";
 
 function Education() {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getEducation, education } = user();
+  const { getEducation, education } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 

@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { admin } from "@/context/Context";
+import { useAdmin } from "@/context/Context";
 
 function Page() {
-  const { getProfile, profile, updateProfile } = admin();
+  const { getProfile, profile, updateProfile } = useAdmin();
 
   const [formData, setFormData] = useState({
     name: "",

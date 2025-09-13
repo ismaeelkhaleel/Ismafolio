@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { user } from "../../../context/Context";
+import { useUser } from "../../../context/Context";
 import {
   PieChart,
   Pie,
@@ -20,7 +20,7 @@ export default function Page() {
     leetcodeProblems,
     getLeetcodeHeatmap,
     leetcodeHeatmap,
-  } = user();
+  } = useUser();
 
   useEffect(() => {
     getLeetcodeState();

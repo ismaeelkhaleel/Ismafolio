@@ -1,10 +1,10 @@
 "use client";
 import { useParams } from "next/navigation";
-import { user } from "../../../../context/Context";
+import { useUser } from "../../../../context/Context";
 import { useEffect } from "react";
 
 export default function BlogDetailPage() {
-  const { getBlogDetail, blogDetail } = user();
+  const { getBlogDetail, blogDetail } = useUser();
   const { slug } = useParams();
   const blogId = slug.split("-")[0];
 
