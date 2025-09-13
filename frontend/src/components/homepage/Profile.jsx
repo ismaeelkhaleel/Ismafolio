@@ -46,9 +46,9 @@ function Profile({ profile }) {
             loop={true}
             cursor
             cursorStyle="|"
-            typeSpeed={150}
-            deleteSpeed={150}
-            delaySpeed={1500}
+            typeSpeed={1}
+            deleteSpeed={1}
+            delaySpeed={150}
           />
         </h2>
 

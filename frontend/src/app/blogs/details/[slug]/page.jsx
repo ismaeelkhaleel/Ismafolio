@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function BlogDetailPage() {
   const { getBlogDetail, blogDetail } = useUser();
-  const { slug } = useParams();
+  const {  } = useParams();
   const blogId = slug.split("-")[0];
 
   useEffect(() => {

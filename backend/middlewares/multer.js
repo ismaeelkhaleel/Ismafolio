@@ -19,7 +19,6 @@ const storage = new CloudinaryStorage({
       folder: "smart_portfolio",
       resource_type: resourceType,
       allowed_formats: ["jpg", "png", "pdf"],
-      // 👇 public_id me extension add kar diya
       public_id: `${originalName}.${ext}`,
       ...(format && { format }),
     };

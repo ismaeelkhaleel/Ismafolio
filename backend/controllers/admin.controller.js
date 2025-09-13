@@ -230,16 +230,13 @@ export const upsertAdminProfile = async (req, res) => {
     if (title) {
       updateData.title = Array.isArray(title) ? title : [];
     }
-
-    // Remove undefined values
     Object.keys(updateData).forEach(
       (key) => updateData[key] === undefined && delete updateData[key]
     );
 
-    // Find one profile (because only 1 profile allowed) and update it
     const profile = await Profile.findOneAndUpdate({}, updateData, {
       new: true,
-      upsert: true, // 🔑 if not exists → create
+      upsert: true,
     });
 
     res.status(200).json({
