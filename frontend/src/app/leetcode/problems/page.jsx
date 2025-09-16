@@ -28,7 +28,6 @@ export default function Page() {
     getLeetcodeProblems();
   }, []);
 
-  // Pie chart data derived from leetcodeState
   const pieData = useMemo(() => {
     const base = leetcodeState?.[0]?.acSubmissionNum || [];
     const map = { All: 0, Easy: 0, Medium: 0, Hard: 0 };
@@ -46,7 +45,6 @@ export default function Page() {
 
   const COLORS = ["#4ade80", "#f59e0b", "#fb7185"];
 
-  // Pagination for problems (10 per page)
   const ITEMS_PER_PAGE = 10;
   const [page, setPage] = useState(1);
   const totalPages = Math.max(
