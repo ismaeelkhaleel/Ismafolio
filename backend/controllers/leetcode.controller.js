@@ -68,22 +68,16 @@ const fetchLeetCodeData = async () => {
     }
     const parseCalender = JSON.parse(user.matchedUser.submissionCalendar);
     const submissionCalendar = Object.entries(parseCalender);
+
     for (const [timestamp, submissions] of submissionCalendar) {
-      const dateOnly = new Date(parseInt(timestamp) * 1000);
-      dateOnly.setUTCHours(0, 0, 0, 0);
-      const existingSubmission = await LeetcodeHeatmap.findOne({
-        date: dateOnly,
-      });
-      if (existingSubmission) {
-        existingSubmission.submissions = Number(submissions);
-        await existingSubmission.save();
-      } else {
-        const newSubmission = new LeetcodeHeatmap({
-          date: dateOnly,
-          submissions: Number(submissions),
-        });
-        await newSubmission.save();
-      }
+      const dateObj = new Date(parseInt(timestamp) * 1000);
+      const formattedDate = dateObj.toISOString().split("T")[0];
+
+      await LeetcodeHeatmap.updateOne(
+        { date: formattedDate },
+        { $set: { submissions: Number(submissions) } },
+        { upsert: true }
+      );
     }
   } catch (err) {
     console.log(err.message);
@@ -91,7 +85,7 @@ const fetchLeetCodeData = async () => {
 };
 
 cron.schedule(
-  "59 7 * * *",
+  "55 7 * * *",
   async () => {
     console.log("Fetching LeetCode Data...");
     await fetchLeetCodeData();
