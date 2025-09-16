@@ -3,8 +3,13 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
+import { useUser } from "../../context/Context";
 
-function Profile({ profile }) {
+function Profile() {
+  const { getProfile, profile } = useUser();
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   if (!profile || !profile.image || !profile.name) {
     return null;
@@ -46,8 +51,8 @@ function Profile({ profile }) {
             loop={true}
             cursor
             cursorStyle="|"
-            typeSpeed={1}
-            deleteSpeed={1}
+            typeSpeed={155}
+            deleteSpeed={155}
             delaySpeed={150}
           />
         </h2>

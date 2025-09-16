@@ -11,7 +11,7 @@ function Stats() {
   useEffect(() => {
     getGfgStats();
     getLeetcodeState();
-  }, [getGfgStats,getLeetcodeState]);
+  }, []);
 
   return (
     <section className="w-full flex flex-col items-center p-6">
@@ -41,7 +41,8 @@ function Stats() {
                   <User className="w-4 h-4" /> {leetcodeState[0].username}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Rank: {leetcodeState[0].ranking}
+                  <Trophy className="w-4 h-4" /> Rank:{" "}
+                  {leetcodeState[0].ranking}
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4" /> Points: {leetcodeState[0].point}
@@ -98,10 +99,12 @@ function Stats() {
                   <Star className="w-4 h-4" /> Score: {gfgState[0].codingScore}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Rank: {gfgState[0].instituteRank}
+                  <Trophy className="w-4 h-4" /> Rank:{" "}
+                  {gfgState[0].instituteRank}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4" /> Monthly: {gfgState[0].monthlyScore}
+                  <Star className="w-4 h-4" /> Monthly:{" "}
+                  {gfgState[0].monthlyScore}
                 </div>
                 <div className="flex items-center gap-2">
                   <Flame className="w-4 h-4" /> Streak:{" "}
