@@ -20,7 +20,7 @@ function Blogs() {
           Latest Blogs
         </h2>
       )}
-      {!loading && projects.length === 0 && (
+      {!loading && blogs.length === 0 && (
         <p className="text-center text-gray-500">No Blog data found.</p>
       )}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
