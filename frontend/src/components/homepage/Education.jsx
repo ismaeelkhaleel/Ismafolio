@@ -27,11 +27,11 @@ function Education() {
       className="w-full px-6 py-12 bg-transparent transition-colors duration-500"
     >
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
-          Education
-        </h2>
-
-        {loading && <Loader />}
+        {!loading && (
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
+            Education
+          </h2>
+        )}
 
         {!loading && education.length === 0 && (
           <p className="text-center text-gray-500">No education data found.</p>
@@ -41,14 +41,13 @@ function Education() {
           {education.map((edu, index) => (
             <motion.div
               key={index}
-              className="gradient-border"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               whileHover={{ scale: 1.03 }}
             >
-              <div className="inner-card p-6 h-full flex flex-col">
+              <div className="inner-card p-6 h-full flex flex-col border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-gray-800">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   {edu.degree}
                 </h3>
