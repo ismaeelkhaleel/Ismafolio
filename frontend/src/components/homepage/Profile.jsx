@@ -4,11 +4,14 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { useUser } from "../../context/Context";
+import Loader from "../buttons/Loader";
 
 function Profile() {
   const { getProfile, profile } = useUser();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    getProfile();
+    setLoading(true);
+    getProfile().finally(() => setLoading(false));
   }, []);
 
   if (!profile || !profile.image || !profile.name) {
@@ -17,6 +20,7 @@ function Profile() {
 
   return (
     <section className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-10 px-6">
+      {loading && <Loader />}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

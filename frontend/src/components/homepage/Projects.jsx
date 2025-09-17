@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
-import Loader from "../buttons/Loader";
 
 function Projects() {
   const { ref, inView } = useInView({ triggerOnce: true });
@@ -15,7 +14,6 @@ function Projects() {
     if (inView && !fetched) {
       setLoading(true);
       getProjects().finally(() => setLoading(false));
-      console.log("Projects section visible → API call");
       setFetched(true);
     }
   }, [inView, fetched, getProjects]);
