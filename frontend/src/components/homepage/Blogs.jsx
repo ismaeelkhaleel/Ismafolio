@@ -1,21 +1,28 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../../context/Context";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 function Blogs() {
   const { getBlogs, blogs } = useUser();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getBlogs();
+    setLoading(true);
+    getBlogs().finally(() => setLoading(false));
   }, []);
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-emerald-500">
-        Latest Blogs
-      </h2>
+      {!loading && (
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-emerald-500">
+          Latest Blogs
+        </h2>
+      )}
+      {!loading && projects.length === 0 && (
+        <p className="text-center text-gray-500">No Blog data found.</p>
+      )}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {blogs.slice(0, 3).map((blog) => (
           <div
