@@ -25,10 +25,11 @@ function Projects() {
       className="w-full px-6 py-12 bg-transparent transition-colors duration-500"
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
-          Projects
-        </h2>
-        {loading && <Loader/>}
+        {!loading && (
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
+            Projects
+          </h2>
+        )}
 
         {!loading && projects.length === 0 && (
           <p className="text-center text-gray-500">No projects data found.</p>
@@ -43,13 +44,8 @@ function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               whileHover={{ scale: 1.03 }}
-              className="p-[3px] rounded-2xl relative overflow-hidden"
             >
-              {/* 🔥 Border only (not background) */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 animate-gradient-x" />
-
-              {/* Inner card (clean background) */}
-              <div className="relative z-10 rounded-2xl bg-white dark:bg-gray-900 shadow-lg flex flex-col overflow-hidden">
+              <div className="relative z-10 rounded-2xl bg-white dark:bg-gray-900 shadow-lg flex flex-col overflow-hidden h-full border border-gray-200 dark:border-gray-700">
                 {/* Thumbnail */}
                 <div className="relative w-full h-48 overflow-hidden">
                   <motion.img
