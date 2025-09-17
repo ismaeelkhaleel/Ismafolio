@@ -1,19 +1,21 @@
 import ContactMessage from "../models/contactMessage.model.js";
 import nodemailer from "nodemailer";
 
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  auth: {
+    user: process.env.BREVO_EMAIL,
+    pass: process.env.BREVO_API_KEY,
+  },
+});
+
 const sendEmail = async (email, name) => {
   try {
     const displayName = name && name.trim() !== "" ? name : "there";
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"Mohd Ismaeel" <${process.env.BREVO_EMAIL}>`,
       to: email,
       subject: "Thank You for Contacting Us",
       text: `Hi ${displayName},\n\nThank you for reaching out! We’ve received your message and will get back to you shortly.\n\nBest regards,\nMOHD ISMAEEL`,
@@ -21,25 +23,17 @@ const sendEmail = async (email, name) => {
 
     await transporter.sendMail(mailOptions);
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error sending email to user ❌:", error.message);
   }
 };
-import nodemailer from "nodemailer";
 
 const sendEmailToAdmin = async ({ name, email, message }) => {
   try {
     const displayName = name && name.trim() !== "" ? name : "unknown";
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
 
     const mailOptions = {
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
+      from: `"Portfolio Contact" <${process.env.BREVO_EMAIL}>`,
+      to: process.env.BREVO_EMAIL,
       subject: `New Contact Message from ${displayName}`,
       text: `
 You have received a new message from your portfolio:
@@ -61,11 +55,9 @@ ${message}
 
     await transporter.sendMail(mailOptions);
   } catch (error) {
-    console.error("Error sending email:", error.message);
+    console.error("Error sending email to admin ❌:", error.message);
   }
 };
-
-export default sendEmailToAdmin;
 
 export const contact = async (req, res) => {
   const { name, email, message } = req.body;
