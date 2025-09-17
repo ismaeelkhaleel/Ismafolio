@@ -30,10 +30,11 @@ function Experience() {
       ref={ref}
       className="py-12 px-4 md:px-8 bg-transparent transition-colors duration-300"
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
-        Experience
-      </h2>
-      {loading && <Loader />}
+      {!loading && (
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500">
+          Experience
+        </h2>
+      )}
 
       {!loading && experience.length === 0 && (
         <p className="text-center text-gray-500">No Experience data found.</p>
@@ -51,13 +52,8 @@ function Experience() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
-              className="p-[3px] rounded-2xl relative overflow-hidden h-full"
             >
-              {/* 🔥 Border only (animated) */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 animate-gradient-x" />
-
-              {/* Inner card (always full height) */}
-              <div className="relative z-10 rounded-2xl bg-white dark:bg-gray-900 shadow-lg p-6 flex flex-col h-full">
+              <div className="relative z-10 rounded-2xl bg-white dark:bg-gray-900 shadow-lg p-6 flex flex-col h-full border border-gray-200 dark:border-gray-700 transition-colors duration-300">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
                   {exp.jobTitle}
                 </h2>
