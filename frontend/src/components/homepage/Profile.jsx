@@ -1,34 +1,49 @@
 "use client";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { useUser } from "../../context/Context";
 import Loader from "../buttons/Loader";
+import { X } from "lucide-react";
 
 function Profile() {
   const { getProfile, profile } = useUser();
   const [loading, setLoading] = useState(false);
+  const [viewImage, setViewImage] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     getProfile().finally(() => setLoading(false));
   }, []);
 
-  if (!profile || !profile.image || !profile.name) {
-    return null;
-  }
+  // Disable scroll when modal is open
+  useEffect(() => {
+    if (viewImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [viewImage]);
+
+  if (!profile || !profile.image || !profile.name) return null;
 
   return (
     <section className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-10 px-6">
       {loading && <Loader />}
+
+      {/* Profile Image */}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="p-[4px] rounded-full relative overflow-hidden shadow-xl"
+        className="p-[4px] rounded-full relative overflow-hidden shadow-xl cursor-pointer"
+        onClick={() => setViewImage(true)}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 animate-gradient-x" />
-
         <div className="relative w-52 h-52 md:w-72 md:h-72 rounded-full overflow-hidden bg-white dark:bg-gray-900 z-10">
           <Image
             src={profile.image}
@@ -39,6 +54,28 @@ function Profile() {
         </div>
       </motion.div>
 
+      {/* Fullscreen Modal */}
+      {viewImage && (
+        <div className="fixed inset-0 z-650 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+          <button
+            onClick={() => setViewImage(false)}
+            className="absolute top-4 right-4 text-white p-2 rounded-full hover:bg-black/40 transition cursor-pointer"
+          >
+            <X size={28} />
+          </button>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+            <Image
+              src={profile.image}
+              alt={profile.name}
+              width={700}
+              height={400}
+              className="object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Profile Info */}
       <motion.div
         initial={{ x: 100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -69,8 +106,8 @@ function Profile() {
           href={profile.resume}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           className="mt-6 inline-block px-6 py-3 rounded-lg relative overflow-hidden font-medium shadow-lg"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 animate-gradient-x" />
