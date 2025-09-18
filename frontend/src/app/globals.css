@@ -2,25 +2,61 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg-color: #white;
+  --bg-color: #ffffff;
   --text-color: #333;
   --card-bg: rgba(255, 255, 255, 0.8);
+  --bg-image: none;
 }
 
 .dark {
   --bg-color: black;
   --text-color: #f0f0f0;
   --card-bg: rgba(17, 24, 39, 0.8);
+  --bg-image:
+    radial-gradient(2px 2px at 20px 30px, white, transparent),
+    radial-gradient(1px 1px at 100px 150px, white, transparent),
+    radial-gradient(3px 3px at 200px 250px, white, transparent),
+    radial-gradient(2px 2px at 300px 400px, white, transparent),
+    radial-gradient(1px 1px at 450px 600px, white, transparent),
+    radial-gradient(3px 3px at 700px 800px, white, transparent),
+    radial-gradient(2px 2px at 150px 90px, white, transparent),
+    radial-gradient(1px 1px at 250px 350px, white, transparent),
+    radial-gradient(2px 2px at 500px 500px, white, transparent),
+    radial-gradient(3px 3px at 650px 200px, white, transparent),
+    radial-gradient(1px 1px at 800px 450px, white, transparent),
+    radial-gradient(2px 2px at 900px 700px, white, transparent),
+    radial-gradient(3px 3px at 50px 500px, white, transparent),
+    radial-gradient(1px 1px at 300px 750px, white, transparent),
+    radial-gradient(2px 2px at 700px 1000px, white, transparent),
+    radial-gradient(1px 1px at 950px 200px, white, transparent),
+    radial-gradient(2px 2px at 1100px 400px, white, transparent),
+    radial-gradient(3px 3px at 1200px 600px, white, transparent);
 }
 
-/* Main body styles */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.5s ease, color 0.5s ease;
+  position: relative;
 }
 
-/* Example card */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-repeat: repeat;
+  background-size: 600px 600px, 800px 800px, 1000px 1000px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark body::before {
+  opacity: 1;
+}
+
 .card {
   background-color: var(--card-bg);
   border-radius: 0.5rem;
@@ -28,35 +64,6 @@ body {
   transition: background-color 0.5s ease;
 }
 
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
-}
-
-.dark body {
-  background-color: black;
-  background-image:
-    radial-gradient(2px 2px at 20px 30px, white, transparent),
-    radial-gradient(1px 1px at 100px 150px, white, transparent),
-    radial-gradient(3px 3px at 200px 250px, white, transparent),
-    radial-gradient(2px 2px at 300px 400px, white, transparent),
-    radial-gradient(1px 1px at 450px 600px, white, transparent),
-    radial-gradient(3px 3px at 700px 800px, white, transparent),
-
-    radial-gradient(2px 2px at 150px 90px, white, transparent),
-    radial-gradient(1px 1px at 250px 350px, white, transparent),
-    radial-gradient(2px 2px at 500px 500px, white, transparent),
-    radial-gradient(3px 3px at 650px 200px, white, transparent),
-    radial-gradient(1px 1px at 800px 450px, white, transparent),
-    radial-gradient(2px 2px at 900px 700px, white, transparent),
-
-    radial-gradient(3px 3px at 50px 500px, white, transparent),
-    radial-gradient(1px 1px at 300px 750px, white, transparent),
-    radial-gradient(2px 2px at 700px 1000px, white, transparent),
-    radial-gradient(1px 1px at 950px 200px, white, transparent),
-    radial-gradient(2px 2px at 1100px 400px, white, transparent),
-    radial-gradient(3px 3px at 1200px 600px, white, transparent);
-
-  background-repeat: repeat;
-  background-size: 600px 600px, 800px 800px, 1000px 1000px;
 }

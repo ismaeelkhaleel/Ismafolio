@@ -22,10 +22,11 @@ function Skills() {
 
   return (
     <section ref={ref} className="bg-transparent">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500 dark:text-emerald-400">
-        Skills
-      </h2>
-      {loading && <Loader />}
+      {!loading && (
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-emerald-500 dark:text-emerald-400">
+          Skills
+        </h2>
+      )}
       {!loading && skills?.length === 0 && (
         <p className="text-center text-zinc-500 dark:text-zinc-400">
           No skill data found.
