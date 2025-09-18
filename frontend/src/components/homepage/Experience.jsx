@@ -54,7 +54,7 @@ function Experience() {
               <h4 className="text-lg font-medium mb-2">{exp.companyName}</h4>
               <p className="text-sm mb-3">
                 {exp.startDate?.slice(0, 10).replaceAll("-", "/")} -{" "}
-                {exp.endDate?.slice(0, 10).replaceAll("-", "/")}
+                {exp.endDate ? exp.endDate?.slice(0, 10).replaceAll("-", "/"):"Present"}
               </p>
               <p className="text-sm leading-relaxed mb-3 flex-1">
                 {expanded[index] || !isLong
