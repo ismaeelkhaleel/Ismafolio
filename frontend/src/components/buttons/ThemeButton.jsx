@@ -1,353 +1,231 @@
 "use client";
+import React from "react";
 import styled from "styled-components";
 
 export default function ThemeButton({ theme, toggleTheme }) {
   return (
     <StyledWrapper>
-      <label className="switch">
-        <input
-          id="input"
-          type="checkbox"
-          checked={theme === "dark"}
-          onChange={toggleTheme}
-        />
-        <div className="slider round">
-          <div className="sun-moon">
-            {/* moon dots */}
-            <svg id="moon-dot-1" className="moon-dot" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="moon-dot-2" className="moon-dot" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="moon-dot-3" className="moon-dot" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
+      <div className="container">
+        <label className="switch">
+          <input
+            role="switch"
+            type="checkbox"
+            className="switch__input"
+            checked={theme === "dark"}
+            onChange={toggleTheme}
+          />
+          {/* Sun Icon */}
+          <svg
+            aria-hidden="true"
+            height="12px"
+            width="12px"
+            viewBox="0 0 12 12"
+            className="switch__icon switch__icon--light"
+          >
+            <g strokeLinecap="round" strokeWidth={1} stroke="#fff" fill="none">
+              <circle r={2} cy={6} cx={6} />
+              <g strokeDasharray="1.5 1.5">
+                <polyline transform="rotate(0,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(45,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(90,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(135,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(180,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(225,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(270,6,6)" points="6 10,6 11.5" />
+                <polyline transform="rotate(315,6,6)" points="6 10,6 11.5" />
+              </g>
+            </g>
+          </svg>
 
-            {/* light rays */}
-            <svg id="light-ray-1" className="light-ray" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="light-ray-2" className="light-ray" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="light-ray-3" className="light-ray" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
+          {/* Moon Icon */}
+          <svg
+            aria-hidden="true"
+            height="12px"
+            width="12px"
+            viewBox="0 0 12 12"
+            className="switch__icon switch__icon--dark"
+          >
+            <g
+              transform="rotate(-45,6,6)"
+              strokeLinejoin="round"
+              strokeWidth={1}
+              stroke="#fff"
+              fill="none"
+            >
+              <path d="m9,10c-2.209,0-4-1.791-4-4s1.791-4,4-4c.304,0,.598.041.883.105-.995-.992-2.367-1.605-3.883-1.605C2.962.5.5,2.962.5,6s2.462,5.5,5.5,5.5c1.516,0,2.888-.613,3.883-1.605-.285.064-.578.105-.883.105Z" />
+            </g>
+          </svg>
 
-            {/* clouds */}
-            <svg id="cloud-1" className="cloud-dark" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="cloud-2" className="cloud-dark" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="cloud-3" className="cloud-dark" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="cloud-4" className="cloud-light" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="cloud-5" className="cloud-light" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-            <svg id="cloud-6" className="cloud-light" viewBox="0 0 100 100">
-              <circle cx={50} cy={50} r={50} />
-            </svg>
-          </div>
-
-          {/* stars */}
-          <div className="stars">
-            <svg id="star-1" className="star" viewBox="0 0 20 20">
-              <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z" />
-            </svg>
-            <svg id="star-2" className="star" viewBox="0 0 20 20">
-              <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z" />
-            </svg>
-            <svg id="star-3" className="star" viewBox="0 0 20 20">
-              <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z" />
-            </svg>
-            <svg id="star-4" className="star" viewBox="0 0 20 20">
-              <path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z" />
-            </svg>
-          </div>
-        </div>
-      </label>
+          <span className="switch__sr">Dark Mode</span>
+        </label>
+      </div>
     </StyledWrapper>
   );
 }
 
-
 const StyledWrapper = styled.div`
+  :root {
+    --hue: 223;
+    --bg: hsl(var(--hue), 10%, 90%);
+    --fg: hsl(var(--hue), 10%, 10%);
+    --primary: hsl(var(--hue), 90%, 50%);
+    --trans-dur: 0.3s;
+    --trans-timing: cubic-bezier(0.76, 0.05, 0.24, 0.95);
+    --trans-timing-in: cubic-bezier(0.76, 0.05, 0.86, 0.06);
+    --trans-timing-out: cubic-bezier(0.05, 0.76, 0.06, 0.86);
+  }
+
+  .container,
+  .switch__input {
+    color: var(--fg);
+    font: 1em/1.5 sans-serif;
+  }
+
+  .container {
+    background-color: var(--bg);
+    display: flex;
+    height: 100%;
+    transition: background-color var(--trans-dur), color var(--trans-dur);
+  }
+
+  .container:has(.switch__input:checked) {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+
   .switch {
+    margin: auto;
     position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
   }
 
-  .switch #input {
+  .switch__icon,
+  .switch__input {
+    display: block;
+  }
+
+  .switch__icon {
+    position: absolute;
+    top: 0.375em;
+    right: 0.375em;
+    width: 0.75em;
+    height: 0.75em;
+    transition: opacity calc(var(--trans-dur) / 2),
+      transform calc(var(--trans-dur) / 2);
+  }
+
+  .switch__icon polyline {
+    transition: stroke-dashoffset calc(var(--trans-dur) / 2);
+  }
+
+  .switch__icon--light,
+  .switch__icon--light polyline {
+    transition-delay: calc(var(--trans-dur) / 2);
+    transition-timing-function: var(--trans-timing-out);
+  }
+
+  .switch__icon--dark {
     opacity: 0;
-    width: 0;
-    height: 0;
+    transform: translateX(-0.75em) rotate(30deg) scale(0.75);
+    transition-timing-function: var(--trans-timing-in);
   }
 
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #2196f3;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    z-index: 0;
-    overflow: hidden;
+  .switch__input {
+    background-color: hsl(210, 90%, 70%);
+    border-radius: 0.75em;
+    box-shadow: 0 0 0 0.125em hsla(var(--hue), 90%, 50%, 0),
+      0.125em 0.125em 0.25em hsla(var(--hue), 90%, 10%, 0.2);
+    outline: transparent;
+    position: relative;
+    width: 3em;
+    height: 1.5em;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color var(--trans-dur) var(--trans-timing),
+      box-shadow 0.15s linear;
   }
 
-  .sun-moon {
-    position: absolute;
+  .switch__input:focus-visible {
+    box-shadow: 0 0 0 0.125em hsl(var(--hue), 90%, 50%),
+      0.125em 0.125em 0.25em hsla(var(--hue), 90%, 10%, 0.2);
+  }
+
+  .switch__input:before,
+  .switch__input:after {
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: yellow;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+    display: block;
+    position: absolute;
   }
 
-  #input:checked + .slider {
-    background-color: black;
+  .switch__input:before {
+    background-color: hsl(50, 90%, 50%);
+    border-radius: inherit;
+    mask-image: linear-gradient(
+      120deg,
+      hsl(0, 0%, 0%) 20%,
+      hsla(0, 0%, 0%, 0) 80%
+    );
+    -webkit-mask-image: linear-gradient(
+      120deg,
+      hsl(0, 0%, 0%) 20%,
+      hsla(0, 0%, 0%, 0) 80%
+    );
+    inset: 0;
+    transition: background-color var(--trans-dur) var(--trans-timing);
   }
 
-  #input:focus + .slider {
-    box-shadow: 0 0 1px #2196f3;
-  }
-
-  #input:checked + .slider .sun-moon {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-    background-color: white;
-    -webkit-animation: rotate-center 0.6s ease-in-out both;
-    animation: rotate-center 0.6s ease-in-out both;
-  }
-
-  .moon-dot {
-    opacity: 0;
-    transition: 0.4s;
-    fill: gray;
-  }
-
-  #input:checked + .slider .sun-moon .moon-dot {
-    opacity: 1;
-  }
-
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round .sun-moon {
+  .switch__input:after {
+    background-color: hsl(0, 0%, 100%);
     border-radius: 50%;
+    box-shadow: 0.05em 0.05em 0.05em hsla(var(--hue), 90%, 10%, 0.1);
+    top: 0.125em;
+    left: 0.125em;
+    width: 1.25em;
+    height: 1.25em;
+    transition: background-color var(--trans-dur) var(--trans-timing),
+      transform var(--trans-dur) var(--trans-timing);
+    z-index: 1;
   }
 
-  #moon-dot-1 {
-    left: 10px;
-    top: 3px;
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    z-index: 4;
+  .switch__input:checked {
+    background-color: hsl(290, 90%, 40%);
   }
 
-  #moon-dot-2 {
-    left: 2px;
-    top: 10px;
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    z-index: 4;
+  .switch__input:checked:before {
+    background-color: hsl(220, 90%, 40%);
   }
 
-  #moon-dot-3 {
-    left: 16px;
-    top: 18px;
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    z-index: 4;
+  .switch__input:checked:after {
+    background-color: hsl(0, 0%, 0%);
+    transform: translateX(1.5em);
   }
 
-  #light-ray-1 {
-    left: -8px;
-    top: -8px;
-    position: absolute;
-    width: 43px;
-    height: 43px;
-    z-index: -1;
-    fill: white;
-    opacity: 10%;
+  .switch__input:checked ~ .switch__icon--light,
+  .switch__input:checked ~ .switch__icon--light polyline {
+    transition-delay: 0s;
+    transition-timing-function: var(--trans-timing-in);
   }
 
-  #light-ray-2 {
-    left: -50%;
-    top: -50%;
-    position: absolute;
-    width: 55px;
-    height: 55px;
-    z-index: -1;
-    fill: white;
-    opacity: 10%;
-  }
-
-  #light-ray-3 {
-    left: -18px;
-    top: -18px;
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    z-index: -1;
-    fill: white;
-    opacity: 10%;
-  }
-
-  .cloud-light {
-    position: absolute;
-    fill: #eee;
-    animation-name: cloud-move;
-    animation-duration: 6s;
-    animation-iteration-count: infinite;
-  }
-
-  .cloud-dark {
-    position: absolute;
-    fill: #ccc;
-    animation-name: cloud-move;
-    animation-duration: 6s;
-    animation-iteration-count: infinite;
-    animation-delay: 1s;
-  }
-
-  #cloud-1 {
-    left: 30px;
-    top: 15px;
-    width: 40px;
-  }
-
-  #cloud-2 {
-    left: 44px;
-    top: 10px;
-    width: 20px;
-  }
-
-  #cloud-3 {
-    left: 18px;
-    top: 24px;
-    width: 30px;
-  }
-
-  #cloud-4 {
-    left: 36px;
-    top: 18px;
-    width: 40px;
-  }
-
-  #cloud-5 {
-    left: 48px;
-    top: 14px;
-    width: 20px;
-  }
-
-  #cloud-6 {
-    left: 22px;
-    top: 26px;
-    width: 30px;
-  }
-
-  @keyframes cloud-move {
-    0% {
-      transform: translateX(0px);
-    }
-
-    40% {
-      transform: translateX(4px);
-    }
-
-    80% {
-      transform: translateX(-4px);
-    }
-
-    100% {
-      transform: translateX(0px);
-    }
-  }
-
-  .stars {
-    transform: translateY(-32px);
+  .switch__input:checked ~ .switch__icon--light {
     opacity: 0;
-    transition: 0.4s;
+    transform: translateX(-0.75em) rotate(-30deg) scale(0.75);
   }
 
-  .star {
-    fill: white;
-    position: absolute;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    animation-name: star-twinkle;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
+  .switch__input:checked ~ .switch__icon--light polyline {
+    stroke-dashoffset: 1.5;
   }
 
-  #input:checked + .slider .stars {
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
+  .switch__input:checked ~ .switch__icon--dark {
     opacity: 1;
+    transform: translateX(-1.5em);
+    transition-delay: calc(var(--trans-dur) / 2);
+    transition-timing-function: var(--trans-timing-out);
   }
 
-  #star-1 {
-    width: 20px;
-    top: 2px;
-    left: 3px;
-    animation-delay: 0.3s;
+  .switch__sr {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
   }
-
-  #star-2 {
-    width: 6px;
-    top: 16px;
-    left: 3px;
-  }
-
-  #star-3 {
-    width: 12px;
-    top: 20px;
-    left: 10px;
-    animation-delay: 0.6s;
-  }
-
-  #star-4 {
-    width: 18px;
-    top: 0px;
-    left: 18px;
-    animation-delay: 1.3s;
-  }
-
-  @keyframes star-twinkle {
-    0% {
-      transform: scale(1);
-    }
-
-    40% {
-      transform: scale(1.2);
-    }
-
-    80% {
-      transform: scale(0.8);
-    }
-
-    100% {
-      transform: scale(1);
-    }
-  }`;
+`;

@@ -32,7 +32,7 @@ function Contact() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-900 rounded-2xl shadow-md p-6 space-y-4 border border-gray-200 dark:border-gray-700"
+        className="bg-[var(--card-bg)] rounded-2xl shadow-md p-6 space-y-4 border border-gray-200 dark:border-gray-700"
       >
         <input
           type="text"
@@ -66,7 +66,7 @@ function Contact() {
         <button
           type="submit"
           disabled={loading}
-          className="cursor-pointer w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2 px-4 rounded-lg transition"
+          className="cursor-pointer w-full bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-medium py-2 px-4 rounded-lg transition hover:opacity-70 disabled:opacity-40"
         >
           {loading ? "Sending..." : "Send Message"}
         </button>

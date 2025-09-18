@@ -20,8 +20,8 @@ export default function Home() {
       <Experience />
       <Projects />
       <Education />
-      <Stats />
       <Blogs />
+       <Stats />
       <Contact />
     </div>
   );

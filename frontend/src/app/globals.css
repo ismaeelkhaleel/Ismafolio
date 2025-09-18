@@ -4,14 +4,20 @@
 :root {
   --bg-color: #ffffff;
   --text-color: #333;
-  --card-bg: rgba(255, 255, 255, 0.8);
+  --heading-color: #111;
+  --subheading-color: #6f3cd4;
+  --card-bg: rgba(242, 242, 242, 0.8);
+  --border-hover: #3b82f6;
   --bg-image: none;
 }
 
 .dark {
   --bg-color: black;
   --text-color: #f0f0f0;
-  --card-bg: rgba(17, 24, 39, 0.8);
+  --heading-color: #e5e7eb;
+  --subheading-color: #6f3cd4;
+  --card-bg: rgba(42, 43, 43, 0.8);
+  --border-hover: #c522b5;
   --bg-image:
     radial-gradient(2px 2px at 20px 30px, white, transparent),
     radial-gradient(1px 1px at 100px 150px, white, transparent),
@@ -36,7 +42,6 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 0.5s ease, color 0.5s ease;
   position: relative;
 }
 
@@ -61,7 +66,33 @@ body::before {
   background-color: var(--card-bg);
   border-radius: 0.5rem;
   padding: 1rem;
-  transition: background-color 0.5s ease;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+ 
+h1, h2, h3 {
+  color: var(--heading-color);
+  transition: color 0.3s ease;
+}
+
+h1.text-transparent,
+h2.text-transparent,
+h3.text-transparent {
+  color: transparent !important;
+}
+
+h4, h5, h6 {
+  color: var(--subheading-color);
+  transition: color 0.3s ease;
+}
+
+p, span, li {
+  color: var(--text-color);
+  transition: color 0.3s ease;
 }
 
 html {
