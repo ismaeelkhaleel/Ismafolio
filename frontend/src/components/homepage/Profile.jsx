@@ -15,7 +15,7 @@ function HighlightedText({ text, highlights = [] }) {
         highlights.map((w) => w.toLowerCase()).includes(part.toLowerCase()) ? (
           <span
             key={idx}
-            style={{color: "var(--border-hover)", fontWeight: "600"}}
+            style={{ color: "var(--border-hover)", fontWeight: "600" }}
           >
             {part}
           </span>
@@ -92,6 +92,9 @@ function Profile() {
           {profile.name}
         </h1>
 
+        <p className="mt-4 leading-relaxed text-justify">
+          <HighlightedText text={profile.description} highlights={highlights} />
+        </p>
         <h2 className="mt-2 text-lg md:text-xl font-medium bg-gradient-to-r from-pink-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent animate-gradient-x">
           <Typewriter
             words={profile.title || ["Developer", "Designer", "Engineer"]}
@@ -100,14 +103,9 @@ function Profile() {
             cursorStyle="|"
             typeSpeed={155}
             deleteSpeed={155}
-            delaySpeed={150}
+            delaySpeed={500}
           />
         </h2>
-
-        <p className="mt-4 leading-relaxed text-justify">
-          <HighlightedText text={profile.description} highlights={highlights} />
-        </p>
-
         <motion.a
           href={profile.resume}
           target="_blank"

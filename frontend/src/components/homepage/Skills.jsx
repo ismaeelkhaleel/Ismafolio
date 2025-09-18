@@ -22,7 +22,7 @@ function Skills() {
   return (
     <section ref={ref} className="bg-transparent">
       {!loading && (
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--heading-color)]">
+        <h2 className="text-3xl md:text-3xl text-center mb-12 text-[var(--heading-color)]">
           Skills
         </h2>
       )}

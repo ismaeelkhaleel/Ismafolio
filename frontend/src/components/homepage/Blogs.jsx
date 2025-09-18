@@ -17,7 +17,7 @@ function Blogs() {
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
       {!loading && (
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 heading-gradient">
+        <h2 className="text-3xl md:text-3xl text-center mb-10 heading-gradient">
           Latest Blogs
         </h2>
       )}

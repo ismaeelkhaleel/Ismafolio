@@ -22,7 +22,7 @@ function Projects() {
     <section ref={ref} className="w-full px-6 py-12 bg-transparent">
       <div className="max-w-6xl mx-auto">
         {!loading && (
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--heading-color)]">
+          <h2 className="text-3xl md:text-3xl text-center mb-12 text-[var(--heading-color)]">
             Projects
           </h2>
         )}

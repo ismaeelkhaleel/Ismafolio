@@ -18,7 +18,7 @@ function Stats() {
 
   return (
     <section className="w-full flex flex-col items-center p-6">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--heading-color)]">
+      <h2 className="text-3xl md:text-3xl text-center mb-12 text-[var(--heading-color)]">
         Stats
       </h2>
 
