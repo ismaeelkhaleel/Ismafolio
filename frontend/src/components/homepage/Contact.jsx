@@ -26,9 +26,12 @@ function Contact() {
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-12">
-      <h2 className="text-3xl md:text-3xl text-center mb-8 text-emerald-500">
-        Contact Me
-      </h2>
+     <div className="pb-6">
+        <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
+          Contact Me
+        </h2>
+        <div className="w-50 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+      </div>
 
       <form
         onSubmit={handleSubmit}

@@ -16,11 +16,15 @@ function Blogs() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
-      {!loading && (
-        <h2 className="text-3xl md:text-3xl text-center mb-10 heading-gradient">
-          Latest Blogs
-        </h2>
+       {!loading && (
+        <div className="pb-6">
+          <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
+            Latest Blogs
+          </h2>
+          <div className="w-54 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+        </div>
       )}
+
 
       {!loading && blogs.length === 0 && (
         <p className="text-center text-[var(--subheading-color)]">No Blog data found.</p>

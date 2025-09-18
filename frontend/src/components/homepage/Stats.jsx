@@ -18,9 +18,12 @@ function Stats() {
 
   return (
     <section className="w-full flex flex-col items-center p-6">
-      <h2 className="text-3xl md:text-3xl text-center mb-12 text-[var(--heading-color)]">
-        Stats
-      </h2>
+      <div className="pb-6">
+        <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
+          Stats
+        </h2>
+        <div className="w-30 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+      </div>
 
       <div className="w-full flex flex-col md:flex-row justify-center items-center md:items-stretch gap-6">
         {/* LeetCode Card */}
@@ -41,16 +44,19 @@ function Stats() {
                   <User className="w-4 h-4" /> {leetcodeState[0].username}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Rank: {leetcodeState[0].ranking}
+                  <Trophy className="w-4 h-4" /> Rank:{" "}
+                  {leetcodeState[0].ranking}
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4" /> Points: {leetcodeState[0].point}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4" /> Rating: {leetcodeState[0].starRating}
+                  <Star className="w-4 h-4" /> Rating:{" "}
+                  {leetcodeState[0].starRating}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4" /> Solved: {leetcodeState[0].acSubmissionNum[0].count}
+                  <Code2 className="w-4 h-4" /> Solved:{" "}
+                  {leetcodeState[0].acSubmissionNum[0].count}
                 </div>
               </div>
             )}
@@ -93,16 +99,20 @@ function Stats() {
                   <Star className="w-4 h-4" /> Score: {gfgState[0].codingScore}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Rank: {gfgState[0].instituteRank}
+                  <Trophy className="w-4 h-4" /> Rank:{" "}
+                  {gfgState[0].instituteRank}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4" /> Monthly: {gfgState[0].monthlyScore}
+                  <Star className="w-4 h-4" /> Monthly:{" "}
+                  {gfgState[0].monthlyScore}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Flame className="w-4 h-4" /> Streak: {gfgState[0].currentStreak}
+                  <Flame className="w-4 h-4" /> Streak:{" "}
+                  {gfgState[0].currentStreak}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4" /> Solved: {gfgState[0].totalProblemsSolved}
+                  <Code2 className="w-4 h-4" /> Solved:{" "}
+                  {gfgState[0].totalProblemsSolved}
                 </div>
               </div>
             )}

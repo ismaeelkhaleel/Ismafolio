@@ -26,9 +26,12 @@ function Experience() {
   return (
     <section ref={ref} className="py-12 px-4 md:px-8 bg-transparent">
       {!loading && (
-        <h2 className="text-3xl md:text-3xl text-center mb-12">
-          Experience
-        </h2>
+        <div className="pb-6">
+          <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
+            Experiences
+          </h2>
+          <div className="w-54 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+        </div>
       )}
 
       {!loading && experience.length === 0 && (
