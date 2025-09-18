@@ -12,16 +12,15 @@ import Blogs from "@/components/homepage/Blogs";
 import Contact from "@/components/homepage/Contact";
 
 export default function Home() {
- 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-black dark:text-white pb-20">
-      <Profile/>
+      <Profile />
       <Skills />
       <Experience />
       <Projects />
       <Education />
       <Blogs />
-       <Stats />
+      <Stats />
       <Contact />
     </div>
   );

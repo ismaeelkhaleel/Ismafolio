@@ -20,7 +20,7 @@ export default function ThemeButton({ theme, toggleTheme }) {
             height="12px"
             width="12px"
             viewBox="0 0 12 12"
-            className="switch__icon switch__icon--light"
+            className="switch__icon switch__icon--light cursor-pointer"
           >
             <g strokeLinecap="round" strokeWidth={1} stroke="#fff" fill="none">
               <circle r={2} cy={6} cx={6} />
@@ -43,7 +43,7 @@ export default function ThemeButton({ theme, toggleTheme }) {
             height="12px"
             width="12px"
             viewBox="0 0 12 12"
-            className="switch__icon switch__icon--dark"
+            className="switch__icon switch__icon--dark cursor-pointer"
           >
             <g
               transform="rotate(-45,6,6)"
