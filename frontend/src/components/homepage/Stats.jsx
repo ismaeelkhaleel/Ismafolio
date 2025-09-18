@@ -58,14 +58,14 @@ function Stats() {
           <div className="flex gap-3 pt-4">
             <a
               href="/leetcode/problems"
-              className="text-xs font-medium text-[var(--accent-color)] hover:underline"
+              className="text-xs font-medium text-[#FFA116] hover:underline"
             >
               View Problems
             </a>
             <a
               href={leetcodeState[0]?.profileUrl}
               target="_blank"
-              className="text-xs font-medium text-[var(--accent-color)] hover:underline"
+              className="text-xs font-medium text-[#FFA116] hover:underline"
             >
               View Profile
             </a>
@@ -110,14 +110,14 @@ function Stats() {
           <div className="flex gap-3 pt-4">
             <a
               href="/geeksforgeek/problems"
-              className="text-xs font-medium text-[var(--accent-color)] hover:underline"
+              className="text-xs font-medium text-[#0F9D58] hover:underline"
             >
               View Problems
             </a>
             <a
               href={gfgState[0]?.profileUrl}
               target="_blank"
-              className="text-xs font-medium text-[var(--accent-color)] hover:underline"
+              className="text-xs font-medium text-[#0F9D58] hover:underline"
             >
               View Profile
             </a>

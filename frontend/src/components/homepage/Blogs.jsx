@@ -39,7 +39,7 @@ function Blogs() {
           >
             <div>
               <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-              <p className="text-sm mb-3 text-[var(--subheading-color)]">
+              <p className="text-sm mb-3" style={{ color: "var(--subheading-color)" }}>
                 {new Date(blog.createdAt).toLocaleDateString()}
               </p>
               <p className="text-[var(--subheading-color)] line-clamp-3">{blog.content}</p>

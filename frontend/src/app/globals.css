@@ -9,6 +9,7 @@
   --card-bg: rgba(242, 242, 242, 0.8);
   --border-hover: #3b82f6;
   --bg-image: none;
+  --tag-bg: #8382d5;
 }
 
 .dark {
@@ -18,6 +19,7 @@
   --subheading-color: #6f3cd4;
   --card-bg: rgba(42, 43, 43, 0.8);
   --border-hover: #c522b5;
+  --tag-bg: #8382d5;
   --bg-image:
     radial-gradient(2px 2px at 20px 30px, white, transparent),
     radial-gradient(1px 1px at 100px 150px, white, transparent),

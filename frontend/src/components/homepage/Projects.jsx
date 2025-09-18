@@ -44,20 +44,17 @@ function Projects() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               whileHover={{ scale: 1.03 }}
             >
-              <div className="relative w-full h-48 overflow-hidden">
+              <div className="relative w-full overflow-hidden">
                 <motion.img
                   src={project.thumbnail}
                   alt={project.title}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  className="object-cover hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              <div className="p-5 flex flex-col flex-1">
-                <h3 className="text-xl font-semibold text-[var(--heading-color)] mb-2">
+              <div className="flex flex-col flex-1 justify-between pt-3">
+                <h3 className="text-xl font-semibold text-[var(--heading-color)]">
                   {project.title}
                 </h3>
-                <p className="text-[var(--subheading-color)] text-sm flex-1">
-                  {project.description}
-                </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {project.techStack.map((tech, idx) => (
                     <span
@@ -75,7 +72,7 @@ function Projects() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="w-full block text-center px-6 py-3 rounded-lg font-medium shadow-lg relative overflow-hidden text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500"
+                    className="w-full block text-center px-6 py-1 rounded-lg font-medium shadow-lg relative overflow-hidden text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500"
                   >
                     View Code
                   </motion.a>
