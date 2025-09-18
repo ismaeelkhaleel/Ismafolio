@@ -7,6 +7,26 @@ import { useUser } from "../../context/Context";
 import Loader from "../buttons/Loader";
 import { X } from "lucide-react";
 
+function HighlightedText({ text, highlights = [] }) {
+  const parts = text.split(new RegExp(`(${highlights.join("|")})`, "gi"));
+  return (
+    <span>
+      {parts.map((part, idx) =>
+        highlights.map((w) => w.toLowerCase()).includes(part.toLowerCase()) ? (
+          <span
+            key={idx}
+            style={{color: "var(--border-hover)", fontWeight: "600"}}
+          >
+            {part}
+          </span>
+        ) : (
+          part
+        )
+      )}
+    </span>
+  );
+}
+
 function Profile() {
   const { getProfile, profile } = useUser();
   const [loading, setLoading] = useState(false);
@@ -17,13 +37,8 @@ function Profile() {
     getProfile().finally(() => setLoading(false));
   }, []);
 
-  // Disable scroll when modal is open
   useEffect(() => {
-    if (viewImage) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = viewImage ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -31,11 +46,24 @@ function Profile() {
 
   if (!profile || !profile.image || !profile.name) return null;
 
+  const highlights = [
+    "Full Stack Web Developer",
+    "MCA graduate",
+    "Aligarh Muslim University",
+    "Data Structures and Algorithms",
+    "Node.js",
+    "React.js",
+    "Express.js",
+    "MongoDB",
+    "responsive UI development",
+    "REST APIs",
+    "backend scalability",
+  ];
+
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-10 px-6">
+    <section className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-10 px-6 md:px-20 w-full">
       {loading && <Loader />}
 
-      {/* Profile Image */}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -54,33 +82,11 @@ function Profile() {
         </div>
       </motion.div>
 
-      {/* Fullscreen Modal */}
-      {viewImage && (
-        <div className="fixed inset-0 z-650 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <button
-            onClick={() => setViewImage(false)}
-            className="absolute top-4 right-4 text-white p-2 rounded-full hover:bg-black/40 transition cursor-pointer"
-          >
-            <X size={28} />
-          </button>
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg">
-            <Image
-              src={profile.image}
-              alt={profile.name}
-              width={700}
-              height={400}
-              className="object-contain rounded-lg"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Profile Info */}
       <motion.div
         initial={{ x: 100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="text-center md:text-left"
+        className="text-center md:text-left max-w-xl flex-1"
       >
         <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-x">
           {profile.name}
@@ -98,8 +104,8 @@ function Profile() {
           />
         </h2>
 
-        <p className="mt-4 max-w-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-          {profile.description}
+        <p className="mt-4 leading-relaxed text-justify">
+          <HighlightedText text={profile.description} highlights={highlights} />
         </p>
 
         <motion.a
@@ -114,6 +120,27 @@ function Profile() {
           <span className="relative z-10 text-white">View Resume</span>
         </motion.a>
       </motion.div>
+
+      {/* Fullscreen Modal */}
+      {viewImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+          <button
+            onClick={() => setViewImage(false)}
+            className="absolute top-4 right-4 text-white p-2 rounded-full hover:bg-black/40 transition cursor-pointer"
+          >
+            <X size={28} />
+          </button>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+            <Image
+              src={profile.image}
+              alt={profile.name}
+              width={700}
+              height={400}
+              className="object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
