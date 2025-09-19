@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   darkMode: "class", // Dark mode enable
   content: [
@@ -10,5 +11,5 @@ export default {
       scrollBehavior: ['smooth'],
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

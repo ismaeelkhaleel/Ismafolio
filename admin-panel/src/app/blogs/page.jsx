@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
 import { useAdmin } from "@/context/Context";
+import RTEWrapper from "@/components/RTEWrapper";
 
 function Page() {
   const { getBlog, blog, addBlog, updateBlog, deleteBlog } = useAdmin();
@@ -155,7 +156,7 @@ function Page() {
           </button>
 
           <form
-            className="relative w-96 bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
+            className="relative bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
             onSubmit={handleSubmit}
             encType="multipart/form-data"
           >
@@ -173,14 +174,9 @@ function Page() {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
             />
 
-            <textarea
-              placeholder="Content"
+            <RTEWrapper
               value={formData.content}
-              onChange={(e) =>
-                setFormData({ ...formData, content: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-              rows="5"
+              onChange={(html) => setFormData({ ...formData, content: html })}
             />
 
             {/* File Upload */}

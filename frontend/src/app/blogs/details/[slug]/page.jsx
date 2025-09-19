@@ -37,8 +37,8 @@ export default function BlogDetailPage() {
           })}
       </p>
 
-      <div className="prose prose-lg max-w-none text-gray-700 dark:text-white leading-relaxed">
-        {blogDetail?.content}
+      <div className="prose prose-lg max-w-none text-gray-700 dark:text-white">
+        <div dangerouslySetInnerHTML={{ __html: blogDetail?.content || "" }} />
       </div>
     </section>
   );
