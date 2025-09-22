@@ -113,7 +113,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
     if (!linkData.href) return;
     const selection = editor.state.selection;
     if (selection.empty && linkData.text) {
-      // insert text as link if nothing selected
+      
       editor.chain().focus().insertContent(`<a href="${linkData.href}">${linkData.text}</a>`).run();
     } else {
       editor.chain().focus().extendMarkRange("link").setLink({ href: linkData.href }).run();
@@ -124,7 +124,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
 
   return (
     <div className="max-w-4xl mx-auto bg-transparent rounded-xl p-4">
-      {/* Toolbar */}
+       
       <div className="flex flex-wrap gap-2 items-center mb-3 overflow-x-auto scrollbar-hide">
         <select
           value={
@@ -145,7 +145,6 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
           <option value="heading-3">Heading 3</option>
         </select>
 
-        {/* Inline formatting */}
         <div className="flex gap-2 ml-2">
           <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} title="Bold">
             <Bold size={16} />
@@ -158,7 +157,6 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
           </ToolbarButton>
         </div>
 
-        {/* Lists + Quote */}
         <div className="flex gap-2 ml-2">
           <ToolbarButton onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive("bulletList")} title="Bulleted list">
             <List size={16} />
@@ -171,7 +169,6 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
           </ToolbarButton>
         </div>
 
-        {/* Alignment */}
         <div className="flex gap-2 ml-2">
           <ToolbarButton onClick={() => editor.chain().focus().setTextAlign("left").run()} active={textAlignActive("left")} title="Align left">
             <AlignLeft size={16} />
@@ -187,7 +184,6 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
           </ToolbarButton>
         </div>
 
-        {/* Undo / Redo */}
         <div className="flex gap-2 ml-auto">
           <ToolbarButton onClick={() => editor.chain().focus().undo().run()} title="Undo">
             <Undo size={16} />
@@ -197,13 +193,11 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
           </ToolbarButton>
         </div>
 
-        {/* Insert Link */}
         <ToolbarButton onClick={() => setShowLinkPopup(true)} title="Insert Link">
           <LinkIcon size={16} />
         </ToolbarButton>
       </div>
 
-      {/* Editor */}
       <div className="border rounded-md">
         <EditorContent
           editor={editor}
@@ -211,7 +205,6 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
         />
       </div>
 
-      {/* Link Popup */}
       {showLinkPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-[300px] flex flex-col gap-3">

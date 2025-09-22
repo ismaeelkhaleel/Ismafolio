@@ -15,7 +15,6 @@ function Page() {
     coverImage: null,
   });
   const [preview, setPreview] = useState("");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -31,6 +30,7 @@ function Page() {
     });
     setPreview("");
     setIsModalOpen(true);
+    document.body.style.overflow = "hidden";
   };
 
   const openEditModal = (b) => {
@@ -42,6 +42,12 @@ function Page() {
     });
     setPreview(b.coverImage || "");
     setIsModalOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = "auto";
   };
 
   const handleFileChange = (e) => {
@@ -72,7 +78,7 @@ function Page() {
       addBlog(data);
     }
 
-    setIsModalOpen(false);
+    closeModal();
     setSelectedBlog(null);
     setFormData({
       title: "",
@@ -84,7 +90,6 @@ function Page() {
 
   return (
     <div className="p-6">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Blogs</h1>
         <button
@@ -96,7 +101,6 @@ function Page() {
         </button>
       </div>
 
-      {/* Cards */}
       <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {blog?.map((b, index) => (
           <div
@@ -120,9 +124,6 @@ function Page() {
                     year: "numeric",
                   })}
                 </p>
-                <p className="text-gray-700 text-sm line-clamp-3">
-                  {b.content}
-                </p>
               </div>
               <div className="flex gap-3 mt-4">
                 <button
@@ -143,20 +144,18 @@ function Page() {
         ))}
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
-          {/* Close icon */}
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <button
             type="button"
-            onClick={() => setIsModalOpen(false)}
+            onClick={closeModal}
             className="cursor-pointer fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
           >
             <X size={24} />
           </button>
 
           <form
-            className="relative bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
+            className="relative bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5 w-full max-w-2xl max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
             onSubmit={handleSubmit}
             encType="multipart/form-data"
           >
@@ -179,7 +178,6 @@ function Page() {
               onChange={(html) => setFormData({ ...formData, content: html })}
             />
 
-            {/* File Upload */}
             <div>
               <input
                 type="file"

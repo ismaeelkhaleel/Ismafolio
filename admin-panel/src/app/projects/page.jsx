@@ -4,6 +4,7 @@ import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
 import { useAdmin } from "@/context/Context";
 import technologies from "@/data/technologies";
+import RTEWrapper from "@/components/RTEWrapper";
 
 function Page() {
   const { getProject, project, addProject, updateProject, deleteProject } =
@@ -19,13 +20,23 @@ function Page() {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     getProject();
   }, []);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
 
   const openAddModal = () => {
     setSelectedProject(null);
@@ -53,28 +64,23 @@ function Page() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const data = new FormData();
     data.append("title", formData.title);
     data.append("description", formData.description);
     data.append("githubUrl", formData.githubUrl);
-
     formData.techStack.forEach((tech) => {
       data.append("techStack", tech);
     });
-
     if (formData.thumbnail instanceof File) {
       data.append("thumbnail", formData.thumbnail);
     } else if (selectedProject) {
       data.append("thumbnail", selectedProject.thumbnail);
     }
-
     if (selectedProject) {
       updateProject(selectedProject._id, data);
     } else {
       addProject(data);
     }
-
     setIsModalOpen(false);
     setSelectedProject(null);
     setFormData({
@@ -107,7 +113,6 @@ function Page() {
 
   return (
     <div className="p-6">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Projects</h1>
         <button
@@ -119,7 +124,6 @@ function Page() {
         </button>
       </div>
 
-      {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {project?.map((proj, index) => (
           <div
@@ -133,9 +137,8 @@ function Page() {
                 className="w-full h-40 object-cover rounded-lg mb-4"
               />
             )}
-
             <h2 className="font-semibold text-lg">{proj.title}</h2>
-            <p className="text-gray-600">{proj.description}</p>
+
             <p className="text-sm text-gray-500 mt-2">
               {proj.techStack.join(", ")}
             </p>
@@ -146,7 +149,6 @@ function Page() {
             >
               GitHub
             </a>
-
             <div className="flex gap-3 mt-4">
               <button
                 onClick={() => openEditModal(proj)}
@@ -165,9 +167,8 @@ function Page() {
         ))}
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <button
             type="button"
             onClick={() => setIsModalOpen(false)}
@@ -177,11 +178,11 @@ function Page() {
           </button>
 
           <form
-            className="relative w-96 bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
+            className="relative bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5 w-full max-w-2xl max-h-[90vh] overflow-y-auto scrollbar-hide"
             onSubmit={handleSubmit}
             encType="multipart/form-data"
           >
-            <h2 className="text-xl font-semibold text-gray-800 text-center">
+            <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">
               {selectedProject ? "Edit Project" : "Add Project"}
             </h2>
 
@@ -195,19 +196,14 @@ function Page() {
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
 
-            <textarea
-              placeholder="Description"
+            <RTEWrapper
               value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
+              onChange={(html) =>
+                setFormData({ ...formData, description: html })
               }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              rows="3"
             />
 
-            {/* ✅ Tech Stack with Autocomplete + Tags */}
             <div className="relative w-full">
-              {/* Selected Tags */}
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.techStack.map((tech, i) => (
                   <span
@@ -226,7 +222,6 @@ function Page() {
                 ))}
               </div>
 
-              {/* Input */}
               <input
                 type="text"
                 placeholder="Type to search technology..."
@@ -239,7 +234,6 @@ function Page() {
                 className="w-full border border-gray-300 rounded-lg px-3 py-2"
               />
 
-              {/* Suggestions */}
               {showSuggestions && query && filteredTechs.length > 0 && (
                 <ul className="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto shadow-lg z-10">
                   {filteredTechs.map((tech, i) => (

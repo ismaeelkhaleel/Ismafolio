@@ -38,3 +38,10 @@ body {
 .prose img {
   @apply max-w-full rounded-lg shadow;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
