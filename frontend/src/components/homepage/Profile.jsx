@@ -119,7 +119,6 @@ function Profile() {
         </motion.a>
       </motion.div>
 
-      {/* Fullscreen Modal */}
       {viewImage && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
           <button
