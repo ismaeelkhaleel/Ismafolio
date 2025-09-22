@@ -37,7 +37,7 @@ function Projects() {
         )}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.slice(0, 3).map((project, index) => (
+          {projects.map((project, index) => (
             <motion.div
               key={index}
               className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl flex flex-col overflow-hidden h-full"
@@ -68,24 +68,29 @@ function Projects() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-5 flex gap-3">
-                  <a
+                <div className="mt-5">
+                  <motion.a
                     href={`/projects/details/${project._id}-${project.title
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200 hover:opacity-80"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full block text-center px-6 py-1 rounded-lg font-medium shadow-lg relative overflow-hidden text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500"
                   >
                     Detail
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
                     href={project.githubUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200 hover:opacity-80"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full block text-center px-6 py-1 rounded-lg font-medium shadow-lg relative overflow-hidden text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500"
                   >
                     View Code
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </motion.div>

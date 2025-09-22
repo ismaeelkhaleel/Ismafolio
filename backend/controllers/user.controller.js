@@ -56,6 +56,20 @@ export const getProjects = async (req, res) => {
       .json({ message: "Can not be fetched projects details right now" });
   }
 };
+export const getProjectDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const projectDetails = await Project.findById(id);
+    return res
+      .status(201)
+      .json({ message: "Project Detail fetched successfully" , projectDetails});
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Can not be fetched Project details right now" });
+  }
+};
+
 
 export const getSkills = async (req, res) => {
   try {

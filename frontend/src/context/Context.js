@@ -14,6 +14,7 @@ import {
   getSkillsAPI,
   sendContactMessageAPI,
   getBlogDetailAPI,
+  getProjectDetailAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -160,7 +161,7 @@ export const Provider = ({ children }) => {
       if (!res.ok) {
         toast.error(data.message || "Can not send message, try again");
       } else {
-        toast.success(data.message || "Message sent")
+        toast.success(data.message || "Message sent");
       }
     } catch (err) {
       toast.error("Some error while sending message");
@@ -178,6 +179,21 @@ export const Provider = ({ children }) => {
       }
     } catch (err) {
       toast.error("Some error while fetching blog detail");
+    }
+  };
+  const [projectDetail, setProjectDetail] = useState([]);
+  const getProjectDetail = async (projectId) => {
+    try {
+      const res = await getProjectDetailAPI(projectId);
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok) {
+        toast.error(data.message || "Can not Fetch detail, try again");
+      } else {
+        setProjectDetail(data.projectDetail);
+      }
+    } catch (err) {
+      toast.error("Some error while fetching Project detail");
     }
   };
   return (
@@ -208,6 +224,8 @@ export const Provider = ({ children }) => {
         sendContactMessage,
         getBlogDetail,
         blogDetail,
+        getProjectDetail,
+        projectDetail,
       }}
     >
       {children}

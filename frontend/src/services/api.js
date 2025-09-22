@@ -122,3 +122,13 @@ export const getBlogDetailAPI = async (blogId) => {
   });
   return response;
 };
+
+export const getProjectDetailAPI = async (projectId) => {
+  const response = await fetch(`${BASE_URL}/get-project-detail/${projectId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
