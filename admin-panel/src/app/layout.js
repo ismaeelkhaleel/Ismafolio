@@ -15,8 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Ismafolio",
-  description: "Smart portfolio built with Next.js",
+  title: "Mohd Ismaeel's Portfolio",
+  description: "personal portfolio website admin panel.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+    other: ["/favicon.svg"],
+  },
 };
 
 export default function RootLayout({ children }) {

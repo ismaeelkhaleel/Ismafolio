@@ -2,6 +2,7 @@
 import { useParams } from "next/navigation";
 import { useUser } from "../../../../context/Context";
 import { useEffect } from "react";
+import Loader from "@/components/buttons/Loader";
 
 export default function BlogDetailPage() {
   const { getBlogDetail, blogDetail } = useUser();
@@ -24,8 +25,14 @@ export default function BlogDetailPage() {
         </div>
       )}
 
-      <h1 className="text-4xl md:text-5xl font-extrabold text-emerald-500 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500">
-        {blogDetail?.title}
+       <h1 className="text-4xl md:text-5xl font-extrabold text-emerald-500 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500">
+        {blogDetail?.title ? (
+          blogDetail.title
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <Loader />
+          </div>
+        )}
       </h1>
 
       <p className="text-sm text-gray-500 dark:text-gray-400 mb-10">

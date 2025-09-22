@@ -4,6 +4,7 @@ import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
 import { useAdmin } from "@/context/Context";
 import RTEWrapper from "@/components/RTEWrapper";
+import withAuth from "@/components/withAuth";
 
 function Page() {
   const { getBlog, blog, addBlog, updateBlog, deleteBlog } = useAdmin();
@@ -207,4 +208,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withAuth(Page);

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   UserRoundPen,
   GraduationCap,
@@ -12,17 +12,24 @@ import {
   LogIn,
   LogOut,
   Mail,
-} from "lucide-react";
+} from "lucide-react";  
 
 function Navbar() {
-  const pathname = usePathname();
   const router = useRouter();
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    setToken(localStorage.getItem("Token"));
+
+    const handleRouteChange = () => {
       setToken(localStorage.getItem("Token"));
-    }
+    };
+
+    router.events?.on?.("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events?.off?.("routeChangeComplete", handleRouteChange);
+    };
   }, []);
 
   const logoutHandler = () => {
@@ -50,7 +57,7 @@ function Navbar() {
             key={item.href}
             href={item.href}
             className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-              pathname === item.href
+              router.pathname === item.href
                 ? "bg-green-900 text-white"
                 : "hover:bg-green-900 hover:text-white"
             }`}
@@ -63,7 +70,7 @@ function Navbar() {
           <Link
             href="/login"
             className={`flex items-center gap-2 px-3 py-2 rounded-md font-bold transition-colors ${
-              pathname === "/login"
+              router.pathname === "/login"
                 ? "bg-green-900 text-white"
                 : "hover:bg-green-900 hover:text-white"
             }`}
@@ -73,7 +80,7 @@ function Navbar() {
         ) : (
           <button
             onClick={logoutHandler}
-            className="flex items-center gap-2 px-3 py-2 rounded-md font-bold hover:bg-green-900 hover:text-white"
+            className="flex items-center gap-2 px-3 py-2 rounded-md font-bold hover:bg-green-900 hover:text-white cursor-pointer"
           >
             <LogOut /> Logout
           </button>

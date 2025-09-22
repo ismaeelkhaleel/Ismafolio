@@ -5,6 +5,8 @@ import Button from "@/components/buttons/Button";
 import { useAdmin } from "@/context/Context";
 import technologies from "@/data/technologies";
 import RTEWrapper from "@/components/RTEWrapper";
+import withAuth from "@/components/withAuth";
+
 
 function Page() {
   const { getProject, project, addProject, updateProject, deleteProject } =
@@ -294,4 +296,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withAuth(Page);

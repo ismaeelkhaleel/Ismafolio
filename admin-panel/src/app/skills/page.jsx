@@ -13,6 +13,7 @@ import {
 } from "@headlessui/react";
 import Button from "@/components/buttons/Button";
 import { useAdmin } from "@/context/Context";
+import withAuth from "@/components/withAuth";
 
 const rating = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
@@ -279,4 +280,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withAuth(Page);

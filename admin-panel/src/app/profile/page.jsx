@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useAdmin } from "@/context/Context";
-
+import withAuth from "@/components/withAuth";
 function Page() {
   const { getProfile, profile, updateProfile } = useAdmin();
 
@@ -199,4 +199,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withAuth(Page);

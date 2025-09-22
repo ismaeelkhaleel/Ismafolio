@@ -15,8 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Smart Portfolio",
-  description: "Portfolio with admin panel",
+  title: "Mohd Ismaeel's Portfolio",
+  description: "Welcome to my personal portfolio website.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+    other: ["/favicon.svg"],
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import Button from "@/components/buttons/Button";
 import { useAdmin } from "@/context/Context";
-
+import withAuth from "@/components/withAuth";
 function Page() {
   const {
     getEducation,
@@ -205,4 +205,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withAuth(Page);
