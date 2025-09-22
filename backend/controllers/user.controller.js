@@ -48,7 +48,7 @@ export const getExperience = async (req, res) => {
 
 export const getProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ createdAt: -1 });
     return res.status(201).json({ message: "Projects fetched", projects });
   } catch (error) {
     return res
@@ -62,14 +62,13 @@ export const getProjectDetail = async (req, res) => {
     const projectDetails = await Project.findById(id);
     return res
       .status(201)
-      .json({ message: "Project Detail fetched successfully" , projectDetails});
+      .json({ message: "Project Detail fetched successfully", projectDetails });
   } catch (err) {
     return res
       .status(500)
       .json({ message: "Can not be fetched Project details right now" });
   }
 };
-
 
 export const getSkills = async (req, res) => {
   try {
@@ -85,7 +84,7 @@ export const getSkills = async (req, res) => {
 
 export const getBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find().sort({ createdAt: -1 });
     return res.status(201).json({ message: "Blogs fetched", blogs });
   } catch (error) {
     console.log(error);
@@ -102,7 +101,7 @@ export const getBlogDetail = async (req, res) => {
     const blogDetail = await Blog.findById(id);
     return res
       .status(201)
-      .json({ message: "Blog Detail fetched successfully" , blogDetail});
+      .json({ message: "Blog Detail fetched successfully", blogDetail });
   } catch (err) {
     return res
       .status(500)
