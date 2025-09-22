@@ -40,18 +40,17 @@ function Projects() {
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl flex flex-col overflow-hidden h-full"
+              className="card shadow-sm hover:shadow-lg transition-shadow duration-300 rounded-2xl flex flex-col overflow-hidden h-full"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ scale: 1.03 }}
             >
               <div className="relative w-full overflow-hidden">
                 <motion.img
                   src={project.thumbnail}
                   alt={project.title}
-                  className="object-cover hover:scale-110 transition-transform duration-500"
+                  className="object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="flex flex-col flex-1 justify-between pt-3">
@@ -68,29 +67,24 @@ function Projects() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-5">
-                  <motion.a
+                <div className="mt-5 flex gap-2">
+                  <a
                     href={`/projects/details/${project._id}-${project.title
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`}
-                    target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full block text-center px-6 py-1 rounded-lg font-medium shadow-lg relative overflow-hidden text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500"
+                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white hover:opacity-90 transition"
                   >
                     Detail
-                  </motion.a>
-                  <motion.a
+                  </a>
+                  <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full block text-center px-6 py-1 rounded-lg font-medium shadow-lg relative overflow-hidden text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500"
+                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white hover:opacity-90 transition"
                   >
                     View Code
-                  </motion.a>
+                  </a>
                 </div>
               </div>
             </motion.div>

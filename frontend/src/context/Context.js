@@ -186,11 +186,10 @@ export const Provider = ({ children }) => {
     try {
       const res = await getProjectDetailAPI(projectId);
       const data = await res.json();
-      console.log(data);
       if (!res.ok) {
         toast.error(data.message || "Can not Fetch detail, try again");
       } else {
-        setProjectDetail(data.projectDetail);
+        setProjectDetail(data.projectDetails);
       }
     } catch (err) {
       toast.error("Some error while fetching Project detail");
