@@ -19,7 +19,7 @@ function Projects() {
   }, [inView, fetched, getProjects]);
 
   return (
-    <section ref={ref} className="w-full px-6 py-12 bg-transparent">
+    <section ref={ref} className="w-full px-6 py-12 bg-transparent pb-40">
       <div className="max-w-6xl mx-auto">
         {!loading && (
           <div className="pb-6">

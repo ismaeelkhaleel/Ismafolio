@@ -24,7 +24,7 @@ export default function BlogDetailPage() {
         </div>
       )}
 
-      <h1 className="text-4xl md:text-5xl font-bold text-emerald-500 mb-4">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-emerald-500 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500">
         {blogDetail?.title}
       </h1>
 
@@ -37,7 +37,7 @@ export default function BlogDetailPage() {
           })}
       </p>
 
-      <div className="prose prose-lg max-w-none text-gray-700 dark:text-white">
+      <div className="prose prose-lg max-w-none leading-relaxed prose-custom">
         <div dangerouslySetInnerHTML={{ __html: blogDetail?.content || "" }} />
       </div>
     </section>

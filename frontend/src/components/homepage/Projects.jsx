@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 function Projects() {
   const { ref, inView } = useInView({ triggerOnce: true });
@@ -62,7 +64,11 @@ function Projects() {
                   {project.techStack.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="text-xs font-medium px-3 py-1 rounded-full bg-[var(--tag-bg)] text-[var(--tag-text)]"
+                      className="inline-block text-xs font-semibold px-3 py-1 rounded-full shadow-sm hover:shadow-md transition"
+                      style={{
+                        backgroundColor: "var(--tag-bg)",
+                        color: "var(--heading-color)",
+                      }}
                     >
                       {tech}
                     </span>
@@ -89,6 +95,14 @@ function Projects() {
               </div>
             </motion.div>
           ))}
+        </div>
+        <div className="flex justify-center mt-10">
+          <Link
+            href="/projects"
+            className="flex items-center gap-2 text-[var(--border-hover)] font-medium transition-opacity duration-300 hover:opacity-80"
+          >
+            View All Projects <ArrowRight size={18} />
+          </Link>
         </div>
       </div>
     </section>

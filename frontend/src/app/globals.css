@@ -138,3 +138,22 @@ html {
 .prose img {
   @apply max-w-full rounded-lg shadow;
 }
+.prose-custom :where(p, li, span, a, h1, h2, h3, h4, h5, h6, code) {
+  color: var(--text-color) !important;
+}
+.prose a {
+  color: var(--subheading-color) !important;
+  font-weight:  bold;
+}
+.prose a:hover {
+  text-decoration: underline;
+}
+.prose blockquote {
+  border-left: 4px solid var(--subheading-color);
+  padding-left: 1rem;
+  font-style: italic;
+  border-radius: 0.375rem;
+  margin: 1rem 0;
+  background-color: var(--card-bg); 
+  color: var(--text-color);        
+}
