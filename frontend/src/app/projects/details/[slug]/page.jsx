@@ -18,10 +18,10 @@ export default function ProjectDetailPage() {
 
   return (
     <section className="max-w-5xl mx-auto px-4 py-12 pb-40">
-      {projectDetail?.coverImage && (
+      {projectDetail?.thumbnail && (
         <div className="w-full h-72 md:h-[28rem] mb-8 overflow-hidden rounded-xl shadow-lg">
           <img
-            src={projectDetail.coverImage}
+            src={projectDetail.thumbnail}
             alt={projectDetail.title}
             className="w-full h-full object-cover transform hover:scale-105 transition duration-500"
           />

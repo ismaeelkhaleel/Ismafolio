@@ -1,9 +1,7 @@
-// src/app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
-// 👇 yeh import zaruri hai
 import { Provider } from "@/context/Context";
 
 const geistSans = Geist({
@@ -27,7 +25,6 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* 👇 Wrap karna zaruri hai */}
         <Provider>
           <Navbar />
           <main>{children}</main>

@@ -89,7 +89,7 @@ function Projects() {
                     rel="noopener noreferrer"
                     className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200 hover:opacity-80"
                   >
-                    View Code
+                    Code
                   </a>
                 </div>
               </div>
