@@ -1,15 +1,11 @@
 "use client";
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
-import { FileDown, BookOpenText, FolderKanban,House } from "lucide-react";
+import { FileDown, BookOpenText, FolderKanban, House } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useUser } from "@/context/Context";
 
 function Navbar() {
-  const { profile } = useUser();
-
-  if (!profile) return null;
   return (
     <div
       className="mx-auto fixed bottom-5 left-0 right-0 flex items-center justify-between px-5 py-3 
@@ -97,21 +93,6 @@ function Navbar() {
                            text-xs px-2 py-1 rounded"
           >
             Projects
-          </span>
-        </Link>
-
-        <Link
-          href={profile?.resume || "#"}
-          target="_blank"
-          className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
-        >
-          <FileDown />
-          <span
-            className="absolute bottom-full mb-2 hidden group-hover:block 
-                           bg-gray-200 text-black dark:bg-gray-800 dark:text-white 
-                           text-xs px-2 py-1 rounded"
-          >
-            Resume
           </span>
         </Link>
 
