@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
-import { FileDown, BookOpenText, FolderKanban } from "lucide-react";
+import { FileDown, BookOpenText, FolderKanban,House } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@/context/Context";
@@ -21,6 +21,19 @@ function Navbar() {
       </div>
 
       <div className="flex items-center gap-6 justify-center md:justify-end w-full md:w-auto">
+        <Link
+          href="/"
+          className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
+        >
+          <House />
+          <span
+            className="absolute bottom-full mb-2 hidden group-hover:block 
+                           bg-gray-200 text-black dark:bg-gray-800 dark:text-white 
+                           text-xs px-2 py-1 rounded"
+          >
+            Home
+          </span>
+        </Link>
         <Link
           href="/leetcode/problems"
           className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
