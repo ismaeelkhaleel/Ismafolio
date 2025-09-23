@@ -13,6 +13,7 @@ import {
   getGfgProblems,
   getBlogDetail,
   getProjectDetail,
+  activeServer,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -30,5 +31,6 @@ router.get("/get-gfg-stats", getGfgStats);
 router.get("/get-gfg-problems", getGfgProblems);
 router.get("/get-blog-detail/:id", getBlogDetail);
 router.get("/get-project-detail/:id", getProjectDetail);
+router.get("/active-server", activeServer);
 
 export default router;

@@ -173,3 +173,7 @@ export const getGfgProblems = async (req, res) => {
     });
   }
 };
+
+export const activeServer = async (req, res) => {
+  return res.status(200).json({ message: "Server is active" });
+};
