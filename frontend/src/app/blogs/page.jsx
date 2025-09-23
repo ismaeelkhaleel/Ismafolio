@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useUser } from "../../context/Context";
 import Link from "next/link";
+import { motion } from "framer-motion";
 function truncateHTML(html, maxLength = 250) {
   const tmp = document.createElement("div");
   tmp.innerHTML = html;
