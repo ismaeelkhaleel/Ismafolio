@@ -11,10 +11,10 @@ function Login() {
   const router = useRouter();
 
   const loginHandler = (e) => {
-    e.preventDefault(); // prevent default submit
+    e.preventDefault();
 
-    login(username, password); // context should save token in localStorage
-    router.push("/profile"); // navigate after login
+    login(username, password);
+    router.push("/profile");
   };
 
   return (
