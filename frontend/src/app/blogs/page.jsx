@@ -40,34 +40,33 @@ function Blogs() {
         All Blogs
       </h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog) => (
-          <div
+        {blogs.map((blog, index) => (
+          <motion.div
             key={blog._id}
-            className="rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-5 flex flex-col justify-between bg-white dark:bg-gray-900 hover:shadow-lg transition"
+            className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl border p-5 flex flex-col justify-between h-full"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.15 }}
+            whileHover={{ scale: 1.03 }}
           >
             <div>
-              <h3 className="text-xl font-semibold text-emerald-400 mb-2">
-                {blog.title}
-              </h3>
+              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
               <p className="text-sm mb-3" style={{ color: "var(--subheading-color)" }}>
                 {new Date(blog.createdAt).toLocaleDateString()}
               </p>
               <div
                 className="text-[var(--text-color)] line-clamp-3"
-                dangerouslySetInnerHTML={{
-                  __html: truncateHTML(blog.content, 250),
-                }}
+                dangerouslySetInnerHTML={{ __html: truncateHTML(blog.content, 250) }}
               />
             </div>
             <Link
-              href={`/blogs/details/${blog._id}-${blog.title
-                .toLowerCase()
-                .replace(/\s+/g, "-")}`}
+              href={`/blogs/details/${blog._id}-${blog.title.toLowerCase().replace(/\s+/g, "-")}`}
               className="mt-4 inline-block text-sm text-[var(--border-hover)] font-medium transition-colors duration-300 hover:opacity-80 hover:underline"
             >
               Read More →
             </Link>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
