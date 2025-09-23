@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
-import { FileDown, BookOpenText, FolderKanban, House } from "lucide-react";
+import { BookOpenText, FolderKanban, House } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
