@@ -299,8 +299,58 @@ export const getAllMessageAPI = async () => {
 export const seenMessageAPI = async (messageId) => {
   const token = localStorage.getItem("Token");
   console.log(messageId);
-  const response = await fetch(`${BASE_URL}/seen-contact-message/${messageId}`, {
-    method: "put",
+  const response = await fetch(
+    `${BASE_URL}/seen-contact-message/${messageId}`,
+    {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};
+
+export const getSocialAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-social-links`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const addSocialAPI = async (platform, url, icon) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/add/social-link`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ platform, url, icon }),
+  });
+  return response;
+};
+
+export const updateSocialAPI = async (socialId, platform, url, icon) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/update/social-link/${socialId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ platform, url, icon }),
+  });
+  return response;
+};
+export const deleteSocialAPI = async (socialId) => {
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/delete/social-link/${socialId}`, {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

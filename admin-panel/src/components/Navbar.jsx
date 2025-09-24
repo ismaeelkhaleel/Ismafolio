@@ -12,7 +12,8 @@ import {
   LogIn,
   LogOut,
   Mail,
-} from "lucide-react";  
+  Link2
+} from "lucide-react";
 
 function Navbar() {
   const router = useRouter();
@@ -46,6 +47,7 @@ function Navbar() {
     { href: "/projects", label: "Projects", icon: <FolderOpenDot /> },
     { href: "/blogs", label: "Blogs", icon: <FileText /> },
     { href: "/messages", label: "Messages", icon: <Mail /> },
+    { href: "/social", label: "Social Media", icon: <Link2 /> },
   ];
 
   return (

@@ -27,6 +27,10 @@ import {
   getNewMessageAPI,
   getAllMessageAPI,
   seenMessageAPI,
+  addSocialAPI,
+  updateSocialAPI,
+  deleteSocialAPI,
+  getSocialAPI,
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -411,6 +415,64 @@ export const Provider = ({ children }) => {
     }
   };
 
+  const [socials, setSocials] = useState([]);
+  const getSocial = async () => {
+    try {
+      const res = await getSocialAPI();
+      const data = await res.json();
+      if (res.ok) {
+        setSocials(data.socials);
+      } else {
+        toast.error(data.message || "Socials can not be fetched");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching socials");
+    }
+  };
+
+  const addSocial = async (platform, url, icon) => {
+    try {
+      const res = await addSocialAPI(platform, url, icon);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Social added");
+        getSocial();
+      } else {
+        toast.error(data.message || "Social can not be added");
+      }
+    } catch (err) {
+      toast.error("Some error while adding social");
+    }
+  };
+  const updateSocial = async (socialId, platform, url, icon) => {
+    try {
+      const res = await updateSocialAPI(socialId, platform, url, icon);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Social updated");
+        getSocial();
+      } else {
+        toast.error(data.message || "Social can not be updated");
+      }
+    } catch (err) {
+      toast.error("Some error while updating social");
+    }
+  };
+  const deleteSocial = async (socialId) => {
+    try {
+      const res = await deleteSocialAPI(socialId);
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Social deleted");
+        getSocial();
+      } else {
+        toast.error(data.message || "Social can not be deleted");
+      }
+    } catch (err) {
+      toast.error("Some error while deleting social");
+    }
+  };
+
   return (
     <Context.Provider
       value={{
@@ -447,6 +509,11 @@ export const Provider = ({ children }) => {
         messages,
         getAllMessage,
         seenMessage,
+        addSocial,
+        socials,
+        getSocial,
+        updateSocial,
+        deleteSocial,
       }}
     >
       {children}
