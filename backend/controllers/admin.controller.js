@@ -7,6 +7,7 @@ import Profile from "../models/profile.model.js";
 import Experience from "../models/experience.model.js";
 import Blog from "../models/blog.model.js";
 import ContactMessage from "../models/contactMessage.model.js";
+import Social from "../models/social.model.js";
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -416,5 +417,56 @@ export const seenMessage = async (req, res) => {
       .json({ message: "Messages seen successfully", message: message });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export const addSocialLink = async (req, res) => {
+  try {
+    const { platform, url, icon } = req.body;
+    if (!platform || !url || !icon) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    const existingLink = await Social.findOne({ platform: platform });
+    if (existingLink) {
+      return res.status(409).json({ message: "Social link already exist" });
+    }
+    const socialLink = await Social.create({ platform, url, icon });
+    return res
+      .status(201)
+      .json({ message: "Social link added successfully", socialLink });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+export const updateSocialLink = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { platform, url, icon } = req.body;
+    const socialLink = await Social.findByIdAndUpdate(
+      id,
+      { platform, url, icon },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "Social link updated successfully", socialLink });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+export const deleteSocialLink = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const socialLink = await Social.findByIdAndDelete(id);
+    if (!socialLink)
+      return res.status(404).json({ message: "Social link not found" });
+    return res
+      .status(200)
+      .json({ message: "Social link deleted successfully" });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Server error" });
   }
 };

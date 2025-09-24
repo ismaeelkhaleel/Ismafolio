@@ -21,6 +21,9 @@ import {
   getNewMessage,
   getAllMessage,
   seenMessage,
+  addSocialLink,
+  updateSocialLink,
+  deleteSocialLink,
 } from "../controllers/admin.controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
@@ -73,5 +76,8 @@ router.put(
 router.get("/get-new-contact-message", verifyToken, getNewMessage);
 router.get("/get-all-contact-message", verifyToken, getAllMessage);
 router.put("/seen-contact-message/:id", verifyToken, seenMessage);
+router.post("/add/social-link", verifyToken, addSocialLink);
+router.put("/update/social-link/:id", verifyToken, updateSocialLink);
+router.delete("/delete/social-link/:id", verifyToken, deleteSocialLink);
 
 export default router;
