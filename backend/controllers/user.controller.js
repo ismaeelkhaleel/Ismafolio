@@ -9,6 +9,7 @@ import LeetcodeProblem from "../models/leetcodeProblem.model.js";
 import LeetcodeHeatmap from "../models/leetcodeHeatmap.model.js";
 import GfgStats from "../models/gfgState.model.js";
 import GfgProblems from "../models/gfgProblem.model.js";
+import Social from "../models/social.model.js";
 
 export const getProfile = async (req, res) => {
   try {
@@ -170,6 +171,19 @@ export const getGfgProblems = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Can not be fetched gfg Problems details right now",
+    });
+  }
+};
+
+export const getSocialLinks = async (req, res) => {
+  try {
+    const socialLinks = await Social.find();
+    return res
+      .status(201)
+      .json({ message: "Social Links fetched", socialLinks });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Can not be fetched social links right now",
     });
   }
 };

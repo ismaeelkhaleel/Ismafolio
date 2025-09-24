@@ -14,6 +14,7 @@ import {
   getBlogDetail,
   getProjectDetail,
   activeServer,
+  getSocialLinks,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -32,5 +33,6 @@ router.get("/get-gfg-problems", getGfgProblems);
 router.get("/get-blog-detail/:id", getBlogDetail);
 router.get("/get-project-detail/:id", getProjectDetail);
 router.get("/active-server", activeServer);
+router.get("/get-social-links", getSocialLinks);
 
 export default router;
