@@ -1,0 +1,19 @@
+
+/* Chrome, Safari, Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+.no-scrollbar {
+  scrollbar-width: none; /* hides scrollbar but keeps scroll */
+}
+
+/* IE & Edge (legacy) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+}
+html[style*="overflow: hidden"] {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}

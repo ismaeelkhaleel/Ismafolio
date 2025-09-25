@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Trash2, SquarePen, Plus, X } from "lucide-react";
 import social from "@/data/social";
+import "./style.css";
 import {
   Combobox,
   ComboboxInput,

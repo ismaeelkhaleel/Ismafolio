@@ -1,88 +1,83 @@
 const social = [
   {
     platform: "GitHub",
-    icon: "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg",
   },
   {
     platform: "LinkedIn",
-    icon: "https://cdn.worldvectorlogo.com/logos/linkedin-icon-2.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg",
   },
   {
     platform: "Twitter / X",
-    icon: "https://cdn.worldvectorlogo.com/logos/x-2.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg",
   },
   {
     platform: "Facebook",
-    icon: "https://cdn.worldvectorlogo.com/logos/facebook-3-2.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg",
   },
   {
     platform: "Instagram",
-    icon: "https://cdn.worldvectorlogo.com/logos/instagram-2016-5.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg",
   },
   {
     platform: "YouTube",
-    icon: "https://cdn.worldvectorlogo.com/logos/youtube-icon.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg",
   },
   {
     platform: "Reddit",
-    icon: "https://cdn.worldvectorlogo.com/logos/reddit-4.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/reddit.svg",
   },
   {
     platform: "Stack Overflow",
-    icon: "https://cdn.worldvectorlogo.com/logos/stack-overflow.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg",
   },
   {
     platform: "Dribbble",
-    icon: "https://cdn.worldvectorlogo.com/logos/dribbble-icon-1.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/dribbble.svg",
   },
   {
     platform: "Behance",
-    icon: "https://cdn.worldvectorlogo.com/logos/behance-1.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/behance.svg",
   },
   {
     platform: "Medium",
-    icon: "https://cdn.worldvectorlogo.com/logos/medium-1.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/medium.svg",
   },
   {
     platform: "Pinterest",
-    icon: "https://cdn.worldvectorlogo.com/logos/pinterest-1.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/pinterest.svg",
   },
   {
     platform: "WhatsApp",
-    icon: "https://cdn.worldvectorlogo.com/logos/whatsapp-symbol.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/whatsapp.svg",
   },
   {
     platform: "Telegram",
-    icon: "https://cdn.worldvectorlogo.com/logos/telegram-1.svg",
+    icon: "https://telegram.org/img/website_icon.svg?4",
   },
   {
     platform: "Discord",
-    icon: "https://cdn.worldvectorlogo.com/logos/discord-icon-svgrepo-com.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg",
   },
-
   {
     platform: "LeetCode",
-    icon: "https://cdn.worldvectorlogo.com/logos/leetcode-2.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg",
   },
   {
     platform: "HackerRank",
-    icon: "https://cdn.worldvectorlogo.com/logos/hackerrank.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg",
   },
   {
     platform: "GeeksforGeeks",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg",
+    icon: "https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/geeks-for-geeks.svg",
   },
   {
     platform: "CodeChef",
-    icon: "https://cdn.worldvectorlogo.com/logos/codechef.svg",
+    icon: "https://www.codechef.com/favicon.ico",
   },
   {
     platform: "Coding Ninjas",
-    icon: "https://media.codingninjas.com/cdn-cgi/image/width=200/42170/coding-ninjas-270.png",
-  },
-  {
-    platform: "CodeStudio",
-    icon: "https://media.codingninjas.com/cdn-cgi/image/width=200/63303/codestudio-8367.png",
+    icon: "https://www.codingninjas.com/favicon.ico",
   },
 ];
 
