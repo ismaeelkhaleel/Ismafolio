@@ -10,11 +10,12 @@ import Education from "@/components/homepage/Education";
 import Stats from "@/components/homepage/Stats";
 import Blogs from "@/components/homepage/Blogs";
 import Contact from "@/components/homepage/Contact";
-
+import Social from "@/components/homepage/Social";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-black dark:text-white pb-20">
       <Profile />
+      <Social />
       <Skills />
       <Experience />
       <Projects />

@@ -15,8 +15,9 @@ import {
   sendContactMessageAPI,
   getBlogDetailAPI,
   getProjectDetailAPI,
+  getSocialLinksAPI,
 } from "@/services/api";
-import { useRouter } from "next/navigation";
+
 import toast, { Toaster } from "react-hot-toast";
 const Context = createContext(null);
 
@@ -195,6 +196,20 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching Project detail");
     }
   };
+  const [socials, setSocials] = useState([]);
+  const getSocialLinks = async () => {
+    try {
+      const res = await getSocialLinksAPI();
+      const data = await res.json();
+      if (res.ok) {
+        setSocials(data.socialLinks);
+      } else {
+        toast.error(data.message || "Some error while fetching social links");
+      }
+    } catch (err) {
+      toast.error("Some error while fetching social links");
+    }
+  };
   return (
     <Context.Provider
       value={{
@@ -225,6 +240,8 @@ export const Provider = ({ children }) => {
         blogDetail,
         getProjectDetail,
         projectDetail,
+        getSocialLinks,
+        socials,
       }}
     >
       {children}

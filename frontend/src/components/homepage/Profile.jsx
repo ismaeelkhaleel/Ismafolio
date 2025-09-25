@@ -61,7 +61,7 @@ function Profile() {
   ];
 
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-10 px-6 md:px-20 w-full">
+    <section className="flex flex-col md:flex-row items-center justify-center py-10 gap-10 w-full max-w-[1400px] mx-auto px-6">
       {loading && <Loader />}
 
       <motion.div
@@ -95,6 +95,7 @@ function Profile() {
         <p className="mt-4 leading-relaxed text-justify">
           <HighlightedText text={profile.description} highlights={highlights} />
         </p>
+
         <h2 className="mt-2 text-lg md:text-xl font-medium bg-gradient-to-r from-pink-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent animate-gradient-x">
           <Typewriter
             words={profile.title || ["Developer", "Designer", "Engineer"]}
@@ -106,6 +107,7 @@ function Profile() {
             delaySpeed={500}
           />
         </h2>
+
         <motion.a
           href={profile.resume}
           target="_blank"

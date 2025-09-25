@@ -132,3 +132,13 @@ export const getProjectDetailAPI = async (projectId) => {
   });
   return response;
 };
+
+export const getSocialLinksAPI = async () => {
+  const response = await fetch(`${BASE_URL}/get-social-links`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
