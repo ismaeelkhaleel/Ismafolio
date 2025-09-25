@@ -421,7 +421,7 @@ export const Provider = ({ children }) => {
       const res = await getSocialAPI();
       const data = await res.json();
       if (res.ok) {
-        setSocials(data.socials);
+        setSocials(data.socialLinks);
       } else {
         toast.error(data.message || "Socials can not be fetched");
       }
