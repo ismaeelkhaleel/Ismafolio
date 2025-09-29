@@ -85,7 +85,7 @@ const fetchLeetCodeData = async () => {
 };
 
 cron.schedule(
-  "55 7 * * *",
+  "59 11 * * *",
   async () => {
     console.log("Fetching LeetCode Data...");
     await fetchLeetCodeData();

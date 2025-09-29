@@ -126,7 +126,7 @@ export const getLeetcodeSate = async (req, res) => {
 
 export const getLeetcodeProblems = async (req, res) => {
   try {
-    const leetcodeProblems = await LeetcodeProblem.find();
+    const leetcodeProblems = await LeetcodeProblem.find().sort({ createdAt: -1 });
     return res
       .status(201)
       .json({ message: "LeetCode Problems fetched", leetcodeProblems });

@@ -9,7 +9,6 @@ const fetchedGfgData = async () => {
     const response = await axios.get(
       `https://geeks-for-geeks-api.vercel.app/${username}`
     );
-
     const existingUser = await GfgState.findOne({
       username: response.data.info.userName,
     });
@@ -35,20 +34,7 @@ const fetchedGfgData = async () => {
       });
       newData = await newData.save();
     }
-    const schoolProblems = response.data.solvedStats.school.questions;
-    for (const problem of schoolProblems) {
-      const existingProblem = await GfgProblem.findOne({
-        titleSlug: problem.questionUrl,
-      });
-      if (!existingProblem) {
-        const newProblem = new GfgProblem({
-          title: problem.question,
-          titleSlug: problem.questionUrl,
-          level: "school",
-        });
-        await newProblem.save();
-      }
-    }
+      
     const basicProblems = response.data.solvedStats.basic.questions;
     for (const problem of basicProblems) {
       const existingProblem = await GfgProblem.findOne({
@@ -112,7 +98,7 @@ const fetchedGfgData = async () => {
 };
 
 cron.schedule(
-  "59 7 * * *",
+  "59 11 * * *",
   async () => {
     console.log("Fetching Geeksforgeek Data...");
     await fetchedGfgData();
