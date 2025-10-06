@@ -1,15 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  darkMode: "class", // Dark mode enable
+  darkMode: "class",
   content: [
     "./src/app/**/*.{js,jsx,ts,tsx}",
     "./src/components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
-      scrollBehavior: ['smooth'],
+      scrollBehavior: ["smooth"],
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tailwind-scrollbar-hide"),
+  ],
 };

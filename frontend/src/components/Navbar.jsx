@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
-import { BookOpenText, FolderKanban, House } from "lucide-react";
+import { SquareTerminal, House } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -69,30 +69,16 @@ function Navbar() {
         </Link>
 
         <Link
-          href="/blogs"
+          href="/terminal"
           className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
         >
-          <BookOpenText />
+           <SquareTerminal />
           <span
             className="absolute bottom-full mb-2 hidden group-hover:block 
                            bg-gray-200 text-black dark:bg-gray-800 dark:text-white 
                            text-xs px-2 py-1 rounded"
           >
-            Blogs
-          </span>
-        </Link>
-
-        <Link
-          href="/projects"
-          className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
-        >
-          <FolderKanban />
-          <span
-            className="absolute bottom-full mb-2 hidden group-hover:block 
-                           bg-gray-200 text-black dark:bg-gray-800 dark:text-white 
-                           text-xs px-2 py-1 rounded"
-          >
-            Projects
+             Terminal
           </span>
         </Link>
 
