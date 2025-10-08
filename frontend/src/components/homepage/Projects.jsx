@@ -42,18 +42,17 @@ function Projects() {
           {projects?.slice(0, 3).map((project, index) => (
             <motion.div
               key={index}
-              className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl flex flex-col overflow-hidden h-full"
+              className="card shadow-sm rounded-2xl flex flex-col overflow-hidden h-full"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ scale: 1.03 }}
             >
               <div className="relative w-full overflow-hidden">
                 <motion.img
                   src={project.thumbnail}
                   alt={project.title}
-                  className="object-cover hover:scale-110 transition-transform duration-500"
+                  className="object-cover transition-transform duration-500"
                 />
               </div>
               <div className="flex flex-col flex-1 justify-between pt-3">
@@ -64,7 +63,7 @@ function Projects() {
                   {project.techStack.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="inline-block text-xs font-semibold px-3 py-1 rounded-full shadow-sm hover:shadow-md transition"
+                      className="inline-block text-xs font-semibold px-3 py-1 rounded-full shadow-sm transition"
                       style={{
                         backgroundColor: "var(--tag-bg)",
                         color: "var(--heading-color)",
@@ -80,14 +79,14 @@ function Projects() {
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`}
                     rel="noopener noreferrer"
-                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200 hover:opacity-80"
+                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200"
                   >
                     Detail
                   </a>
                   <a
                     href={project.githubUrl}
                     rel="noopener noreferrer"
-                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200 hover:opacity-80"
+                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 transition-opacity duration-200"
                   >
                     Code
                   </a>

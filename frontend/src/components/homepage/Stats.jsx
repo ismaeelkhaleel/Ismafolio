@@ -9,14 +9,14 @@ function Stats() {
   const { getLeetcodeState, leetcodeState, getGfgStats, gfgState } = useUser();
 
   useEffect(() => {
-    if (!leetcodeState || !getGfgStats) {
+    if (!leetcodeState || !gfgState) {
       getGfgStats();
       getLeetcodeState();
     }
   }, []);
 
   const cardClasses =
-    "w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 p-5 flex flex-col justify-between card";
+    "w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-sm transition-transform transition-shadow duration-300 p-5 flex flex-col justify-between card";
 
   return (
     <section className="w-full flex flex-col items-center p-6">
@@ -29,7 +29,7 @@ function Stats() {
 
       <div className="w-full flex flex-col md:flex-row justify-center items-center md:items-stretch gap-6">
         {/* LeetCode Card */}
-        <motion.div whileHover={{ scale: 1.03 }} className={cardClasses}>
+        <motion.div className={cardClasses} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div>
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-[var(--heading-color)]">
               <Image
@@ -46,36 +46,26 @@ function Stats() {
                   <User className="w-4 h-4" /> {leetcodeState[0].username}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Rank:{" "}
-                  {leetcodeState[0].ranking}
+                  <Trophy className="w-4 h-4" /> Rank: {leetcodeState[0].ranking}
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4" /> Points: {leetcodeState[0].point}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4" /> Rating:{" "}
-                  {leetcodeState[0].starRating}
+                  <Star className="w-4 h-4" /> Rating: {leetcodeState[0].starRating}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4" /> Solved:{" "}
-                  {leetcodeState[0].acSubmissionNum[0].count}
+                  <Code2 className="w-4 h-4" /> Solved: {leetcodeState[0].acSubmissionNum[0].count}
                 </div>
               </div>
             )}
           </div>
           <div className="flex gap-3 pt-4">
-            <a
-              href="/leetcode/problems"
-              className="text-xs font-medium text-[#FFA116] hover:underline"
-            >
+            <a href="/leetcode/problems" className="text-xs font-medium text-[#FFA116] hover:underline">
               View Problems
             </a>
             {leetcodeState && (
-              <a
-                href={leetcodeState[0]?.profileUrl}
-                target="_blank"
-                className="text-xs font-medium text-[#FFA116] hover:underline"
-              >
+              <a href={leetcodeState[0]?.profileUrl} target="_blank" className="text-xs font-medium text-[#FFA116] hover:underline">
                 View Profile
               </a>
             )}
@@ -83,7 +73,7 @@ function Stats() {
         </motion.div>
 
         {/* GFG Card */}
-        <motion.div whileHover={{ scale: 1.03 }} className={cardClasses}>
+        <motion.div className={cardClasses} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div>
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-[var(--heading-color)]">
               <Image
@@ -103,39 +93,28 @@ function Stats() {
                   <Star className="w-4 h-4" /> Score: {gfgState[0].codingScore}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Rank:{" "}
-                  {gfgState[0].instituteRank}
+                  <Trophy className="w-4 h-4" /> Rank: {gfgState[0].instituteRank}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4" /> Monthly:{" "}
-                  {gfgState[0].monthlyScore}
+                  <Star className="w-4 h-4" /> Monthly: {gfgState[0].monthlyScore}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Flame className="w-4 h-4" /> Streak:{" "}
-                  {gfgState[0].currentStreak}
+                  <Flame className="w-4 h-4" /> Streak: {gfgState[0].currentStreak}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4" /> Solved:{" "}
-                  {gfgState[0].totalProblemsSolved}
+                  <Code2 className="w-4 h-4" /> Solved: {gfgState[0].totalProblemsSolved}
                 </div>
               </div>
             )}
           </div>
           <div className="flex gap-3 pt-4">
-            <a
-              href="/geeksforgeek/problems"
-              className="text-xs font-medium text-[#0F9D58] hover:underline"
-            >
+            <a href="/geeksforgeek/problems" className="text-xs font-medium text-[#0F9D58] hover:underline">
               View Problems
             </a>
             {gfgState && (
-            <a
-              href={gfgState[0]?.profileUrl}
-              target="_blank"
-              className="text-xs font-medium text-[#0F9D58] hover:underline"
-            >
-              View Profile
-            </a>
+              <a href={gfgState[0]?.profileUrl} target="_blank" className="text-xs font-medium text-[#0F9D58] hover:underline">
+                View Profile
+              </a>
             )}
           </div>
         </motion.div>

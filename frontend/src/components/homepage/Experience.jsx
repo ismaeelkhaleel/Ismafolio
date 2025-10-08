@@ -41,23 +41,22 @@ function Experience() {
       )}
 
       <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        { experience?.map((exp, index) => {
+        {experience?.map((exp, index) => {
           const isLong = exp.description.length > 120;
           return (
             <motion.div
               key={index}
-              className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl p-6 flex flex-col h-full"
+              className="card shadow-sm transition-shadow duration-300 rounded-2xl p-6 flex flex-col h-full"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.03 }}
             >
               <h3 className="text-xl font-semibold mb-1">{exp.jobTitle}</h3>
               <h4 className="text-lg font-medium mb-2">{exp.companyName}</h4>
               <p className="text-sm mb-3">
                 {exp.startDate?.slice(0, 10).replaceAll("-", "/")} -{" "}
-                {exp.endDate ? exp.endDate?.slice(0, 10).replaceAll("-", "/"):"Present"}
+                {exp.endDate ? exp.endDate?.slice(0, 10).replaceAll("-", "/") : "Present"}
               </p>
               <p className="text-sm leading-relaxed mb-3 flex-1">
                 {expanded[index] || !isLong

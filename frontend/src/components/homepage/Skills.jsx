@@ -40,12 +40,11 @@ function Skills() {
         {skills?.map((skill, index) => (
           <motion.div
             key={skill._id}
-            className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 min-w-[280px] max-w-[350px] w-full p-4 flex items-center gap-4"
+            className="card shadow-sm transition-shadow duration-300 min-w-[280px] max-w-[350px] w-full p-4 flex items-center gap-4"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            whileHover={{ scale: 1.03 }}
           >
             {skill.icon && (
               <div className="relative w-14 h-14 flex-shrink-0">

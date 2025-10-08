@@ -36,8 +36,8 @@ function Blogs() {
 
   useEffect(() => {
     if (!blogs) {
-    setLoading(true);
-    getBlogs().finally(() => setLoading(false));
+      setLoading(true);
+      getBlogs().finally(() => setLoading(false));
     }
   }, []);
 
@@ -58,12 +58,11 @@ function Blogs() {
         {blogs?.slice(0, 3).map((blog, index) => (
           <motion.div
             key={blog._id}
-            className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl border p-5 flex flex-col justify-between h-full"
+            className="card shadow-sm transition-transform transition-shadow duration-300 rounded-2xl border p-5 flex flex-col justify-between h-full"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.15 }}
-            whileHover={{ scale: 1.03 }}
           >
             <div>
               <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>

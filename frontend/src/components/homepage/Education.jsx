@@ -23,13 +23,13 @@ function Education() {
     <section ref={ref} className="w-full px-6 py-12 bg-transparent">
       <div className="max-w-5xl mx-auto">
         {!loading && (
-        <div className="pb-6">
-          <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
-            Educations
-          </h2>
-          <div className="w-50 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
-        </div>
-      )}
+          <div className="pb-6">
+            <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
+              Educations
+            </h2>
+            <div className="w-50 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+          </div>
+        )}
 
         {!education && (
           <p className="text-center text-[var(--subheading-color)]">
@@ -38,15 +38,14 @@ function Education() {
         )}
 
         <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          { education?.map((edu, index) => (
+          {education?.map((edu, index) => (
             <motion.div
               key={index}
-              className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 p-6 flex flex-col rounded-lg h-full"
+              className="card shadow-sm transition-transform transition-shadow duration-300 p-6 flex flex-col rounded-lg h-full"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ scale: 1.03 }}
             >
               <h3 className="text-xl font-semibold text-[var(--heading-color)]">
                 {edu.degree}
