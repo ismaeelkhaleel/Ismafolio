@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
+import Loader from "../../components/buttons/Loader";
 
 function Projects() {
   const { ref, inView } = useInView({ triggerOnce: true });
@@ -11,7 +12,7 @@ function Projects() {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    if (inView && !fetched) {
+    if (inView && !fetched && !projects) {
       setLoading(true);
       getProjects().finally(() => setLoading(false));
       setFetched(true);
@@ -21,23 +22,25 @@ function Projects() {
   return (
     <section ref={ref} className="w-full px-6 py-12 bg-transparent pb-40">
       <div className="max-w-6xl mx-auto">
-        {!loading && (
-          <div className="pb-6">
-            <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
-              Projects
-            </h2>
-            <div className="w-40 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+        <div className="pb-6">
+          <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
+            All Projects
+          </h2>
+          <div className="w-40 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+        </div>
+        {loading && (
+          <div className="flex justify-center my-20">
+            <Loader />
           </div>
         )}
-
-        {!loading && projects.length === 0 && (
+        {!loading && projects && projects.length === 0 && (
           <p className="text-center text-[var(--subheading-color)]">
             No projects data found.
           </p>
         )}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
+          {projects?.map((project, index) => (
             <motion.div
               key={index}
               className="card shadow-sm hover:shadow-lg transition-shadow duration-300 rounded-2xl flex flex-col overflow-hidden h-full"

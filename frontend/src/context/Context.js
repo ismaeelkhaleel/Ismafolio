@@ -22,7 +22,7 @@ import toast, { Toaster } from "react-hot-toast";
 const Context = createContext(null);
 
 export const Provider = ({ children }) => {
-  const [profile, setProfile] = useState([]);
+  const [profile, setProfile] = useState(null);
   const getProfile = async () => {
     try {
       const res = await getProfileAPI();
@@ -34,7 +34,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching profile");
     }
   };
-  const [education, setEducation] = useState([]);
+  const [education, setEducation] = useState(null);
   const getEducation = async () => {
     try {
       const res = await getEducationAPI();
@@ -46,7 +46,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching education");
     }
   };
-  const [experience, setExperience] = useState([]);
+  const [experience, setExperience] = useState(null);
   const getExperience = async () => {
     try {
       const res = await getExperienceAPI();
@@ -58,7 +58,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching experience");
     }
   };
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState(null);
   const getProjects = async () => {
     try {
       const res = await getProjectsAPI();
@@ -70,7 +70,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching projects");
     }
   };
-  const [skills, setSkills] = useState([]);
+  const [skills, setSkills] = useState(null);
   const getSkills = async () => {
     try {
       const res = await getSkillsAPI();
@@ -82,7 +82,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching skills");
     }
   };
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState(null);
   const getBlogs = async () => {
     try {
       const res = await getBlogsAPI();
@@ -94,7 +94,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching blogs");
     }
   };
-  const [leetcodeState, setLeetcodeState] = useState([]);
+  const [leetcodeState, setLeetcodeState] = useState(null);
   const getLeetcodeState = async () => {
     try {
       const res = await getLeetCodeStateAPI();
@@ -106,7 +106,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching leetcode stats");
     }
   };
-  const [leetcodeProblems, setLeetcodeProblems] = useState([]);
+  const [leetcodeProblems, setLeetcodeProblems] = useState(null);
   const getLeetcodeProblems = async () => {
     try {
       const res = await getLeetcodeProblemsAPI();
@@ -118,7 +118,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching leetcode problems");
     }
   };
-  const [leetcodeHeatmap, setLeetcodeHeatmap] = useState([]);
+  const [leetcodeHeatmap, setLeetcodeHeatmap] = useState(null);
   const getLeetcodeHeatmap = async () => {
     try {
       const res = await getLeetcodeHeatmapAPI();
@@ -131,7 +131,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching leetcode heatmap");
     }
   };
-  const [gfgState, setGfgStats] = useState([]);
+  const [gfgState, setGfgStats] = useState(null);
   const getGfgStats = async () => {
     try {
       const res = await getGfgStatsAPI();
@@ -143,7 +143,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching gfg stats");
     }
   };
-  const [gfgProblems, setGfgProblems] = useState([]);
+  const [gfgProblems, setGfgProblems] = useState(null);
   const getGfgProblems = async () => {
     try {
       const res = await getGfgProblemsAPI();
@@ -168,7 +168,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while sending message");
     }
   };
-  const [blogDetail, setBlogDetail] = useState([]);
+  const [blogDetail, setBlogDetail] = useState(null);
   const getBlogDetail = async (blogId) => {
     try {
       const res = await getBlogDetailAPI(blogId);
@@ -182,7 +182,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching blog detail");
     }
   };
-  const [projectDetail, setProjectDetail] = useState([]);
+  const [projectDetail, setProjectDetail] = useState(null);
   const getProjectDetail = async (projectId) => {
     try {
       const res = await getProjectDetailAPI(projectId);
@@ -196,7 +196,7 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching Project detail");
     }
   };
-  const [socials, setSocials] = useState([]);
+  const [socials, setSocials] = useState(null);
   const getSocialLinks = async () => {
     try {
       const res = await getSocialLinksAPI();

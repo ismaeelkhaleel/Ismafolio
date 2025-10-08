@@ -32,14 +32,14 @@ function Projects() {
           </div>
         )}
 
-        {!loading && projects.length === 0 && (
+        {!projects && (
           <p className="text-center text-[var(--subheading-color)]">
             No projects data found.
           </p>
         )}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.slice(0, 3).map((project, index) => (
+          {projects?.slice(0, 3).map((project, index) => (
             <motion.div
               key={index}
               className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl flex flex-col overflow-hidden h-full"

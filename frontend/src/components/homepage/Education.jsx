@@ -12,7 +12,7 @@ function Education() {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    if (inView && !fetched) {
+    if (inView && !fetched && !education) {
       setLoading(true);
       getEducation().finally(() => setLoading(false));
       setFetched(true);
@@ -31,14 +31,14 @@ function Education() {
         </div>
       )}
 
-        {!loading && education.length === 0 && (
+        {!education && (
           <p className="text-center text-[var(--subheading-color)]">
             No education data found.
           </p>
         )}
 
         <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {education.map((edu, index) => (
+          { education?.map((edu, index) => (
             <motion.div
               key={index}
               className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 p-6 flex flex-col rounded-lg h-full"

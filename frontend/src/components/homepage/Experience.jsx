@@ -12,7 +12,7 @@ function Experience() {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    if (inView && !fetched) {
+    if (inView && !fetched && !experience) {
       setLoading(true);
       getExperience().finally(() => setLoading(false));
       setFetched(true);
@@ -34,14 +34,14 @@ function Experience() {
         </div>
       )}
 
-      {!loading && experience.length === 0 && (
+      {!experience && (
         <p className="text-center text-[var(--subheading-color)]">
           No Experience data found.
         </p>
       )}
 
       <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {experience.map((exp, index) => {
+        { experience?.map((exp, index) => {
           const isLong = exp.description.length > 120;
           return (
             <motion.div

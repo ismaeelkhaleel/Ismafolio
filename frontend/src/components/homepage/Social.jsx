@@ -11,7 +11,7 @@ function Social() {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    if (inView && !fetched) {
+    if (inView && !fetched && !socials) {
       setLoading(true);
       getSocialLinks()
         .finally(() => setLoading(false))
@@ -30,8 +30,7 @@ function Social() {
         </div>
       )}
       <div className="flex justify-center items-center gap-10">
-        {socials &&
-          socials.map((social, index) => (
+        {socials?.map((social, index) => (
             <div
               key={index}
               className="relative w-10 h-10"

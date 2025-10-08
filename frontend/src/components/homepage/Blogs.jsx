@@ -35,8 +35,10 @@ function Blogs() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!blogs) {
     setLoading(true);
     getBlogs().finally(() => setLoading(false));
+    }
   }, []);
 
   return (
@@ -49,11 +51,11 @@ function Blogs() {
           <div className="w-54 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
         </div>
       )}
-      {!loading && blogs.length === 0 && (
+      {!blogs && (
         <p className="text-center text-[var(--subheading-color)]">No Blog data found.</p>
       )}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.slice(0, 3).map((blog, index) => (
+        {blogs?.slice(0, 3).map((blog, index) => (
           <motion.div
             key={blog._id}
             className="card shadow-sm hover:shadow-lg transition-transform transition-shadow duration-300 rounded-2xl border p-5 flex flex-col justify-between h-full"

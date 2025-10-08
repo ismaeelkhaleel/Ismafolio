@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import Loader from "../../../components/buttons/Loader";
 
 export default function Page() {
   const {
@@ -22,10 +23,27 @@ export default function Page() {
     leetcodeHeatmap,
   } = useUser();
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    getLeetcodeState();
-    getLeetcodeHeatmap();
-    getLeetcodeProblems();
+    const fetchLeetcodeData = async () => {
+      try {
+        setLoading(true);
+        if (!leetcodeState || !leetcodeProblems || !leetcodeHeatmap) {
+          await Promise.all([
+            getLeetcodeState(),
+            getLeetcodeHeatmap(),
+            getLeetcodeProblems(),
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching LeetCode data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeetcodeData();
   }, []);
 
   const pieData = useMemo(() => {
@@ -69,10 +87,16 @@ export default function Page() {
     return "bg-green-700 dark:bg-green-400";
   };
 
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader />
+      </div>
+    );
+
   return (
     <div className="px-4 py-6 pb-40 min-h-screen bg-transparent text-gray-900 dark:text-gray-100">
       <div className="mx-auto lg:w-[70%] md:w-[80%] sm:w-[95%]">
-        {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
@@ -88,9 +112,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Main row: left stats + right pie chart */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-start">
-          {/* Left: stats list */}
           <div className="space-y-4">
             {leetcodeState?.[0] ? (
               <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
@@ -133,7 +155,6 @@ export default function Page() {
               </div>
             )}
 
-            {/* Heatmap below stats */}
             <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
               <h3 className="font-semibold mb-3">Heatmap</h3>
               <div className="flex flex-wrap gap-1">
@@ -156,7 +177,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: Pie chart */}
           <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm h-full flex flex-col">
             <h3 className="font-semibold mb-3">Solved by Difficulty</h3>
             <div className="flex-1 flex items-center justify-center min-h-[200px]">
@@ -191,7 +211,6 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Problems list with pagination */}
         <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Solved Problems</h3>
@@ -243,7 +262,6 @@ export default function Page() {
             ))}
           </div>
 
-          {/* Pagination controls */}
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button

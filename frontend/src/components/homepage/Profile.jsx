@@ -33,8 +33,10 @@ function Profile() {
   const [viewImage, setViewImage] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    getProfile().finally(() => setLoading(false));
+    if (!profile) {
+      setLoading(true);
+      getProfile().finally(() => setLoading(false));
+    }
   }, []);
 
   useEffect(() => {

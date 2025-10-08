@@ -10,14 +10,21 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import Loader from "../../../components/buttons/Loader"; // make sure the path is correct
 
 export default function GfgPage() {
   const { getGfgStats, gfgState, getGfgProblems, gfgProblems } = useUser();
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    getGfgStats();
-    getGfgProblems();
-  }, [getGfgProblems, getGfgStats]);
+    if (!gfgState || !gfgProblems) {
+      setLoading(true);
+      Promise.all([getGfgStats(), getGfgProblems()]).finally(() =>
+        setLoading(false)
+      );
+    }
+  }, [getGfgStats, getGfgProblems, gfgState, gfgProblems]);
 
   const ITEMS_PER_PAGE = 10;
   const [page, setPage] = useState(1);
@@ -43,30 +50,13 @@ export default function GfgPage() {
 
   useEffect(() => setPage(1), [filter]);
 
-  // Pie chart data
   const pieData = useMemo(() => {
     if (!gfgProblems) return [];
     return [
-      {
-        name: "Basic",
-        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "basic")
-          .length,
-      },
-      {
-        name: "Easy",
-        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "easy")
-          .length,
-      },
-      {
-        name: "Medium",
-        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "medium")
-          .length,
-      },
-      {
-        name: "Hard",
-        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "hard")
-          .length,
-      },
+      { name: "Basic", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "basic").length },
+      { name: "Easy", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "easy").length },
+      { name: "Medium", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "medium").length },
+      { name: "Hard", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "hard").length },
     ];
   }, [gfgProblems]);
 
@@ -82,11 +72,20 @@ export default function GfgPage() {
     return [...new Set(pages)].sort((a, b) => a - b);
   };
 
+  // 🔹 Show loader for the whole page
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 py-6 pb-40 min-h-screen bg-transparent text-gray-900 dark:text-gray-100">
       <div className="mx-auto lg:w-[70%] md:w-[85%] sm:w-[95%]">
-       
-        <div className="flex items-center gap-3  mb-6 ">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6">
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg"
             alt="GFG Logo"
@@ -100,15 +99,14 @@ export default function GfgPage() {
             </p>
           </div>
         </div>
+
+        {/* Stats and Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Stats */}
-
           <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-sm space-y-4">
             {gfgState?.[0] ? (
               <div className="space-y-2">
-                <div>
-                  <h3 className="text-xl font-bold">Overview</h3>
-                </div>
+                <h3 className="text-xl font-bold">Overview</h3>
                 <div className="flex justify-between">
                   <span className="font-medium">Coding Score</span>
                   <span>{gfgState[0].codingScore ?? "-"}</span>
@@ -142,7 +140,7 @@ export default function GfgPage() {
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-gray-500">Loading stats...</p>
+              <p className="text-sm text-gray-500">No stats found</p>
             )}
           </div>
 

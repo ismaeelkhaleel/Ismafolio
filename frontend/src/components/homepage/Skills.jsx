@@ -12,7 +12,7 @@ function Skills() {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    if (inView && !fetched) {
+    if (inView && !fetched && !skills) {
       setLoading(true);
       getSkills().finally(() => setLoading(false));
       setFetched(true);
@@ -30,7 +30,7 @@ function Skills() {
         </div>
       )}
 
-      {!loading && skills?.length === 0 && (
+      {!skills && (
         <p className="text-center text-[var(--subheading-color)]">
           No skill data found.
         </p>

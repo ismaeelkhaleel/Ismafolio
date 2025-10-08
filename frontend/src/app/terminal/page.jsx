@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/Context";
 import { X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 export default function WebTerminal() {
   const router = useRouter();
@@ -17,6 +18,20 @@ export default function WebTerminal() {
     socials,
   } = useUser();
 
+  const availableCommands = [
+    "help",
+    "bio",
+    "about",
+    "education",
+    "experience",
+    "projects",
+    "skills",
+    "leetcode-stats",
+    "gfg-stats",
+    "socials",
+    "clear",
+  ];
+
   const [lines, setLines] = useState([
     {
       id: uid("l"),
@@ -24,13 +39,18 @@ export default function WebTerminal() {
       type: "out",
     },
   ]);
-  const [cwd] = useState("/home/mohdismaeel");
   const [input, setInput] = useState("");
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("command-history") || "[]");
+    }
+    return [];
+  });
   const [hIndex, setHIndex] = useState(null);
+  const [username] = useState("mohdismaeel");
+  const [isExecuting, setIsExecuting] = useState(false);
   const containerRef = useRef(null);
   const inputRef = useRef(null);
-  const [username] = useState("mohdismaeel");
 
   function uid(prefix = "") {
     return prefix + Math.random().toString(36).slice(2, 9);
@@ -45,19 +65,51 @@ export default function WebTerminal() {
     containerRef.current.scrollTop = containerRef.current.scrollHeight;
   }, [lines]);
 
+  useEffect(() => {
+    localStorage.setItem("command-history", JSON.stringify(history));
+  }, [history]);
+
   const focusInput = () => inputRef.current?.focus();
 
-  const pushLine = (content, type = "out") => {
-    setLines((s) => [...s, { id: uid("l"), text: content, type }]);
-  };
+  // pushLine now returns Promise that resolves after typing effect completes
+  const pushLine = useCallback((content, type = "out") => {
+    const delay = 15;
 
-  const formatArray = (arr, keyFields = []) => {
+    if (typeof content === "string") {
+      return new Promise((resolve) => {
+        let output = "";
+        const id = uid("l");
+
+        const print = (i = 0) => {
+          if (i < content.length) {
+            output += content[i];
+            setLines((prev) =>
+              prev.map((line) =>
+                line.id === id ? { ...line, text: output } : line
+              )
+            );
+            setTimeout(() => print(i + 1), delay);
+          } else {
+            resolve();
+          }
+        };
+
+        setLines((s) => [...s, { id, text: "", type }]);
+        print();
+      });
+    } else {
+      setLines((s) => [...s, { id: uid("l"), text: content, type }]);
+      return Promise.resolve();
+    }
+  }, []);
+
+  const formatArray = (arr, keys = []) => {
     if (!Array.isArray(arr) || arr.length === 0) return "No data found.";
     return arr
       .map((item, i) => {
         if (typeof item === "string") return `- ${item}`;
         let line = `${i + 1}. `;
-        line += keyFields
+        line += keys
           .map((k) => item[k])
           .filter(Boolean)
           .join(" | ");
@@ -66,11 +118,29 @@ export default function WebTerminal() {
       .join("\n");
   };
 
-  const runCommand = (raw) => {
-    if (!raw.trim()) return;
+  const runCommand = async (raw) => {
+    if (!raw.trim() || isExecuting) return;
+
+    setIsExecuting(true);
+
     setLines((s) => [
       ...s,
-      { id: uid("c"), text: `${username}@web:${cwd}$ ${raw}`, type: "cmd" },
+      {
+        id: uid("c"),
+        text: (
+          <>
+            <span style={{ color: "green", fontWeight: "bold" }}>
+              {username}@web:
+            </span>
+            <span style={{ color: "red", fontWeight: "bold" }}>
+              &nbsp;~&nbsp;
+            </span>
+            <span style={{ color: "white", fontWeight: "bold" }}>$&nbsp;</span>
+            {raw}
+          </>
+        ),
+        type: "cmd",
+      },
     ]);
     setHistory((h) => [...h, raw]);
     setHIndex(null);
@@ -79,105 +149,100 @@ export default function WebTerminal() {
 
     switch (cmd) {
       case "help":
-        pushLine(
-          "Available commands:\n- bio / about\n- education\n- experience\n- projects\n- skills\n- leetcode-stats\n- gfg-stats\n- socials\n- clear"
+        await pushLine(
+          "### Available Commands:\n- " + availableCommands.join(", ")
         );
         break;
 
       case "bio":
       case "about":
-        if (!profile)
-          pushLine("No profile data available. Please add your bio.", "err");
-        else {
-          pushLine(`👤 ${profile.name || "Mohd Ismaeel"}`);
-          pushLine(`${profile.title || "Web Developer"}`);
-          pushLine(`${profile.description || "No bio info available."}`);
-          if (profile.location) pushLine(`📍 ${profile.location}`);
+        if (!profile) {
+          await pushLine("No profile data available.", "err");
+        } else {
+          await pushLine(`👤 **${profile.name || "Mohd Ismaeel"}**  
+${profile.title || "Web Developer"}  
+${profile.description || "No bio available."}`);
         }
         break;
 
       case "education":
-        pushLine(
-          "🎓 Education:\n" +
-            formatArray(education, ["degree", "institute", "endYear"])
+        await pushLine(
+          formatArray(education, ["degree", "institute", "endYear"])
         );
         break;
 
       case "experience":
-        pushLine(
-          "💼 Experience:\n" +
-            formatArray(experience, [
-              "jobTitle",
-              "companyName",
-              "description",
-              "startDate",
-              "endDate",
-              "location",
-            ])
+        await pushLine(
+          formatArray(experience, [
+            "jobTitle",
+            "companyName",
+            "description",
+            "startDate",
+            "endDate",
+            "location",
+          ])
         );
         break;
 
       case "projects":
-        pushLine("📁 Projects:\n" + formatArray(projects, ["title"]));
+        await pushLine(formatArray(projects, ["title"]));
         break;
 
       case "skills":
         if (!skills || skills.length === 0) {
-          pushLine("No skills found.");
+          await pushLine("No skills found.");
         } else {
+          // Skills rendering as React elements - since pushLine expects string or ReactNode
           const skillElements = skills.map((s, i) => (
             <div key={i} className="flex items-center gap-2 my-1">
               {s.icon && <img src={s.icon} alt={s.name} className="w-5 h-5" />}
-              <span>{s.name || "Unknown Skill"}</span>
-              <span>{s.level || "Unknown Skill"}</span>
-              <span>{s.rating || "Unknown Skill"}</span>
+              <span>{s.name}</span>
+              <span>{s.level}</span>
+              <span>{s.rating}</span>
             </div>
           ));
-          pushLine(
-            <div className="flex flex-col">
-              <span>🧠 Skills:</span>
-              {skillElements}
-            </div>
-          );
+          await pushLine(<div className="flex flex-col">{skillElements}</div>);
         }
         break;
 
       case "leetcode-stats":
+        await pushLine("Fetching LeetCode stats...");
+        await new Promise((r) => setTimeout(r, 1000));
+
         if (!leetcodeState || !leetcodeState[0]) {
-          pushLine("LeetCode stats not found.");
+          await pushLine("LeetCode stats not found.");
         } else {
           const stats = leetcodeState[0];
-          pushLine(
-            `💻 LeetCode Stats:
-Username: ${stats.username}
-Ranking: ${stats.ranking}
-Points: ${stats.point}
-Stars: ${stats.starRating}
-Submissions: ${JSON.stringify(stats.acSubmissionNum?.[0]?.count || 0)}`
-          );
+          await pushLine(` 
+**Username:** ${stats.username}  
+**Ranking:** ${stats.ranking}  
+**Points:** ${stats.point}  
+**Stars:** ${stats.starRating}  
+**Submissions:** ${stats.acSubmissionNum?.[0]?.count || 0}`);
         }
         break;
 
       case "gfg-stats":
+        await pushLine("Fetching GeeksforGeeks stats...");
+        await new Promise((r) => setTimeout(r, 1000));
+
         if (!gfgState || !gfgState[0]) {
-          pushLine("Geeksforgeeks stats not found.");
+          await pushLine("GFG stats not found.");
         } else {
           const stats = gfgState[0];
-          pushLine(
-            `💚 GeeksForGeeks Stats:
-Username: ${stats.username}
-Coding Score: ${stats.codingScore}
-Institute Rank: ${stats.instituteRank}
-Monthly Score: ${stats.monthlyScore}
-Current Streak: ${stats.currentStreak}
-Problems Solved: ${JSON.stringify(stats.totalProblemsSolved)}`
-          );
+          await pushLine(`  
+**Username:** ${stats.username}  
+**Coding Score:** ${stats.codingScore}  
+**Institute Rank:** ${stats.instituteRank}  
+**Monthly Score:** ${stats.monthlyScore}  
+**Current Streak:** ${stats.currentStreak}  
+**Solved:** ${stats.totalProblemsSolved}`);
         }
         break;
 
       case "socials":
         if (!socials || socials.length === 0) {
-          pushLine("No social links found.");
+          await pushLine("No social links found.");
         } else {
           const socialElements = socials.map((s) => (
             <div key={s.platform} className="my-1">
@@ -188,23 +253,13 @@ Problems Solved: ${JSON.stringify(stats.totalProblemsSolved)}`
                 className="flex items-center gap-2 hover:opacity-80"
               >
                 {s.icon && (
-                  <img
-                    src={s.icon}
-                    alt={s.platform}
-                    className="w-5 h-5 cursor-pointer"
-                  />
+                  <img src={s.icon} alt={s.platform} className="w-5 h-5" />
                 )}
                 <span>{s.platform}</span>
               </a>
             </div>
           ));
-
-          pushLine(
-            <div className="flex flex-col">
-              <span>🌐 Socials:</span>
-              {socialElements}
-            </div>
-          );
+          await pushLine(<div className="flex flex-col">{socialElements}</div>);
         }
         break;
 
@@ -219,8 +274,14 @@ Problems Solved: ${JSON.stringify(stats.totalProblemsSolved)}`
         break;
 
       default:
-        pushLine(`${cmd}: command not found, type help to see all the command`, "err");
+        await pushLine(
+          `${cmd}: command not found, type \`help\` to see all commands.`,
+          "err"
+        );
     }
+
+    setIsExecuting(false);
+    focusInput();
   };
 
   const handleSubmit = (e) => {
@@ -230,16 +291,12 @@ Problems Solved: ${JSON.stringify(stats.totalProblemsSolved)}`
   };
 
   const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit(e);
-      return;
-    }
+    if (e.key === "Enter") return handleSubmit(e);
     if (e.key === "ArrowUp") {
       e.preventDefault();
       setHIndex((i) => {
         const hi = i === null ? history.length - 1 : Math.max(0, i - 1);
-        const val = history[hi] ?? "";
-        setInput(val);
+        setInput(history[hi] ?? "");
         return hi;
       });
     }
@@ -248,10 +305,14 @@ Problems Solved: ${JSON.stringify(stats.totalProblemsSolved)}`
       setHIndex((i) => {
         if (i === null) return null;
         const hi = Math.min(history.length - 1, i + 1);
-        const val = history[hi] ?? "";
-        setInput(val);
+        setInput(history[hi] ?? "");
         return hi === history.length - 1 ? null : hi;
       });
+    }
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const match = availableCommands.find((cmd) => cmd.startsWith(input));
+      if (match) setInput(match);
     }
   };
 
@@ -283,27 +344,41 @@ Problems Solved: ${JSON.stringify(stats.totalProblemsSolved)}`
                   : "text-gray-200"
               }`}
             >
-              {line.text}
+              {typeof line.text === "string" ? (
+                <ReactMarkdown>{line.text}</ReactMarkdown>
+              ) : (
+                line.text
+              )}
             </div>
           ))}
 
-          <form onSubmit={handleSubmit} className="mt-1">
-            <label className="flex gap-3 items-center">
-              <span className="text-green-400 font-mono">
-                {username}@web:{cwd}$
-              </span>
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={onKeyDown}
-                className="flex-1 bg-transparent focus:outline-none caret-white font-mono"
-                autoComplete="off"
-                spellCheck={false}
-              />
-              <span className="ml-2 opacity-80">▌</span>
-            </label>
-          </form>
+          {!isExecuting && (
+            <form onSubmit={handleSubmit} className="mt-1">
+              <label className="flex gap-3 items-center">
+                <span className="font-mono">
+                  <span style={{ color: "green", fontWeight: "bold" }}>
+                    {username}@web:
+                  </span>
+                  <span style={{ color: "red", fontWeight: "bold" }}>
+                    &nbsp;~&nbsp;
+                  </span>
+                  <span style={{ color: "white", fontWeight: "bold" }}>$</span>
+                </span>
+
+                <input
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  className="flex-1 bg-transparent focus:outline-none caret-white font-mono disabled:opacity-50"
+                  autoComplete="off"
+                  spellCheck={false}
+                  disabled={isExecuting}
+                />
+                <span className="ml-2 opacity-80">▌</span>
+              </label>
+            </form>
+          )}
         </div>
       </div>
     </div>

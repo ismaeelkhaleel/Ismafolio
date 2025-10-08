@@ -9,8 +9,10 @@ function Stats() {
   const { getLeetcodeState, leetcodeState, getGfgStats, gfgState } = useUser();
 
   useEffect(() => {
-    getGfgStats();
-    getLeetcodeState();
+    if (!leetcodeState || !getGfgStats) {
+      getGfgStats();
+      getLeetcodeState();
+    }
   }, []);
 
   const cardClasses =
@@ -38,7 +40,7 @@ function Stats() {
               />
               LeetCode Stats
             </h2>
-            {leetcodeState[0] && (
+            {leetcodeState && leetcodeState[0] && (
               <div className="space-y-3 text-sm text-[var(--text-color)]">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" /> {leetcodeState[0].username}
@@ -68,13 +70,15 @@ function Stats() {
             >
               View Problems
             </a>
-            <a
-              href={leetcodeState[0]?.profileUrl}
-              target="_blank"
-              className="text-xs font-medium text-[#FFA116] hover:underline"
-            >
-              View Profile
-            </a>
+            {leetcodeState && (
+              <a
+                href={leetcodeState[0]?.profileUrl}
+                target="_blank"
+                className="text-xs font-medium text-[#FFA116] hover:underline"
+              >
+                View Profile
+              </a>
+            )}
           </div>
         </motion.div>
 
@@ -90,7 +94,7 @@ function Stats() {
               />
               GFG Stats
             </h2>
-            {gfgState[0] && (
+            {gfgState && gfgState[0] && (
               <div className="space-y-3 text-sm text-[var(--text-color)]">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" /> {gfgState[0].username}
@@ -124,6 +128,7 @@ function Stats() {
             >
               View Problems
             </a>
+            {gfgState && (
             <a
               href={gfgState[0]?.profileUrl}
               target="_blank"
@@ -131,6 +136,7 @@ function Stats() {
             >
               View Profile
             </a>
+            )}
           </div>
         </motion.div>
       </div>
