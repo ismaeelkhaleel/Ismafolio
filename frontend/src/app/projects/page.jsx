@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
 import Loader from "../../components/buttons/Loader";
+import { Github, Code2, ExternalLink } from "lucide-react";
 
 function Projects() {
   const { ref, inView } = useInView({ triggerOnce: true });
@@ -60,6 +61,49 @@ function Projects() {
                 <h3 className="text-xl font-semibold text-[var(--heading-color)]">
                   {project.title}
                 </h3>
+                <div className="mt-5 flex gap-4">
+                  <a
+                    href={`/projects/details/${project._id}-${project.title
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    rel="noopener noreferrer"
+                    className="relative group text-emerald-600 transition-colors hover:bg-emerald-100 p-1 rounded-full"
+                    title="View Details"
+                  >
+                    <span className="absolute inset-0 rounded-full scale-0 bg-emerald-100 opacity-70 group-hover:scale-100 transition-transform duration-300"></span>
+                    <Code2
+                      size={22}
+                      className="relative z-10 group-hover:text-emerald-800"
+                    />
+                  </a>
+
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative group text-gray-700 transition-colors hover:bg-grey-100 p-1 rounded-full"
+                    title="View Code on GitHub"
+                  >
+                    <span className="absolute inset-0 rounded-full scale-0 bg-gray-200 opacity-70 group-hover:scale-100 transition-transform duration-300"></span>
+                    <Github
+                      size={22}
+                      className="relative z-10 group-hover:text-gray-900"
+                    />
+                  </a>
+
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative group text-pink-600 transition-colors hover:bg-pink-100 p-1 rounded-full"
+                      title="View Live Project"
+                    >
+                      <span className="absolute inset-0 rounded-full scale-0 bg-pink-100 opacity-70 transition-transform duration-300"></span>
+                      <ExternalLink size={22} className="relative z-10" />
+                    </a>
+                  )}
+                </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {project.techStack.map((tech, idx) => (
                     <span
@@ -69,25 +113,6 @@ function Projects() {
                       {tech}
                     </span>
                   ))}
-                </div>
-                <div className="mt-5 flex gap-2">
-                  <a
-                    href={`/projects/details/${project._id}-${project.title
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white hover:opacity-90 transition"
-                  >
-                    Detail
-                  </a>
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center px-6 py-2 rounded-lg font-medium shadow-lg bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white hover:opacity-90 transition"
-                  >
-                    View Code
-                  </a>
                 </div>
               </div>
             </motion.div>

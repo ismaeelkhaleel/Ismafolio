@@ -22,6 +22,10 @@ const projectSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    liveUrl: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

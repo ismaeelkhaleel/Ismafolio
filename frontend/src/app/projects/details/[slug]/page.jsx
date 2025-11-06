@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import { useUser } from "../../../../context/Context";
 import { useEffect } from "react";
 import Loader from "@/components/buttons/Loader";
+import { Github, ExternalLink } from "lucide-react";
 
 export default function ProjectDetailPage() {
   const { getProjectDetail, projectDetail } = useUser();
@@ -46,6 +47,34 @@ export default function ProjectDetailPage() {
             day: "numeric",
           })}
       </p>
+      <div className="mt-5 flex gap-4 mb-6">
+        <a
+          href={projectDetail?.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group text-gray-700 transition-colors hover:bg-grey-100 p-1 rounded-full"
+          title="View Code on GitHub"
+        >
+          <span className="absolute inset-0 rounded-full scale-0 bg-gray-200 opacity-70 group-hover:scale-100 transition-transform duration-300"></span>
+          <Github
+            size={22}
+            className="relative z-10 group-hover:text-gray-900"
+          />
+        </a>
+
+        {projectDetail?.liveUrl && (
+          <a
+            href={projectDetail.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative group text-pink-600 transition-colors hover:bg-pink-100 p-1 rounded-full"
+            title="View Live Project"
+          >
+            <span className="absolute inset-0 rounded-full scale-0 bg-pink-100 opacity-70 transition-transform duration-300"></span>
+            <ExternalLink size={22} className="relative z-10" />
+          </a>
+        )}
+      </div>
 
       <div className="mb-8 flex flex-wrap gap-2">
         {projectDetail?.techStack?.map((tech, index) => (
@@ -67,17 +96,6 @@ export default function ProjectDetailPage() {
           dangerouslySetInnerHTML={{ __html: projectDetail?.description || "" }}
         />
       </div>
-
-      {projectDetail?.githubUrl && (
-        <a
-          href={projectDetail.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-8 px-6 py-3 font-semibold text-white bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-lg shadow-lg hover:opacity-90 transition"
-        >
-          View on GitHub
-        </a>
-      )}
     </section>
   );
 }
