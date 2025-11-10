@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useUser } from "../../context/Context";
 import { motion } from "framer-motion";
-import { Trophy, Star, Code2, Flame, User } from "lucide-react";
+import { Trophy, Star, Code2, Flame, User,Award } from "lucide-react";
 import Image from "next/image";
 
 function Stats() {
@@ -14,6 +14,7 @@ function Stats() {
       getLeetcodeState();
     }
   }, []);
+ 
 
   const cardClasses =
     "w-full md:flex-1 max-w-md h-[300px] rounded-2xl shadow-sm transition-transform transition-shadow duration-300 p-5 flex flex-col justify-between card";
@@ -56,6 +57,9 @@ function Stats() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Code2 className="w-4 h-4" /> Solved: {leetcodeState[0].acSubmissionNum[0].count}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4" /> Badges: {leetcodeState[0].badges.length}
                 </div>
               </div>
             )}

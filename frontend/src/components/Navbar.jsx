@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
-import { SquareTerminal, House } from "lucide-react";
+import { SquareTerminal, House, BotMessageSquare } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -72,15 +72,28 @@ function Navbar() {
           href="/terminal"
           className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
         >
-           <SquareTerminal />
+          <SquareTerminal />
           <span
             className="absolute bottom-full mb-2 hidden group-hover:block 
                            bg-gray-200 text-black dark:bg-gray-800 dark:text-white 
                            text-xs px-2 py-1 rounded"
           >
-             Terminal
+            Terminal
           </span>
         </Link>
+        {/* <Link
+          href="/chatbot"
+          className="relative group cursor-pointer hover:scale-125 transition-transform duration-200"
+        >
+          <BotMessageSquare />
+          <span
+            className="absolute bottom-full mb-2 hidden group-hover:block 
+                           bg-gray-200 text-black dark:bg-gray-800 dark:text-white 
+                           text-xs px-2 py-1 rounded"
+          >
+            IsmaBot
+          </span>
+        </Link> */}
 
         <div className="relative group cursor-pointer">
           <ThemeToggle />

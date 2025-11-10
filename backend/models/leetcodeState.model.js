@@ -29,6 +29,14 @@ const leetcodeStateSchema = new mongoose.Schema(
         submissions: { type: Number },
       },
     ],
+    badges: [
+      {
+        id: { type: Number },
+        displayName: { type: String },
+        icon: { type: String },
+        creationDate: { type: Date },
+      },
+    ],
   },
   { timestamps: true }
 );

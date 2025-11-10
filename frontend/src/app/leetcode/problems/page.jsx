@@ -154,24 +154,27 @@ export default function Page() {
                 Loading stats...
               </div>
             )}
-
             <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
-              <h3 className="font-semibold mb-3">Heatmap</h3>
-              <div className="flex flex-wrap gap-1">
-                {leetcodeHeatmap && leetcodeHeatmap.length > 0 ? (
-                  leetcodeHeatmap.map((h, idx) => (
-                    <div
-                      key={idx}
-                      className={`w-7 h-7 flex items-center justify-center rounded-sm ${heatColor(
-                        h.submissions
-                      )} text-xs text-gray-800 dark:text-gray-100`}
-                      title={`${h.date.slice(0, 15)}: ${
-                        h.submissions
-                      } submissions`}
-                    />
+              <h3 className="font-semibold mb-3">Badges</h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                {leetcodeState?.[0]?.badges &&
+                leetcodeState[0].badges.length > 0 ? (
+                  leetcodeState[0].badges.map((badge, idx) => (
+                    <div key={idx} className="flex flex-col items-center w-30">
+                      <img
+                        src={badge.icon}
+                        alt={badge.name}
+                        className="w-20 h-20 mb-2"
+                      />
+                      <span className="text-xs text-center">
+                        {badge.displayName}
+                      </span>
+                    </div>
                   ))
                 ) : (
-                  <p className="text-sm text-gray-500">No heatmap data</p>
+                  <p className="text-sm text-gray-500 text-center">
+                    No badges earned yet
+                  </p>
                 )}
               </div>
             </div>
@@ -210,7 +213,24 @@ export default function Page() {
             </div>
           </div>
         </div>
-
+        <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm mb-6">
+          <h3 className="font-semibold mb-3">Heatmap</h3>
+          <div className="flex flex-wrap gap-1">
+            {leetcodeHeatmap && leetcodeHeatmap.length > 0 ? (
+              leetcodeHeatmap.map((h, idx) => (
+                <div
+                  key={idx}
+                  className={`w-7 h-7 flex items-center justify-center rounded-sm ${heatColor(
+                    h.submissions
+                  )} text-xs text-gray-800 dark:text-gray-100`}
+                  title={`${h.date.slice(0, 15)}: ${h.submissions} submissions`}
+                />
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No heatmap data</p>
+            )}
+          </div>
+        </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Solved Problems</h3>

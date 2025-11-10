@@ -10,6 +10,7 @@ const username = "Mohd_Ismaeel";
 const fetchLeetCodeData = async () => {
   try {
     const user = await leetcode.user(username);
+    console.log(user.matchedUser.badges);
     const existingUser = await LeetcodeState.findOne({
       username: user.matchedUser.username,
     });
@@ -26,6 +27,12 @@ const fetchLeetCodeData = async () => {
           count: item.count,
           submissions: item.submissions,
         }));
+      existingUser.badges = user.matchedUser.badges.map((badge) => ({
+        id: badge.id,
+        displayName: badge.displayName,
+        icon: badge.icon,
+        creationDate: new Date(badge.creationDate),
+      }));
       savedUser = await existingUser.save();
     } else {
       savedUser = new LeetcodeState({
@@ -41,6 +48,12 @@ const fetchLeetCodeData = async () => {
             submissions: item.submissions,
           })
         ),
+        badges: user.matchedUser.badges.map((badge) => ({
+          id: badge.id,
+          displayName: badge.displayName,
+          icon: badge.icon,
+          creationDate: new Date(badge.creationDate),
+        })),
       });
       savedUser = await savedUser.save();
     }
@@ -85,7 +98,7 @@ const fetchLeetCodeData = async () => {
 };
 
 cron.schedule(
-  "59 11 * * *",
+  "* * * * *",
   async () => {
     console.log("Fetching LeetCode Data...");
     await fetchLeetCodeData();
