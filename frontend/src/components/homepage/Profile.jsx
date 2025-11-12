@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { useUser } from "../../context/Context";
 import Loader from "../buttons/Loader";
-import { X } from "lucide-react";
 
 function HighlightedText({ text, highlights = [] }) {
   const parts = text.split(new RegExp(`(${highlights.join("|")})`, "gi"));
@@ -15,7 +14,11 @@ function HighlightedText({ text, highlights = [] }) {
         highlights.map((w) => w.toLowerCase()).includes(part.toLowerCase()) ? (
           <span
             key={idx}
-            style={{ color: "var(--border-hover)", fontWeight: "600" }}
+            style={{
+              color: "var(--border-hover)",
+              fontWeight: "600",
+              textShadow: "0 0 6px rgba(0,0,0,0.3)",
+            }}
           >
             {part}
           </span>
@@ -30,7 +33,6 @@ function HighlightedText({ text, highlights = [] }) {
 function Profile() {
   const { getProfile, profile } = useUser();
   const [loading, setLoading] = useState(false);
-  const [viewImage, setViewImage] = useState(false);
 
   useEffect(() => {
     if (!profile) {
@@ -39,14 +41,7 @@ function Profile() {
     }
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = viewImage ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [viewImage]);
-
-  if (!profile || !profile.image || !profile.name) return null;
+  if (!profile || !profile.image || !profile.name) return <Loader />;
 
   const highlights = [
     "Full Stack Web Developer",
@@ -63,45 +58,50 @@ function Profile() {
   ];
 
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center py-10 gap-10 w-full max-w-[1400px] mx-auto px-6">
+    <section
+      className="relative flex flex-col md:flex-row items-center justify-between 
+                 w-full max-w-[1400px] mx-auto 
+                 px-10 md:px-15 overflow-hidden 
+                 bg-[var(--background)] text-gray-900 dark:text-white transition-colors duration-300"
+    >
       {loading && <Loader />}
 
-      <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="p-[4px] rounded-full relative overflow-hidden shadow-xl cursor-pointer"
-        onClick={() => setViewImage(true)}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 animate-gradient-x" />
-        <div className="relative w-52 h-52 md:w-72 md:h-72 rounded-full overflow-hidden bg-white dark:bg-gray-900 z-10">
-          <Image
-            src={profile.image}
-            alt={profile.name}
-            fill
-            className="object-cover rounded-full"
-          />
-        </div>
-      </motion.div>
+      {/* 🌈 Soft glow behind elements */}
+      <div
+        className="absolute inset-0 -z-10 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 60% 40%, var(--border-hover) 0%, transparent 70%)",
+          opacity: 0.25,
+          filter: "blur(90px)",
+        }}
+      />
 
+      {/* LEFT TEXT CONTENT */}
       <motion.div
-        initial={{ x: 100, opacity: 0 }}
+        initial={{ x: -60, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="text-center md:text-left max-w-xl flex-1"
+        transition={{ duration: 1 }}
+        className="relative flex-3/4 text-left space-y-5 z-20 
+                     md:-mr-40 lg:-mr-48 xl:-mr-56 
+                   mt-10 md:mt-0"
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-x">
-          {profile.name}
+        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+          Hi, I am <br />
+          <span className="text-[var(--border-hover)]">{profile.name}</span>
         </h1>
 
-        <p className="mt-4 leading-relaxed text-justify">
+        <p
+          className="text-base md:text-lg leading-relaxed 
+                     text-gray-800 dark:text-gray-300"
+        >
           <HighlightedText text={profile.description} highlights={highlights} />
         </p>
 
-        <h2 className="mt-2 text-lg md:text-xl font-medium bg-gradient-to-r from-pink-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent animate-gradient-x">
+        <h2 className="text-lg md:text-xl font-medium text-[var(--border-hover)]">
           <Typewriter
             words={profile.title || ["Developer", "Designer", "Engineer"]}
-            loop={true}
+            loop
             cursor
             cursorStyle="|"
             typeSpeed={155}
@@ -114,34 +114,33 @@ function Profile() {
           href={profile.resume}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="mt-6 inline-block px-6 py-3 rounded-lg relative overflow-hidden font-medium shadow-lg"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-block mt-6 px-6 py-3 rounded-lg relative overflow-hidden font-medium shadow-lg"
         >
-          <span className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 animate-gradient-x" />
+          <span className="absolute inset-0 bg-[var(--border-hover)] opacity-90" />
           <span className="relative z-10 text-white">View Resume</span>
         </motion.a>
       </motion.div>
 
-      {viewImage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <button
-            onClick={() => setViewImage(false)}
-            className="absolute top-4 right-4 text-white p-2 rounded-full hover:bg-black/40 transition cursor-pointer"
-          >
-            <X size={28} />
-          </button>
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg">
-            <Image
-              src={profile.image}
-              alt={profile.name}
-              width={700}
-              height={400}
-              className="object-contain rounded-lg"
-            />
-          </div>
+      {/* RIGHT IMAGE */}
+      <motion.div
+        initial={{ x: 80, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="relative flex-1/2 flex justify-center z-[5] mt-8 md:mt-0"
+      >
+        <div className="relative flex justify-center items-center w-fit h-fit">
+          <Image
+            src={profile.image}
+            alt={profile.name}
+            width={profile.imageWidth || 450}
+            height={profile.imageHeight || 450}
+            priority
+            className="object-contain w-auto h-auto max-w-full"
+          />
         </div>
-      )}
+      </motion.div>
     </section>
   );
 }
