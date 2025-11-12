@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { useUser } from "../../context/Context";
 import Loader from "../buttons/Loader";
@@ -56,7 +56,6 @@ function Profile() {
     }
   }, [img.length]);
 
-  // 🔹 Loader condition — only show while profile not loaded
   if (!profile || !profile.name) return <Loader />;
 
   const highlights = [
@@ -143,16 +142,27 @@ function Profile() {
         transition={{ duration: 1 }}
         className="relative flex-1/2 flex justify-center z-[5] mt-8 md:mt-0"
       >
-        <div className="relative flex justify-center items-center w-fit h-fit">
+        {/* 🖼 Enlarged image container */}
+        <div className="relative w-[550px] h-[550px] flex justify-center items-center">
           {img.length > 0 ? (
-            <Image
-              src={img[i]}
-              alt={profile.name}
-              width={profile.imageWidth || 450}
-              height={profile.imageHeight || 450}
-              priority
-              className="object-contain w-auto h-auto max-w-full"
-            />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={img[i]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0 flex justify-center items-center"
+              >
+                <Image
+                  src={img[i]}
+                  alt={profile.name}
+                  fill
+                  priority
+                  className="object-contain rounded-2xl shadow-2xl"
+                />
+              </motion.div>
+            </AnimatePresence>
           ) : (
             <p className="text-gray-400">No image uploaded</p>
           )}
