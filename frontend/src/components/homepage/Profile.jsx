@@ -35,7 +35,7 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const [i, setI] = useState(0);
 
-  // 🔹 Fetch profile when component mounts
+  // Fetch profile on mount
   useEffect(() => {
     if (!profile) {
       setLoading(true);
@@ -43,10 +43,9 @@ function Profile() {
     }
   }, []);
 
-  // 🔹 Extract images safely
   const img = Array.isArray(profile?.images) ? profile.images : [];
 
-  // 🔹 Auto-rotate images every 3 seconds
+  // Auto-rotate every 3 seconds
   useEffect(() => {
     if (img.length > 0) {
       const interval = setInterval(() => {
@@ -97,7 +96,7 @@ function Profile() {
         initial={{ x: -60, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative flex-3/4 text-left space-y-5 z-20 
+        className="relative flex-4/5 text-left space-y-5 z-20 
                    md:-mr-40 lg:-mr-48 xl:-mr-56 
                    mt-10 md:mt-0"
       >
@@ -140,10 +139,10 @@ function Profile() {
         initial={{ x: 80, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative flex-1/2 flex justify-center z-[5] mt-8 md:mt-0"
+        className="relative flex-1/4 justify-center items-center z-[5] mt-8 md:mt-0"
       >
-        {/* 🖼 Enlarged image container */}
-        <div className="relative w-[550px] h-[550px] flex justify-center items-center">
+        {/* 🖼 Auto-sized image container */}
+        <div className="relative w-fit h-fit flex justify-center items-center">
           {img.length > 0 ? (
             <AnimatePresence mode="wait">
               <motion.div
@@ -152,14 +151,15 @@ function Profile() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="absolute inset-0 flex justify-center items-center"
+                className="relative flex justify-center items-center"
               >
                 <Image
                   src={img[i]}
                   alt={profile.name}
-                  fill
+                  width={550}
+                  height={550}
                   priority
-                  className="object-contain rounded-2xl shadow-2xl"
+                  className="object-contain rounded-2xl shadow-2xl max-w-[550px] max-h-[550px] w-auto h-auto"
                 />
               </motion.div>
             </AnimatePresence>
