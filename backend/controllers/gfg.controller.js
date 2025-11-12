@@ -98,7 +98,7 @@ const fetchedGfgData = async () => {
 };
 
 cron.schedule(
-  "59 11 * * *",
+  "* 1 * * *",
   async () => {
     console.log("Fetching Geeksforgeek Data...");
     await fetchedGfgData();

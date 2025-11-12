@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useAdmin } from "@/context/Context";
 import withAuth from "@/components/withAuth";
+
 function Page() {
   const { getProfile, profile, updateProfile } = useAdmin();
 
@@ -11,17 +12,31 @@ function Page() {
     description: "",
     title: [],
     resume: "",
-    image: "",
+    images: [],
   });
 
   const [resumeFile, setResumeFile] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]); // 👈 multiple files
+  const [previewUrls, setPreviewUrls] = useState([]);
   const [isEdited, setIsEdited] = useState(false);
   const [titleInput, setTitleInput] = useState("");
 
   useEffect(() => {
-    if (profile?.title) {
-      setTitleInput(profile.title.join(", "));
+    getProfile();
+  }, []);
+
+  useEffect(() => {
+    if (profile?.title) setTitleInput(profile.title.join(", "));
+    if (profile) {
+      setFormData({
+        name: profile.name || "",
+        email: profile.email || "",
+        description: profile.description || "",
+        title: profile.title || [],
+        resume: profile.resume || "",
+        images: profile.images || [],
+      });
+      setPreviewUrls(profile.images || []);
     }
   }, [profile]);
 
@@ -35,34 +50,30 @@ function Page() {
     }));
   }, [titleInput]);
 
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  useEffect(() => {
-    if (profile) {
-      setFormData({
-        name: profile.name || "",
-        email: profile.email || "",
-        description: profile.description || "",
-        title: profile.title || [],
-        resume: profile.resume || "",
-        image: profile.image || "",
-      });
-    }
-  }, [profile]);
-
+  // Handle text inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setIsEdited(true);
   };
 
+  // Handle file inputs
   const handleFileChange = (e) => {
-    if (e.target.name === "resume") setResumeFile(e.target.files[0]);
-    if (e.target.name === "image") setImageFile(e.target.files[0]);
+    if (e.target.name === "resume") {
+      setResumeFile(e.target.files[0]);
+    }
+    if (e.target.name === "images") {
+      const files = Array.from(e.target.files);
+      if (files.length > 5) {
+        alert("You can upload a maximum of 5 images");
+        return;
+      }
+      setImageFiles(files);
+      setPreviewUrls(files.map((f) => URL.createObjectURL(f)));
+    }
     setIsEdited(true);
   };
 
+  // Cancel edits
   const handleCancel = () => {
     setFormData({
       name: profile?.name || "",
@@ -70,22 +81,26 @@ function Page() {
       description: profile?.description || "",
       title: profile?.title || [],
       resume: profile?.resume || "",
-      image: profile?.image || "",
+      images: profile?.images || [],
     });
+    setPreviewUrls(profile?.images || []);
     setResumeFile(null);
-    setImageFile(null);
+    setImageFiles([]);
     setIsEdited(false);
     setTitleInput(profile?.title?.join(", ") || "");
   };
 
+  // Update
   const handleUpdate = async () => {
     const form = new FormData();
     form.append("name", formData.name);
     form.append("email", formData.email);
     form.append("description", formData.description);
     formData.title.forEach((t) => form.append("title", t));
+
     if (resumeFile) form.append("resume", resumeFile);
-    if (imageFile) form.append("image", imageFile);
+    imageFiles.forEach((file) => form.append("images", file)); // 👈 multiple
+
     await updateProfile(form);
     setIsEdited(false);
   };
@@ -96,28 +111,36 @@ function Page() {
         Admin Profile
       </h1>
 
-      <div className="space-y-2">
-        <div className="flex items-center gap-4">
-          {formData.image ? (
-            <img
-              src={imageFile ? URL.createObjectURL(imageFile) : formData.image}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover border shadow"
-            />
+      {/* Multiple Images */}
+      <div className="space-y-3">
+        <h2 className="text-lg font-semibold text-emerald-800">
+          Portfolio Images (up to 5)
+        </h2>
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+          {previewUrls.length > 0 ? (
+            previewUrls.map((url, i) => (
+              <img
+                key={i}
+                src={url}
+                alt={`Preview ${i}`}
+                className="w-24 h-24 rounded-lg object-cover border shadow"
+              />
+            ))
           ) : (
-            <p className="text-gray-500">No image uploaded</p>
+            <p className="text-gray-500">No images uploaded</p>
           )}
-          <div>
-            <input
-              type="file"
-              name="image"
-              onChange={handleFileChange}
-              className="block text-sm text-gray-600"
-            />
-          </div>
         </div>
+        <input
+          type="file"
+          name="images"
+          multiple
+          accept="image/*"
+          onChange={handleFileChange}
+          className="block text-sm text-gray-600"
+        />
       </div>
 
+      {/* Resume */}
       <div className="space-y-2">
         {formData.resume ? (
           <a
@@ -139,6 +162,7 @@ function Page() {
         />
       </div>
 
+      {/* Text fields */}
       <div className="space-y-4">
         <input
           type="text"
@@ -148,7 +172,6 @@ function Page() {
           onChange={handleChange}
           className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
         />
-
         <input
           type="email"
           name="email"
@@ -157,7 +180,6 @@ function Page() {
           onChange={handleChange}
           className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
         />
-
         <textarea
           name="description"
           value={formData.description}
@@ -165,7 +187,6 @@ function Page() {
           onChange={handleChange}
           className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
         />
-
         <input
           type="text"
           name="title"
@@ -179,6 +200,7 @@ function Page() {
         />
       </div>
 
+      {/* Buttons */}
       {isEdited && (
         <div className="flex gap-4 justify-end mt-6">
           <button

@@ -221,17 +221,24 @@ export const upsertAdminProfile = async (req, res) => {
       email,
     };
 
+    // 📎 Resume upload
     if (req.files?.resume) {
       updateData.resume = req.files.resume[0].path;
     }
 
-    if (req.files?.image) {
-      updateData.image = req.files.image[0].path;
+    // 🖼️ Multiple Images Upload (array of Cloudinary URLs)
+    if (req.files?.images && req.files.images.length > 0) {
+      updateData.images = req.files.images.map((file) => file.path);
     }
 
+    // 🏷️ Titles
     if (title) {
-      updateData.title = Array.isArray(title) ? title : [];
+      updateData.title = Array.isArray(title)
+        ? title
+        : title.split(",").map((t) => t.trim());
     }
+
+    // Clean undefined
     Object.keys(updateData).forEach(
       (key) => updateData[key] === undefined && delete updateData[key]
     );

@@ -69,7 +69,7 @@ router.put(
   verifyToken,
   upload.fields([
     { name: "resume", maxCount: 1 },
-    { name: "image", maxCount: 1 },
+    { name: "images", maxCount: 5 },
   ]),
   upsertAdminProfile
 );

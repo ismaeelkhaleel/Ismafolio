@@ -33,7 +33,9 @@ function HighlightedText({ text, highlights = [] }) {
 function Profile() {
   const { getProfile, profile } = useUser();
   const [loading, setLoading] = useState(false);
+  const [i, setI] = useState(0);
 
+  // 🔹 Fetch profile when component mounts
   useEffect(() => {
     if (!profile) {
       setLoading(true);
@@ -41,7 +43,21 @@ function Profile() {
     }
   }, []);
 
-  if (!profile || !profile.image || !profile.name) return <Loader />;
+  // 🔹 Extract images safely
+  const img = Array.isArray(profile?.images) ? profile.images : [];
+
+  // 🔹 Auto-rotate images every 3 seconds
+  useEffect(() => {
+    if (img.length > 0) {
+      const interval = setInterval(() => {
+        setI((prevI) => (prevI + 1) % img.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [img.length]);
+
+  // 🔹 Loader condition — only show while profile not loaded
+  if (!profile || !profile.name) return <Loader />;
 
   const highlights = [
     "Full Stack Web Developer",
@@ -66,7 +82,7 @@ function Profile() {
     >
       {loading && <Loader />}
 
-      {/* 🌈 Soft glow behind elements */}
+      {/* 🌈 Soft glow background */}
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
@@ -83,7 +99,7 @@ function Profile() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1 }}
         className="relative flex-3/4 text-left space-y-5 z-20 
-                     md:-mr-40 lg:-mr-48 xl:-mr-56 
+                   md:-mr-40 lg:-mr-48 xl:-mr-56 
                    mt-10 md:mt-0"
       >
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
@@ -91,10 +107,7 @@ function Profile() {
           <span className="text-[var(--border-hover)]">{profile.name}</span>
         </h1>
 
-        <p
-          className="text-base md:text-lg leading-relaxed 
-                     text-gray-800 dark:text-gray-300"
-        >
+        <p className="text-base md:text-lg leading-relaxed text-gray-800 dark:text-gray-300">
           <HighlightedText text={profile.description} highlights={highlights} />
         </p>
 
@@ -123,7 +136,7 @@ function Profile() {
         </motion.a>
       </motion.div>
 
-      {/* RIGHT IMAGE */}
+      {/* RIGHT IMAGE SECTION */}
       <motion.div
         initial={{ x: 80, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -131,14 +144,18 @@ function Profile() {
         className="relative flex-1/2 flex justify-center z-[5] mt-8 md:mt-0"
       >
         <div className="relative flex justify-center items-center w-fit h-fit">
-          <Image
-            src={profile.image}
-            alt={profile.name}
-            width={profile.imageWidth || 450}
-            height={profile.imageHeight || 450}
-            priority
-            className="object-contain w-auto h-auto max-w-full"
-          />
+          {img.length > 0 ? (
+            <Image
+              src={img[i]}
+              alt={profile.name}
+              width={profile.imageWidth || 450}
+              height={profile.imageHeight || 450}
+              priority
+              className="object-contain w-auto h-auto max-w-full"
+            />
+          ) : (
+            <p className="text-gray-400">No image uploaded</p>
+          )}
         </div>
       </motion.div>
     </section>
