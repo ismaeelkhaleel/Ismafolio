@@ -159,7 +159,7 @@ function Profile() {
                   width={550}
                   height={550}
                   priority
-                  className="object-contain rounded-2xl shadow-2xl max-w-[550px] max-h-[550px] w-auto h-auto"
+                  className="object-contain max-w-[550px] max-h-[550px] w-auto h-auto"
                 />
               </motion.div>
             </AnimatePresence>
