@@ -18,7 +18,6 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Only run client-side to avoid SSR mismatch
   useEffect(() => {
     setMounted(true);
     if (!profile) {
@@ -27,7 +26,6 @@ export default function Home() {
     }
   }, []);
 
-  // Prevent hydration mismatch by delaying UI until mounted
   if (!mounted) return null;
 
   return (
