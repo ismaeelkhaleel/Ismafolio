@@ -75,15 +75,14 @@ const fetchedGfgData = async () => {
     console.error("Error fetching GFG data:", err.message);
   }
 };
-fetchedGfgData();
-// Cron job to fetch every hour
-// cron.schedule(
-//   "* * * * *",
-//   async () => {
-//     console.log("Fetching GeeksforGeeks Data...");
-//     await fetchedGfgData();
-//   },
-//   {
-//     timezone: "Asia/Kolkata",
-//   }
-// );
+ 
+cron.schedule(
+  "1 * * * *",
+  async () => {
+    console.log("Fetching GeeksforGeeks Data...");
+    await fetchedGfgData();
+  },
+  {
+    timezone: "Asia/Kolkata",
+  }
+);
