@@ -11,7 +11,7 @@ const gfgProbelmSchema = new mongoose.Schema({
   },
   level: {
     type: String,
-    enum: ["school","basic","easy", "basic", "medium", "hard"],
+    enum: ["school","basic","easy", "medium", "hard"],
   },
 });
 

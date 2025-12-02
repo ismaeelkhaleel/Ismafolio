@@ -13,11 +13,15 @@ const gfgStateSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  maxStreak: {
+    type: Number,
+    required: true,
+  },
   codingScore: {
     type: Number,
     required: true,
   },
-  monthlyScore: {
+  potdSolved: {
     type: Number,
     required: true,
   },
@@ -26,6 +30,10 @@ const gfgStateSchema = new mongoose.Schema({
     required: true,
   },
   profileUrl: {
+    type: String,
+    required: true,
+  },
+  picUrl: {
     type: String,
     required: true,
   },
