@@ -116,8 +116,8 @@ export default function GfgPage() {
                   <span>{gfgState[0].currentStreak ?? "-"}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-medium">Monthly Score</span>
-                  <span>{gfgState[0].monthlyScore ?? "-"}</span>
+                  <span className="font-medium">Max Streak</span>
+                  <span>{gfgState[0].maxStreak ?? "-"}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Institute Rank</span>
@@ -125,7 +125,11 @@ export default function GfgPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Problems Solved</span>
-                  <span>{gfgProblems?.length ?? "-"}</span>
+                  <span>{gfgState[0].totalProblemsSolved ?? "-"}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">POTD Solved</span>
+                  <span>{gfgState[0].potdSolved ?? "-"}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Username</span>

@@ -44,9 +44,6 @@ function Stats() {
             {leetcodeState && leetcodeState[0] && (
               <div className="space-y-3 text-sm text-[var(--text-color)]">
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" /> {leetcodeState[0].username}
-                </div>
-                <div className="flex items-center gap-2">
                   <Trophy className="w-4 h-4" /> Rank: {leetcodeState[0].ranking}
                 </div>
                 <div className="flex items-center gap-2">
@@ -91,7 +88,7 @@ function Stats() {
             {gfgState && gfgState[0] && (
               <div className="space-y-3 text-sm text-[var(--text-color)]">
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" /> {gfgState[0].username}
+                  <Code2 className="w-4 h-4" /> Solved: {gfgState[0].totalProblemsSolved}
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4" /> Score: {gfgState[0].codingScore}
@@ -100,13 +97,13 @@ function Stats() {
                   <Trophy className="w-4 h-4" /> Rank: {gfgState[0].instituteRank}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4" /> Monthly: {gfgState[0].monthlyScore}
+                  <Star className="w-4 h-4" /> Max Streak: {gfgState[0].maxStreak}
                 </div>
                 <div className="flex items-center gap-2">
                   <Flame className="w-4 h-4" /> Streak: {gfgState[0].currentStreak}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4" /> Solved: {gfgState[0].totalProblemsSolved}
+                  <Code2 className="w-4 h-4" /> POTD: {gfgState[0].potdSolved}
                 </div>
               </div>
             )}
