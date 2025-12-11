@@ -8,7 +8,7 @@ const username = "pmohd2";
 const fetchedGfgData = async () => {
   try {
     const data = await getGFGDetails(username);
-    // console.log(data);
+    console.log(data);
     // Helper function to convert streak string like "12 Days" to number
     const parseStreak = (streakStr) => {
       if (!streakStr) return 0;
@@ -75,9 +75,8 @@ const fetchedGfgData = async () => {
     console.error("Error fetching GFG data:", err.message);
   }
 };
- 
 cron.schedule(
-  "1 * * * *",
+  "0 0 * * *",
   async () => {
     console.log("Fetching GeeksforGeeks Data...");
     await fetchedGfgData();
