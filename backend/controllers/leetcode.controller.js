@@ -96,7 +96,10 @@ const fetchLeetCodeData = async () => {
     console.log(err.message);
   }
 };
-
+(async () => {
+  console.log("Initial GFG fetch on server start");
+  await fetchedGfgData();
+})();
 cron.schedule(
   "0 0 * * *",
   async () => {
