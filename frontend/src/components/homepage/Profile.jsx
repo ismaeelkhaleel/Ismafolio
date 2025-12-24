@@ -14,11 +14,7 @@ function HighlightedText({ text, highlights = [] }) {
         highlights.map((w) => w.toLowerCase()).includes(part.toLowerCase()) ? (
           <span
             key={idx}
-            style={{
-              color: "var(--border-hover)",
-              fontWeight: "600",
-              textShadow: "0 0 6px rgba(0,0,0,0.3)",
-            }}
+            style={{ color: "var(--border-hover)", fontWeight: "600" }}
           >
             {part}
           </span>
@@ -32,10 +28,12 @@ function HighlightedText({ text, highlights = [] }) {
 
 function Profile() {
   const { getProfile, profile } = useUser();
-  const [loading, setLoading] = useState(false);
-  const [i, setI] = useState(0);
 
-  // Fetch profile on mount
+  const [loading, setLoading] = useState(false);
+  const [storyOpen, setStoryOpen] = useState(false);
+  const [storyIndex, setStoryIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
   useEffect(() => {
     if (!profile) {
       setLoading(true);
@@ -45,15 +43,40 @@ function Profile() {
 
   const img = Array.isArray(profile?.images) ? profile.images : [];
 
-  // Auto-rotate every 3 seconds
+  // Disable background scroll when story is open
   useEffect(() => {
-    if (img.length > 0) {
-      const interval = setInterval(() => {
-        setI((prevI) => (prevI + 1) % img.length);
-      }, 3000);
-      return () => clearInterval(interval);
+    if (storyOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-  }, [img.length]);
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [storyOpen]);
+
+  // Story timeline + auto close
+  useEffect(() => {
+    if (!storyOpen) return;
+
+    const interval = setInterval(() => {
+      setProgress((p) => p + 1);
+    }, 50); // 5 seconds
+
+    if (progress >= 100) {
+      if (storyIndex < img.length - 1) {
+        setStoryIndex((i) => i + 1);
+        setProgress(0);
+      } else {
+        setStoryOpen(false);
+        setStoryIndex(0);
+        setProgress(0);
+      }
+    }
+
+    return () => clearInterval(interval);
+  }, [progress, storyIndex, storyOpen]);
 
   if (!profile || !profile.name) return <Loader />;
 
@@ -61,113 +84,149 @@ function Profile() {
     "Full Stack Web Developer",
     "MCA graduate",
     "Aligarh Muslim University",
-    "Data Structures and Algorithms",
     "Node.js",
     "React.js",
     "Express.js",
     "MongoDB",
-    "responsive UI development",
-    "REST APIs",
-    "backend scalability",
   ];
 
   return (
-    <section
-      className="relative flex flex-col md:flex-row items-center justify-between 
-                 w-full max-w-[1400px] mx-auto 
-                 px-10 md:px-15 overflow-hidden 
-                 bg-[var(--background)] text-gray-900 dark:text-white transition-colors duration-300"
-    >
+    <section className="relative flex flex-col md:flex-row items-center justify-between w-full max-w-[1400px] mx-auto px-10 bg-[var(--background)]">
       {loading && <Loader />}
 
-      {/* 🌈 Soft glow background */}
-      <div
-        className="absolute inset-0 -z-10 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at 60% 40%, var(--border-hover) 0%, transparent 70%)",
-          opacity: 0.25,
-          filter: "blur(90px)",
-        }}
-      />
-
-      {/* LEFT TEXT CONTENT */}
+      {/* LEFT CONTENT (SMALLER WIDTH) */}
       <motion.div
-        initial={{ x: -60, opacity: 0 }}
+        initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="relative flex-4/5 text-left space-y-5 z-20 
-                   md:-mr-40 lg:-mr-48 xl:-mr-56 
-                   mt-10 md:mt-0"
+        transition={{ duration: 0.8 }}
+        className="flex-[0.55] space-y-5 pt-10 mb-10 md:mb-0"
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+        <h1 className="text-4xl font-bold">
           Hi, I am <br />
           <span className="text-[var(--border-hover)]">{profile.name}</span>
         </h1>
 
-        <p className="text-base md:text-lg leading-relaxed text-gray-800 dark:text-gray-300">
+        <p className="text-gray-700 dark:text-gray-300">
           <HighlightedText text={profile.description} highlights={highlights} />
         </p>
 
-        <h2 className="text-lg md:text-xl font-medium text-[var(--border-hover)]">
+        <h2 className="text-xl text-[var(--border-hover)]">
           <Typewriter
-            words={profile.title || ["Developer", "Designer", "Engineer"]}
+            words={profile.title || ["Developer"]}
             loop
             cursor
-            cursorStyle="|"
-            typeSpeed={155}
-            deleteSpeed={155}
-            delaySpeed={500}
+            typeSpeed={120}
+            deleteSpeed={80}
           />
         </h2>
-
-        <motion.a
-          href={profile.resume}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-block mt-6 px-6 py-3 rounded-lg relative overflow-hidden font-medium shadow-lg"
-        >
-          <span className="absolute inset-0 bg-[var(--border-hover)] opacity-90" />
-          <span className="relative z-10 text-white">View Resume</span>
-        </motion.a>
       </motion.div>
 
-      {/* RIGHT IMAGE SECTION */}
-      <motion.div
-        initial={{ x: 80, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="relative flex-1/4 justify-center items-center z-[5] mt-8 md:mt-0"
-      >
-        {/* 🖼 Auto-sized image container */}
-        <div className="relative w-fit h-fit flex justify-center items-center">
-          {img.length > 0 ? (
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={img[i]}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="relative flex justify-center items-center"
-              >
-                <Image
-                  src={img[i]}
-                  alt={profile.name}
-                  width={550}
-                  height={550}
-                  priority
-                  className="object-contain max-w-[550px] max-h-[550px] w-auto h-auto"
-                />
-              </motion.div>
-            </AnimatePresence>
-          ) : (
-            <p className="text-gray-400">No image uploaded</p>
-          )}
+      {/* RIGHT IMAGE (BIGGER) */}
+      {img.length > 0 && (
+        <div className="flex-[0.45] flex justify-center">
+          <div
+            onClick={() => {
+              setStoryIndex(0);
+              setProgress(0);
+              setStoryOpen(true);
+            }}
+            className="cursor-pointer w-[280px] h-[280px] rounded-full overflow-hidden 
+                       border-4 border-[var(--border-hover)]"
+          >
+            <Image
+              src={img[0]}
+              alt={profile.name}
+              width={280}
+              height={280}
+              className="object-cover w-full h-full"
+            />
+          </div>
         </div>
-      </motion.div>
+      )}
+
+      {/* STORY VIEWER */}
+      <AnimatePresence>
+        {storyOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+          >
+            {/* TIMELINE */}
+            <div className="absolute top-4 left-4 right-4 flex gap-1">
+              {img.map((_, idx) => (
+                <div
+                  key={idx}
+                  className="flex-1 h-[3px] bg-white/30 rounded overflow-hidden"
+                >
+                  <div
+                    className="h-full bg-white transition-all duration-100"
+                    style={{
+                      width:
+                        idx < storyIndex
+                          ? "100%"
+                          : idx === storyIndex
+                          ? `${progress}%`
+                          : "0%",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* CLOSE */}
+            <button
+              onClick={() => {
+                setStoryOpen(false);
+                setProgress(0);
+              }}
+              className="absolute top-6 right-6 text-white text-xl cursor-pointer"
+            >
+              ✕
+            </button>
+
+            {/* PREV */}
+            <button
+              onClick={() => {
+                setStoryIndex((i) => Math.max(i - 1, 0));
+                setProgress(0);
+              }}
+              className="absolute left-6 text-white text-4xl cursor-pointer"
+            >
+              ‹
+            </button>
+
+            {/* IMAGE */}
+            <motion.div
+              key={storyIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Image
+                src={img[storyIndex]}
+                alt="story"
+                width={520}
+                height={760}
+                className="object-contain max-h-[80vh]"
+              />
+            </motion.div>
+
+            {/* NEXT */}
+            <button
+              onClick={() => {
+                setStoryIndex((i) => Math.min(i + 1, img.length - 1));
+                setProgress(0);
+              }}
+              className="absolute right-6 text-white text-4xl cursor-pointer"
+            >
+              ›
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
