@@ -164,7 +164,7 @@ export const getGfgStats = async (req, res) => {
 
 export const getGfgProblems = async (req, res) => {
   try {
-    const gfgProblems = await GfgProblems.find();
+    const gfgProblems = await GfgProblems.find().sort({ createdAt: -1 });
     return res
       .status(201)
       .json({ message: "Gfg Problems fetched", gfgProblems });
