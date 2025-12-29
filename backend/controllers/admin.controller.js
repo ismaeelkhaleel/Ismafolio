@@ -115,6 +115,7 @@ export const updateEducation = async (req, res) => {
       .status(200)
       .json({ message: "Education updated successfully", education });
   } catch (e) {
+    console.error(e);
     return res.status(500).json({ message: "Server error" });
   }
 };
