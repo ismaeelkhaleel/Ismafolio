@@ -76,7 +76,7 @@ function Projects() {
                     href={`/projects/details/${project._id}-${project.title
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`}
-                    className="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
+                    className="p-3 dark:bg-black/90 bg-white/90 backdrop-blur-sm rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
                     title="View Details"
                   >
                     <Code2 size={20} />
@@ -86,7 +86,7 @@ function Projects() {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-gray-800 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
+                    className="p-3 dark:bg-black/90 bg-white/90 backdrop-blur-sm rounded-full hover:bg-gray-800 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
                     title="View Code"
                   >
                     <Github size={20} />
@@ -97,7 +97,7 @@ function Projects() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
+                      className="p-3 dark:bg-black/90 bg-white/90 backdrop-blur-sm rounded-full hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
                       title="Live Demo"
                     >
                       <ExternalLink size={20} />
@@ -118,7 +118,7 @@ function Projects() {
                     {project.techStack.slice(0, 3).map((tech, idx) => (
                       <span
                         key={idx}
-                        className="inline-block text-xs font-medium px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50/50 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-all duration-200 hover:scale-105 cursor-default"
+                        className="inline-block text-xs font-medium px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50/50 text-emerald-700 hover:bg-grey hover:border-emerald-300 transition-all duration-200 cursor-default"
                       >
                         {tech}
                       </span>
@@ -187,7 +187,7 @@ function Projects() {
         >
           <Link
             href="/projects"
-            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
             View All Projects 
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />

@@ -58,7 +58,7 @@ function Experience() {
           return (
             <motion.div
               key={index}
-              className="card shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl p-6 flex flex-col h-full border border-[var(--border-color)] hover:border-emerald-400 group relative overflow-hidden"
+              className="card shadow-lg   transition-all duration-300 rounded-2xl p-6 flex flex-col h-full border border-[var(--border-color)] hover:border-emerald-400 group relative overflow-hidden"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -71,7 +71,7 @@ function Experience() {
               <div className="relative z-10 flex flex-col h-full">
                 {/* Company Badge */}
                 <div className="inline-flex items-center gap-2 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-400/20 via-purple-500/20 to-pink-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-400/20 via-purple-500/20 to-pink-500/20 flex items-center justify-center transition-transform duration-300">
                     <span className="text-xl">💼</span>
                   </div>
                   <div className="flex-1">
