@@ -86,7 +86,7 @@ function Blogs() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
               {/* Content Container */}
-              <div className="flex flex-col flex-1 p-6">
+              <div className="flex flex-col flex-1">
                 <div className="flex-1">
                   {/* Date Badge */}
                   <div className="flex items-center gap-2 mb-4 text-sm text-[var(--subheading-color)]">
