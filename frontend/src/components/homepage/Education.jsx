@@ -89,11 +89,11 @@ function Education() {
                 {/* Duration Badge - Bottom */}
                 <div className="pt-3 border-t border-[var(--border-color)]">
                   <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50  rounded-lg border border-emerald-200">
                       <Calendar size={16} className="text-emerald-600" />
-                      <span className="text-sm font-medium text-emerald-700">
+                      <p className="text-sm font-medium !text-emerald-600">
                         {edu.startYear} - {edu.endYear}
-                      </span>
+                      </p>
                     </div>
                   </div>
                 </div>
