@@ -21,19 +21,31 @@ function Projects() {
   }, [inView, fetched, getProjects]);
 
   return (
-    <section ref={ref} className="w-full px-6 py-12 bg-transparent">
-      <div className="max-w-6xl mx-auto">
+    <section ref={ref} className="w-full px-6 py-16 bg-transparent">
+      <div className="max-w-7xl mx-auto">
         {!loading && (
-          <div className="pb-6">
-            <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
-              Projects
-            </h2>
-            <div className="w-40 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+          <div className="pb-12">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-4 text-[var(--heading-color)]"
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              Featured Projects
+            </motion.h2>
+            <motion.div 
+              className="w-32 h-1.5 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-3 shadow-lg"
+              initial={{ width: 0 }}
+              whileInView={{ width: 128 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            />
           </div>
         )}
 
         {!projects && (
-          <p className="text-center text-[var(--subheading-color)]">
+          <p className="text-center text-lg text-[var(--subheading-color)]">
             No projects data found.
           </p>
         )}
@@ -42,95 +54,145 @@ function Projects() {
           {projects?.slice(0, 3).map((project, index) => (
             <motion.div
               key={index}
-              className="card shadow-sm rounded-2xl flex flex-col overflow-hidden h-full"
+              className="card shadow-lg hover:shadow-2xl rounded-2xl flex flex-col overflow-hidden h-full border border-[var(--border-color)] hover:border-emerald-400 group transition-all duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <div className="relative w-full overflow-hidden">
-                <motion.img
+              {/* Image Container */}
+              <div className="relative w-full h-48 overflow-hidden">
+                <img
                   src={project.thumbnail}
                   alt={project.title}
-                  className="object-cover transition-transform duration-500 h-48 w-full"
+                  className="w-full h-full object-cover"
                 />
-              </div>
-              <div className="flex flex-col flex-1 justify-between pt-3">
-                <h3 className="text-xl font-semibold text-[var(--heading-color)]">
-                  {project.title}
-                </h3>
-                <div className="mt-5 flex gap-4">
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                {/* Quick Actions on Hover */}
+                <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <a
                     href={`/projects/details/${project._id}-${project.title
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`}
-                    rel="noopener noreferrer"
-                    className="relative group text-emerald-600 transition-colors hover:bg-emerald-100 p-1 rounded-full"
+                    className="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
                     title="View Details"
                   >
-                    <span className="absolute inset-0 rounded-full scale-0 bg-emerald-100 opacity-70 group-hover:scale-100 transition-transform duration-300"></span>
-                    <Code2
-                      size={22}
-                      className="relative z-10 group-hover:text-emerald-800"
-                    />
+                    <Code2 size={20} />
                   </a>
-
+                  
                   <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative group text-gray-700 transition-colors hover:bg-grey-100 p-1 rounded-full"
-                    title="View Code on GitHub"
+                    className="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-gray-800 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
+                    title="View Code"
                   >
-                    <span className="absolute inset-0 rounded-full scale-0 bg-gray-200 opacity-70 group-hover:scale-100 transition-transform duration-300"></span>
-                    <Github
-                      size={22}
-                      className="relative z-10 group-hover:text-gray-900"
-                    />
+                    <Github size={20} />
                   </a>
-
+                  
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative group text-pink-600 transition-colors hover:bg-pink-100 p-1 rounded-full"
-                      title="View Live Project"
+                      className="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110"
+                      title="Live Demo"
                     >
-                      <span className="absolute inset-0 rounded-full scale-0 bg-pink-100 opacity-70 transition-transform duration-300"></span>
-                      <ExternalLink
-                        size={22}
-                        className="relative z-10"
-                      />
+                      <ExternalLink size={20} />
                     </a>
                   )}
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.techStack.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-block text-xs font-semibold px-3 py-1 rounded-full shadow-sm transition"
-                      style={{
-                        backgroundColor: "var(--tag-bg)",
-                        color: "var(--heading-color)",
-                      }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              </div>
+
+              {/* Content Container */}
+              <div className="flex flex-col flex-1">
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-[var(--heading-color)] mb-4 group-hover:text-emerald-500 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.techStack.slice(0, 3).map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="inline-block text-xs font-medium px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50/50 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-all duration-200 hover:scale-105 cursor-default"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 3 && (
+                      <span
+                        className="inline-block text-xs font-medium px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50/50 text-purple-700 cursor-default"
+                      >
+                        +{project.techStack.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Action Links - Bottom */}
+                <div className="flex items-center gap-3 pt-4 border-t border-[var(--border-color)]">
+                  <a
+                    href={`/projects/details/${project._id}-${project.title
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    className="flex items-center gap-2 text-sm font-medium text-emerald-500 hover:text-emerald-600 transition-colors"
+                  >
+                    <Code2 size={16} />
+                    Details
+                  </a>
+                  
+                  <span className="text-[var(--border-color)]">•</span>
+                  
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm font-medium text-[var(--subheading-color)] hover:text-gray-800 transition-colors"
+                  >
+                    <Github size={16} />
+                    Code
+                  </a>
+                  
+                  {project.liveUrl && (
+                    <>
+                      <span className="text-[var(--border-color)]">•</span>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm font-medium text-pink-500 hover:text-pink-600 transition-colors"
+                      >
+                        <ExternalLink size={16} />
+                        Live
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
-        <div className="flex justify-center mt-10">
+
+        {/* View All Button */}
+        <motion.div 
+          className="flex justify-center mt-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
           <Link
             href="/projects"
-            className="flex items-center gap-2 text-[var(--border-hover)] font-medium transition-opacity duration-300 hover:opacity-80"
+            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            View All Projects <ArrowRight size={18} />
+            View All Projects 
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

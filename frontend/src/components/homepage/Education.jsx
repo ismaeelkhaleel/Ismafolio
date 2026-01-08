@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { Calendar, GraduationCap, BookOpen } from "lucide-react";
 import { useUser } from "../../context/Context";
 import { useInView } from "react-intersection-observer";
 
@@ -20,47 +20,83 @@ function Education() {
   }, [inView, fetched, getEducation]);
 
   return (
-    <section ref={ref} className="w-full px-6 py-12 bg-transparent">
-      <div className="max-w-5xl mx-auto">
+    <section ref={ref} className="w-full px-6 py-16 bg-transparent">
+      <div className="max-w-7xl mx-auto">
         {!loading && (
-          <div className="pb-6">
-            <h2 className="text-3xl md:text-3xl text-center mb-4 text-[var(--heading-color)]">
-              Educations
-            </h2>
-            <div className="w-50 h-1 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-2 animate-gradient-x" />
+          <div className="pb-12">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-center mb-4 text-[var(--heading-color)]"
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              Education
+            </motion.h2>
+            <motion.div
+              className="w-32 h-1.5 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-3 shadow-lg"
+              initial={{ width: 0 }}
+              whileInView={{ width: 128 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            />
           </div>
         )}
 
         {!education && (
-          <p className="text-center text-[var(--subheading-color)]">
+          <p className="text-center text-lg text-[var(--subheading-color)]">
             No education data found.
           </p>
         )}
 
-        <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-wrap justify-center gap-8 items-stretch">
           {education?.map((edu, index) => (
             <motion.div
               key={index}
-              className="card shadow-sm transition-transform transition-shadow duration-300 p-6 flex flex-col rounded-lg h-full"
+              className="card shadow-lg hover:shadow-2xl rounded-2xl flex flex-col overflow-hidden border border-[var(--border-color)] hover:border-emerald-400 group transition-all duration-300 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] max-w-md"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <h3 className="text-xl font-semibold text-[var(--heading-color)]">
-                {edu.degree}
-              </h3>
-              <h5 className="text-md font-medium mt-2 text-[var(--accent-color)]">
-                {edu.institute}
-              </h5>
-              <p className="text-sm mt-3 flex-1 text-[var(--subheading-color)]">
-                {edu.description}
-              </p>
-              <div className="flex items-center gap-2 mt-4 text-sm font-medium text-[var(--accent-color)]">
-                <Calendar size={16} />
-                <span>
-                  {edu.startYear} - {edu.endYear}
-                </span>
+              {/* Content Container */}
+              <div className="flex flex-col flex-1">
+                <div className="flex-1">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-emerald-400 to-purple-500 rounded-lg flex items-center justify-center shadow-md flex-shrink-0 transition-transform duration-300">
+                      <GraduationCap size={20} className="text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[var(--heading-color)] group-hover:text-emerald-500 transition-colors duration-300 leading-tight">
+                      {edu.degree}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-start gap-2 mb-3">
+                    <BookOpen
+                      size={16}
+                      className="text-purple-500 mt-0.5 flex-shrink-0"
+                    />
+                    <h5 className="text-sm font-semibold text-purple-600">
+                      {edu.institute}
+                    </h5>
+                  </div>
+
+                  <p className="text-sm leading-relaxed text-[var(--subheading-color)] mb-3">
+                    {edu.description}
+                  </p>
+                </div>
+
+                {/* Duration Badge - Bottom */}
+                <div className="pt-3 border-t border-[var(--border-color)]">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                      <Calendar size={16} className="text-emerald-600" />
+                      <span className="text-sm font-medium text-emerald-700">
+                        {edu.startYear} - {edu.endYear}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}
