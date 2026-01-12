@@ -23,7 +23,7 @@ function Skills() {
     <section ref={ref} className="bg-transparent py-16">
       {!loading && (
         <div className="pb-12">
-          <motion.h2 
+          <motion.h2
             className="text-4xl md:text-5xl font-bold text-center mb-4 text-[var(--heading-color)]"
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ function Skills() {
           >
             Skills & Expertise
           </motion.h2>
-          <motion.div 
+          <motion.div
             className="w-32 h-1.5 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-3 shadow-lg"
             initial={{ width: 0 }}
             whileInView={{ width: 128 }}
@@ -42,11 +42,11 @@ function Skills() {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-6">
         {skills?.map((skill, index) => (
           <motion.div
             key={skill._id}
-            className="card shadow-lg hover:shadow-xl transition-all duration-300 p-6 rounded-2xl border border-[var(--border-color)] hover:border-emerald-400 group relative overflow-hidden"
+            className="card shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl border border-[var(--border-color)] hover:border-emerald-400 group relative overflow-hidden md:w-[calc40%-12px)] lg:w-[calc(32%-16px)]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -54,7 +54,7 @@ function Skills() {
           >
             {/* Gradient overlay on hover */}
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-            
+
             <div className="relative z-10">
               {/* Icon and Title Row */}
               <div className="flex items-center gap-4 mb-4">
@@ -93,7 +93,11 @@ function Skills() {
                     className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 shadow-md"
                     initial={{ width: 0 }}
                     whileInView={{ width: `${(skill.rating / 10) * 100}%` }}
-                    transition={{ duration: 1, delay: index * 0.1 + 0.3, ease: "easeOut" }}
+                    transition={{
+                      duration: 1,
+                      delay: index * 0.1 + 0.3,
+                      ease: "easeOut",
+                    }}
                     viewport={{ once: true }}
                   />
                 </div>

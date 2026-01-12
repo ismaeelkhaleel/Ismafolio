@@ -68,7 +68,6 @@ function Blogs() {
             />
           </div>
         )}
- 
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {blogs?.slice(0, 3).map((blog, index) => (
@@ -86,11 +85,13 @@ function Blogs() {
                   {/* Date Badge */}
                   <div className="flex items-center gap-2 mb-4 text-sm text-[var(--subheading-color)]">
                     <Calendar size={16} className="text-purple-500" />
-                    <span>{new Date(blog.createdAt).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      day: 'numeric', 
-                      year: 'numeric' 
-                    })}</span>
+                    <span>
+                      {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
                     <span className="text-[var(--border-color)]">•</span>
                     <Clock size={16} className="text-emerald-500" />
                     <span>5 min read</span>
@@ -139,24 +140,26 @@ function Blogs() {
         </div>
 
         {/* View All Button */}
-        <motion.div
-          className="flex justify-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <Link
-            href="/blogs"
-            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+        {blogs?.length > 3 && (
+          <motion.div
+            className="flex justify-center mt-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
           >
-            View All Blogs
-            <ArrowRight
-              size={20}
-              className="group-hover:translate-x-1 transition-transform duration-300"
-            />
-          </Link>
-        </motion.div>
+            <Link
+              href="/blogs"
+              className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              View All Blogs
+              <ArrowRight
+                size={20}
+                className="group-hover:translate-x-1 transition-transform duration-300"
+              />
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   );

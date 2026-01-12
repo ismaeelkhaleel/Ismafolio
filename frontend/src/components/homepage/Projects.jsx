@@ -25,7 +25,7 @@ function Projects() {
       <div className="max-w-7xl mx-auto">
         {!loading && (
           <div className="pb-12">
-            <motion.h2 
+            <motion.h2
               className="text-4xl md:text-5xl font-bold text-center mb-4 text-[var(--heading-color)]"
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ function Projects() {
             >
               Featured Projects
             </motion.h2>
-            <motion.div 
+            <motion.div
               className="w-32 h-1.5 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 rounded-full mx-auto mt-3 shadow-lg"
               initial={{ width: 0 }}
               whileInView={{ width: 128 }}
@@ -43,8 +43,6 @@ function Projects() {
             />
           </div>
         )}
-
-        
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects?.slice(0, 3).map((project, index) => (
@@ -65,7 +63,7 @@ function Projects() {
                 />
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 {/* Quick Actions on Hover */}
                 <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <a
@@ -77,7 +75,7 @@ function Projects() {
                   >
                     <Code2 size={20} />
                   </a>
-                  
+
                   <a
                     href={project.githubUrl}
                     target="_blank"
@@ -87,7 +85,7 @@ function Projects() {
                   >
                     <Github size={20} />
                   </a>
-                  
+
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}
@@ -108,7 +106,7 @@ function Projects() {
                   <h3 className="text-2xl font-bold text-[var(--heading-color)] mb-4 group-hover:text-emerald-500 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  
+
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.techStack.slice(0, 3).map((tech, idx) => (
@@ -120,9 +118,7 @@ function Projects() {
                       </span>
                     ))}
                     {project.techStack.length > 3 && (
-                      <span
-                        className="inline-block text-xs font-medium px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50/50 text-purple-700 cursor-default"
-                      >
+                      <span className="inline-block text-xs font-medium px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50/50 text-purple-700 cursor-default">
                         +{project.techStack.length - 3} more
                       </span>
                     )}
@@ -140,9 +136,9 @@ function Projects() {
                     <Code2 size={16} />
                     Details
                   </a>
-                  
+
                   <span className="text-[var(--border-color)]">•</span>
-                  
+
                   <a
                     href={project.githubUrl}
                     target="_blank"
@@ -152,7 +148,7 @@ function Projects() {
                     <Github size={16} />
                     Code
                   </a>
-                  
+
                   {project.liveUrl && (
                     <>
                       <span className="text-[var(--border-color)]">•</span>
@@ -174,21 +170,27 @@ function Projects() {
         </div>
 
         {/* View All Button */}
-        <motion.div 
-          className="flex justify-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <Link
-            href="/projects"
-            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+
+        {projects?.length > 3 && (
+          <motion.div
+            className="flex justify-center mt-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
           >
-            View All Projects 
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
-        </motion.div>
+            <Link
+              href="/projects"
+              className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              View All Projects
+              <ArrowRight
+                size={20}
+                className="group-hover:translate-x-1 transition-transform duration-300"
+              />
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   );
