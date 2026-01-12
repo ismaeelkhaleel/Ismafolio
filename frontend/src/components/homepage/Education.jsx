@@ -43,12 +43,7 @@ function Education() {
           </div>
         )}
 
-        {!education && (
-          <p className="text-center text-lg text-[var(--subheading-color)]">
-            No education data found.
-          </p>
-        )}
-
+        
         <div className="flex flex-wrap justify-center gap-8 items-stretch">
           {education?.map((edu, index) => (
             <motion.div

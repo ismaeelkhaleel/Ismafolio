@@ -42,12 +42,6 @@ function Skills() {
         </div>
       )}
 
-      {!skills && (
-        <p className="text-center text-lg text-[var(--subheading-color)]">
-          No skill data found.
-        </p>
-      )}
-
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {skills?.map((skill, index) => (
           <motion.div
@@ -57,7 +51,6 @@ function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            whileHover={{ y: -8 }}
           >
             {/* Gradient overlay on hover */}
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
@@ -66,7 +59,7 @@ function Skills() {
               {/* Icon and Title Row */}
               <div className="flex items-center gap-4 mb-4">
                 {skill.icon && (
-                  <div className="relative w-16 h-16 flex-shrink-0 p-2 rounded-xl bg-gradient-to-br from-emerald-400/10 via-purple-500/10 to-pink-500/10 group-hover:scale-110 transition-transform duration-300">
+                  <div className="relative w-16 h-16 flex-shrink-0 p-2 rounded-xl bg-gradient-to-br from-emerald-400/10 via-purple-500/10 to-pink-500/10 transition-transform duration-300">
                     <Image
                       src={skill.icon}
                       alt={skill.name}

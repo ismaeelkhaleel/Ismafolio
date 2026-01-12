@@ -68,12 +68,7 @@ function Blogs() {
             />
           </div>
         )}
-
-        {!blogs && (
-          <p className="text-center text-lg text-[var(--subheading-color)]">
-            No blog data found.
-          </p>
-        )}
+ 
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {blogs?.slice(0, 3).map((blog, index) => (

@@ -37,107 +37,108 @@ function Stats() {
           />
         </div>
 
-        <div className="flex flex-wrap justify-center gap-8 items-stretch">
+        <div className="flex flex-wrap justify-center gap-6 items-stretch">
           {/* LeetCode Card */}
           <motion.div
-            className="card shadow-lg hover:shadow-2xl rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[#FFA116] group transition-all duration-300 w-full sm:w-[calc(50%-1rem)] max-w-md flex flex-col"
+            className="card shadow-lg hover:shadow-xl rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[#FFA116] group transition-all duration-300 w-full sm:w-[calc(50%-0.75rem)] max-w-lg flex flex-col"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {/* Header with Gradient */}
-            <div className="bg-gradient-to-r from-[#FFA116] to-[#FFB84D] p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md">
+            {/* Header - Compact */}
+            <div className="bg-gradient-to-r from-[#FFA116] to-[#FFB84D] p-4">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
                   <Image
                     src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
                     alt="LeetCode"
-                    width={28}
-                    height={28}
+                    width={24}
+                    height={24}
                   />
                 </div>
-                <h3 className="text-2xl font-bold text-white">LeetCode</h3>
+                <h3 className="text-xl font-bold text-white">LeetCode</h3>
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 flex-1 flex flex-col">
+            {/* Content - Compact */}
+            <div className="p-5 flex-1 flex flex-col">
               {leetcodeState && leetcodeState[0] ? (
                 <>
-                  <div className="grid grid-cols-2 gap-4 flex-1">
-                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-4 border border-[#FFA116]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Trophy className="w-5 h-5 text-[#FFA116]" />
+                  <div className="grid grid-cols-2 gap-3 flex-1">
+                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-3 border border-[#FFA116]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Trophy className="w-4 h-4 text-[#FFA116]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Rank
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {leetcodeState[0].ranking?.toLocaleString()}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-4 border border-[#FFA116]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Code2 className="w-5 h-5 text-[#FFA116]" />
+                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-3 border border-[#FFA116]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Code2 className="w-4 h-4 text-[#FFA116]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Solved
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {leetcodeState[0].acSubmissionNum[0].count}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-4 border border-[#FFA116]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Star className="w-5 h-5 text-[#FFA116]" />
+                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-3 border border-[#FFA116]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Star className="w-4 h-4 text-[#FFA116]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Rating
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {leetcodeState[0].starRating}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-4 border border-[#FFA116]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Award className="w-5 h-5 text-[#FFA116]" />
+                    <div className="bg-gradient-to-br from-[#FFA116]/10 to-[#FFB84D]/10 rounded-xl p-3 border border-[#FFA116]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Award className="w-4 h-4 text-[#FFA116]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Badges
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {leetcodeState[0].badges.length}
                       </p>
                     </div>
                   </div>
 
-                  {/* Footer Links */}
-                  <div className="flex gap-3 pt-6 border-t border-[var(--border-color)] mt-6">
+                  {/* Footer Links - Compact */}
+                  <div className="flex gap-3 pt-4 border-t border-[var(--border-color)] mt-4">
                     <a
                       href="/leetcode/problems"
-                      className="flex items-center gap-1 text-sm font-medium text-[#FFA116] hover:text-[#FFB84D] transition-colors"
+                      className="flex items-center gap-1 text-xs font-medium text-[#FFA116] hover:text-[#FFB84D] transition-colors"
                     >
-                      View Problems
-                      <ExternalLink className="w-4 h-4" />
+                      Problems
+                      <ExternalLink className="w-3 h-3" />
                     </a>
+                    <span className="text-[var(--border-color)]">•</span>
                     <a
                       href={leetcodeState[0]?.profileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm font-medium text-[#FFA116] hover:text-[#FFB84D] transition-colors"
+                      className="flex items-center gap-1 text-xs font-medium text-[#FFA116] hover:text-[#FFB84D] transition-colors"
                     >
-                      View Profile
-                      <ExternalLink className="w-4 h-4" />
+                      Profile
+                      <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </>
               ) : (
                 <div className="flex items-center justify-center h-full">
-                  <p className="text-[var(--subheading-color)]">
+                  <p className="text-sm text-[var(--subheading-color)]">
                     Loading stats...
                   </p>
                 </div>
@@ -147,101 +148,101 @@ function Stats() {
 
           {/* GFG Card */}
           <motion.div
-            className="card shadow-lg hover:shadow-2xl rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[#0F9D58] group transition-all duration-300 w-full sm:w-[calc(50%-1rem)] max-w-md flex flex-col"
+            className="card shadow-lg hover:shadow-xl rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[#0F9D58] group transition-all duration-300 w-full sm:w-[calc(50%-0.75rem)] max-w-lg flex flex-col"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {/* Header with Gradient */}
-            <div className="bg-gradient-to-r from-[#0F9D58] to-[#34A853] p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md">
+            {/* Header - Compact */}
+            <div className="bg-gradient-to-r from-[#0F9D58] to-[#34A853] p-4">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
                   <Image
                     src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg"
                     alt="GeeksforGeeks"
-                    width={28}
-                    height={28}
+                    width={24}
+                    height={24}
                   />
                 </div>
-                <h3 className="text-2xl font-bold text-white">GeeksforGeeks</h3>
+                <h3 className="text-xl font-bold text-white">GeeksforGeeks</h3>
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 flex-1 flex flex-col">
+            {/* Content - Compact */}
+            <div className="p-5 flex-1 flex flex-col">
               {gfgState && gfgState[0] ? (
                 <>
-                  <div className="grid grid-cols-2 gap-4 flex-1">
-                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-4 border border-[#0F9D58]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Code2 className="w-5 h-5 text-[#0F9D58]" />
+                  <div className="grid grid-cols-2 gap-3 flex-1">
+                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-3 border border-[#0F9D58]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Code2 className="w-4 h-4 text-[#0F9D58]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Solved
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {gfgState[0].totalProblemsSolved}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-4 border border-[#0F9D58]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Star className="w-5 h-5 text-[#0F9D58]" />
+                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-3 border border-[#0F9D58]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Star className="w-4 h-4 text-[#0F9D58]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Score
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {gfgState[0].codingScore}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-4 border border-[#0F9D58]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Trophy className="w-5 h-5 text-[#0F9D58]" />
+                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-3 border border-[#0F9D58]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Trophy className="w-4 h-4 text-[#0F9D58]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Rank
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {gfgState[0].instituteRank}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-4 border border-[#0F9D58]/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Flame className="w-5 h-5 text-[#0F9D58]" />
+                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-3 border border-[#0F9D58]/20">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Flame className="w-4 h-4 text-[#0F9D58]" />
                         <span className="text-xs font-medium text-[var(--subheading-color)]">
                           Streak
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-[var(--heading-color)]">
+                      <p className="text-xl font-bold text-[var(--heading-color)]">
                         {gfgState[0].currentStreak}
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-4 border border-[#0F9D58]/20 col-span-2">
+                    <div className="bg-gradient-to-br from-[#0F9D58]/10 to-[#34A853]/10 rounded-xl p-3 border border-[#0F9D58]/20 col-span-2">
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Star className="w-5 h-5 text-[#0F9D58]" />
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <Star className="w-4 h-4 text-[#0F9D58]" />
                             <span className="text-xs font-medium text-[var(--subheading-color)]">
                               Max Streak
                             </span>
                           </div>
-                          <p className="text-xl font-bold text-[var(--heading-color)]">
+                          <p className="text-lg font-bold text-[var(--heading-color)]">
                             {gfgState[0].maxStreak} days
                           </p>
                         </div>
                         <div className="text-right">
-                          <div className="flex items-center gap-2 mb-1 justify-end">
-                            <Code2 className="w-5 h-5 text-[#0F9D58]" />
+                          <div className="flex items-center gap-1.5 mb-1 justify-end">
+                            <Code2 className="w-4 h-4 text-[#0F9D58]" />
                             <span className="text-xs font-medium text-[var(--subheading-color)]">
                               POTD
                             </span>
                           </div>
-                          <p className="text-xl font-bold text-[var(--heading-color)]">
+                          <p className="text-lg font-bold text-[var(--heading-color)]">
                             {gfgState[0].potdSolved}
                           </p>
                         </div>
@@ -249,29 +250,30 @@ function Stats() {
                     </div>
                   </div>
 
-                  {/* Footer Links */}
-                  <div className="flex gap-3 pt-6 border-t border-[var(--border-color)] mt-6">
+                  {/* Footer Links - Compact */}
+                  <div className="flex gap-3 pt-4 border-t border-[var(--border-color)] mt-4">
                     <a
                       href="/geeksforgeek/problems"
-                      className="flex items-center gap-1 text-sm font-medium text-[#0F9D58] hover:text-[#34A853] transition-colors"
+                      className="flex items-center gap-1 text-xs font-medium text-[#0F9D58] hover:text-[#34A853] transition-colors"
                     >
-                      View Problems
-                      <ExternalLink className="w-4 h-4" />
+                      Problems
+                      <ExternalLink className="w-3 h-3" />
                     </a>
+                    <span className="text-[var(--border-color)]">•</span>
                     <a
                       href={gfgState[0]?.profileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm font-medium text-[#0F9D58] hover:text-[#34A853] transition-colors"
+                      className="flex items-center gap-1 text-xs font-medium text-[#0F9D58] hover:text-[#34A853] transition-colors"
                     >
-                      View Profile
-                      <ExternalLink className="w-4 h-4" />
+                      Profile
+                      <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </>
               ) : (
                 <div className="flex items-center justify-center h-full">
-                  <p className="text-[var(--subheading-color)]">
+                  <p className="text-sm text-[var(--subheading-color)]">
                     Loading stats...
                   </p>
                 </div>
