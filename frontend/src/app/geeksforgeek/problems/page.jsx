@@ -10,23 +10,10 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import Loader from "../../../components/buttons/Loader"; // make sure the path is correct
 
 export default function GfgPage() {
-  const { getGfgStats, gfgState, getGfgProblems, gfgProblems } = useUser();
-
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!gfgState || !gfgProblems) {
-      setLoading(true);
-      Promise.all([getGfgStats(), getGfgProblems()]).finally(() =>
-        setLoading(false)
-      );
-    }
-  }, [getGfgStats, getGfgProblems, gfgState, gfgProblems]);
-
-  const ITEMS_PER_PAGE = 10;
+  const { gfgState, gfgProblems } = useUser();
+  const ITEMS_PER_PAGE = 15;
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("All");
 
@@ -34,13 +21,13 @@ export default function GfgPage() {
     if (!gfgProblems) return [];
     if (filter === "All") return gfgProblems;
     return gfgProblems.filter(
-      (p) => p.level?.toLowerCase() === filter.toLowerCase()
+      (p) => p.level?.toLowerCase() === filter.toLowerCase(),
     );
   }, [gfgProblems, filter]);
 
   const totalPages = Math.max(
     1,
-    Math.ceil((filteredProblems?.length || 0) / ITEMS_PER_PAGE)
+    Math.ceil((filteredProblems?.length || 0) / ITEMS_PER_PAGE),
   );
 
   const visibleProblems = useMemo(() => {
@@ -53,10 +40,26 @@ export default function GfgPage() {
   const pieData = useMemo(() => {
     if (!gfgProblems) return [];
     return [
-      { name: "Basic", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "basic").length },
-      { name: "Easy", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "easy").length },
-      { name: "Medium", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "medium").length },
-      { name: "Hard", value: gfgProblems.filter((p) => p.level?.toLowerCase() === "hard").length },
+      {
+        name: "Basic",
+        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "basic")
+          .length,
+      },
+      {
+        name: "Easy",
+        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "easy")
+          .length,
+      },
+      {
+        name: "Medium",
+        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "medium")
+          .length,
+      },
+      {
+        name: "Hard",
+        value: gfgProblems.filter((p) => p.level?.toLowerCase() === "hard")
+          .length,
+      },
     ];
   }, [gfgProblems]);
 
@@ -71,15 +74,6 @@ export default function GfgPage() {
     if (totalPages > 1) pages.push(totalPages);
     return [...new Set(pages)].sort((a, b) => a - b);
   };
-
-  // 🔹 Show loader for the whole page
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div className="px-4 py-6 pb-40 min-h-screen bg-transparent text-gray-900 dark:text-gray-100">

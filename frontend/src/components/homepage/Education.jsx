@@ -7,17 +7,17 @@ import { useInView } from "react-intersection-observer";
 
 function Education() {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getEducation, education } = useUser();
+  const { education } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 
-  useEffect(() => {
-    if (inView && !fetched && !education) {
-      setLoading(true);
-      getEducation().finally(() => setLoading(false));
-      setFetched(true);
-    }
-  }, [inView, fetched, getEducation]);
+  // useEffect(() => {
+  //   if (inView && !fetched && !education) {
+  //     setLoading(true);
+  //     getEducation().finally(() => setLoading(false));
+  //     setFetched(true);
+  //   }
+  // }, [inView, fetched, getEducation]);
 
   return (
     <section ref={ref} className="w-full px-6 py-16 bg-transparent">

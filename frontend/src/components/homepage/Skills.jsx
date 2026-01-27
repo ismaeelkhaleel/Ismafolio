@@ -7,17 +7,17 @@ import { useInView } from "react-intersection-observer";
 
 function Skills() {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getSkills, skills } = useUser();
+  const {  skills } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 
-  useEffect(() => {
-    if (inView && !fetched && !skills) {
-      setLoading(true);
-      getSkills().finally(() => setLoading(false));
-      setFetched(true);
-    }
-  }, [inView, fetched, getSkills]);
+  // useEffect(() => {
+  //   if (inView && !fetched && !skills) {
+  //     setLoading(true);
+  //     getSkills().finally(() => setLoading(false));
+  //     setFetched(true);
+  //   }
+  // }, [inView, fetched, getSkills]);
 
   return (
     <section ref={ref} className="bg-transparent py-16">

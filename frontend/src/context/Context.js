@@ -1,251 +1,60 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import {
-  getBlogsAPI,
-  getEducationAPI,
-  getExperienceAPI,
-  getGfgProblemsAPI,
-  getGfgStatsAPI,
-  getLeetCodeStateAPI,
-  getLeetcodeHeatmapAPI,
-  getLeetcodeProblemsAPI,
-  getProfileAPI,
-  getProjectsAPI,
-  getSkillsAPI,
-  sendContactMessageAPI,
-  getBlogDetailAPI,
-  getProjectDetailAPI,
-  getSocialLinksAPI,
-} from "@/services/api";
-
 import toast, { Toaster } from "react-hot-toast";
+
 const Context = createContext(null);
 
-export const Provider = ({ children }) => {
-  const [profile, setProfile] = useState(null);
-  const getProfile = async () => {
-    try {
-      const res = await getProfileAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setProfile(data.profile[0]);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching profile");
-    }
-  };
-  const [education, setEducation] = useState(null);
-  const getEducation = async () => {
-    try {
-      const res = await getEducationAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setEducation(data.education);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching education");
-    }
-  };
-  const [experience, setExperience] = useState(null);
-  const getExperience = async () => {
-    try {
-      const res = await getExperienceAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setExperience(data.experience);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching experience");
-    }
-  };
-  const [projects, setProjects] = useState(null);
-  const getProjects = async () => {
-    try {
-      const res = await getProjectsAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setProjects(data.projects);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching projects");
-    }
-  };
-  const [skills, setSkills] = useState(null);
-  const getSkills = async () => {
-    try {
-      const res = await getSkillsAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setSkills(data.skills);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching skills");
-    }
-  };
-  const [blogs, setBlogs] = useState(null);
-  const getBlogs = async () => {
-    try {
-      const res = await getBlogsAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setBlogs(data.blogs);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching blogs");
-    }
-  };
-  const [leetcodeState, setLeetcodeState] = useState(null);
-  const getLeetcodeState = async () => {
-    try {
-      const res = await getLeetCodeStateAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setLeetcodeState(data.leetcodeState);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching leetcode stats");
-    }
-  };
-  const [leetcodeProblems, setLeetcodeProblems] = useState(null);
-  const getLeetcodeProblems = async () => {
-    try {
-      const res = await getLeetcodeProblemsAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setLeetcodeProblems(data.leetcodeProblems);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching leetcode problems");
-    }
-  };
-  const [leetcodeHeatmap, setLeetcodeHeatmap] = useState(null);
-  const getLeetcodeHeatmap = async () => {
-    try {
-      const res = await getLeetcodeHeatmapAPI();
-      const data = await res.json();
-
-      if (res.ok) {
-        setLeetcodeHeatmap(data.leetcodeHeatmap);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching leetcode heatmap");
-    }
-  };
-  const [gfgState, setGfgStats] = useState(null);
-  const getGfgStats = async () => {
-    try {
-      const res = await getGfgStatsAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setGfgStats(data.gfgStats);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching gfg stats");
-    }
-  };
-  const [gfgProblems, setGfgProblems] = useState(null);
-  const getGfgProblems = async () => {
-    try {
-      const res = await getGfgProblemsAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setGfgProblems(data.gfgProblems);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching gfg problems");
-    }
-  };
-  const sendContactMessage = async (name, email, message) => {
-    try {
-      const res = await sendContactMessageAPI(name, email, message);
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.message || "Can not send message, try again");
-      } else {
-        toast.success(data.message || "Message sent");
-      }
-    } catch (err) {
-      toast.error("Some error while sending message");
-    }
-  };
-  const [blogDetail, setBlogDetail] = useState(null);
-  const getBlogDetail = async (blogId) => {
-    try {
-      const res = await getBlogDetailAPI(blogId);
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.message || "Can not Fetch detail, try again");
-      } else {
-        setBlogDetail(data.blogDetail);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching blog detail");
-    }
-  };
-  const [projectDetail, setProjectDetail] = useState(null);
-  const getProjectDetail = async (projectId) => {
-    try {
-      const res = await getProjectDetailAPI(projectId);
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.message || "Can not Fetch detail, try again");
-      } else {
-        setProjectDetail(data.projectDetails);
-      }
-    } catch (err) {
-      toast.error("Some error while fetching Project detail");
-    }
-  };
-  const [socials, setSocials] = useState(null);
-  const getSocialLinks = async () => {
-    try {
-      const res = await getSocialLinksAPI();
-      const data = await res.json();
-      if (res.ok) {
-        setSocials(data.socialLinks);
-      } else {
-        toast.error(data.message || "Some error while fetching social links");
-      }
-    } catch (err) {
-      toast.error("Some error while fetching social links");
-    }
-  };
+export const Provider = ({ children, initialData = {} }) => {
+  const [profile, setProfile] = useState(initialData.profile || null);
+  const [education, setEducation] = useState(initialData.education || null);
+  const [experience, setExperience] = useState(initialData.experience || null);
+  const [projects, setProjects] = useState(initialData.projects || null);
+  const [skills, setSkills] = useState(initialData.skills || null);
+  const [blogs, setBlogs] = useState(initialData.blogs || null);
+  const [socials, setSocials] = useState(initialData.socials || null);
+  const [leetcodeState, setLeetcodeState] = useState(
+    initialData.leetcodeState || null,
+  );
+  const [leetcodeProblems, setLeetcodeProblems] = useState(
+    initialData.leetcodeProblems || null,
+  );
+  const [leetcodeHeatmap, setLeetcodeHeatmap] = useState(
+    initialData.leetcodeHeatmap || null,
+  );
+  const [gfgState, setGfgState] = useState(initialData.gfgState || null);
+  const [gfgProblems, setGfgProblems] = useState(
+    initialData.gfgProblems || null,
+  );
   return (
     <Context.Provider
       value={{
-        getProfile,
         profile,
-        getEducation,
+        setProfile,
         education,
-        getExperience,
+        setEducation,
         experience,
-        getProjects,
+        setExperience,
         projects,
-        getSkills,
+        setProjects,
         skills,
-        getBlogs,
+        setSkills,
         blogs,
-        getLeetcodeState,
-        leetcodeState,
-        getLeetcodeProblems,
-        leetcodeProblems,
-        getLeetcodeHeatmap,
-        leetcodeHeatmap,
-        getGfgStats,
-        gfgState,
-        getGfgProblems,
-        gfgProblems,
-        sendContactMessage,
-        getBlogDetail,
-        blogDetail,
-        getProjectDetail,
-        projectDetail,
-        getSocialLinks,
+        setBlogs,
         socials,
+        setSocials,
+        leetcodeState,
+        setLeetcodeState,
+        gfgState,
+        setGfgState,
+        leetcodeProblems,
+        setLeetcodeProblems,
+        leetcodeHeatmap,
+        setLeetcodeHeatmap,
+        gfgProblems,
       }}
     >
       {children}
-      <Toaster position="top-right"></Toaster>
+      <Toaster position="top-right" />
     </Context.Provider>
   );
 };

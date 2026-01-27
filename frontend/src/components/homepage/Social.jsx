@@ -5,22 +5,22 @@ import { useInView } from "react-intersection-observer";
 import { useUser } from "../../context/Context";
 
 function Socials() {
-  const { getSocialLinks, socials } = useUser();
+  const { socials } = useUser();
   const { ref, inView } = useInView({ triggerOnce: true });
 
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState(null);
 
-  useEffect(() => {
-    if (inView && !fetched && !socials) {
-      setLoading(true);
-      getSocialLinks().finally(() => {
-        setLoading(false);
-        setFetched(true);
-      });
-    }
-  }, [inView, fetched, socials, getSocialLinks]);
+  // useEffect(() => {
+  //   if (inView && !fetched && !socials) {
+  //     setLoading(true);
+  //     getSocialLinks().finally(() => {
+  //       setLoading(false);
+  //       setFetched(true);
+  //     });
+  //   }
+  // }, [inView, fetched, socials, getSocialLinks]);
 
   if (loading) return null;
 

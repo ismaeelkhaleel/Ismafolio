@@ -6,44 +6,26 @@ import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-function truncateHTML(html, maxLength = 150) {
-  const tmp = document.createElement("div");
-  tmp.innerHTML = html;
-  let total = 0;
+function truncateHTML(html = "", maxLength = 150) {
+  if (!html) return "";
 
-  function traverse(node) {
-    if (total >= maxLength) return null;
-    if (node.nodeType === Node.TEXT_NODE) {
-      const remaining = maxLength - total;
-      const text = node.textContent ? node.textContent.slice(0, remaining) : "";
-      total += text.length;
-      return document.createTextNode(text);
-    }
-    const el = node.cloneNode(false);
-    node.childNodes.forEach((child) => {
-      const newChild = traverse(child);
-      if (newChild) el.appendChild(newChild);
-    });
-    return el;
-  }
-
-  const truncated = traverse(tmp);
-  return truncated ? truncated.innerHTML : "";
+  const text = html.replace(/<[^>]*>/g, "");
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
 function Blogs() {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getBlogs, blogs } = useUser();
+  const { blogs } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 
-  useEffect(() => {
-    if (inView && !fetched) {
-      setLoading(true);
-      getBlogs().finally(() => setLoading(false));
-      setFetched(true);
-    }
-  }, [inView, fetched, getBlogs]);
+  // useEffect(() => {
+  //   if (inView && !fetched) {
+  //     setLoading(true);
+  //     getBlogs().finally(() => setLoading(false));
+  //     setFetched(true);
+  //   }
+  // }, [inView, fetched, getBlogs]);
 
   return (
     <section ref={ref} className="w-full px-6 py-16 bg-transparent">

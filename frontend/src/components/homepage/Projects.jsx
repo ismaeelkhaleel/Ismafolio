@@ -8,17 +8,17 @@ import { Github, Code2, ExternalLink, ArrowRight } from "lucide-react";
 
 function Projects() {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getProjects, projects } = useUser();
+  const { projects } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 
-  useEffect(() => {
-    if (inView && !fetched) {
-      setLoading(true);
-      getProjects().finally(() => setLoading(false));
-      setFetched(true);
-    }
-  }, [inView, fetched, getProjects]);
+  // useEffect(() => {
+  //   if (inView && !fetched) {
+  //     setLoading(true);
+  //     getProjects().finally(() => setLoading(false));
+  //     setFetched(true);
+  //   }
+  // }, [inView, fetched, getProjects]);
 
   return (
     <section ref={ref} className="w-full px-6 py-16 bg-transparent">

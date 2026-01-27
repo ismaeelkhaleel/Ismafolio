@@ -1,37 +1,70 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-
 import { Provider } from "@/context/Context";
+import {
+  getProfileAPI,
+  getEducationAPI,
+  getExperienceAPI,
+  getProjectsAPI,
+  getSkillsAPI,
+  getBlogsAPI,
+  getSocialLinksAPI,
+  getLeetCodeStateAPI,
+  getGfgStateAPI,
+  getLeetcodeHeatmapAPI,
+  getLeetcodeProblemsAPI,
+  getGfgProblemsAPI,
+  getProjectDetailAPI
+} from "@/services/api";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export default async function RootLayout({ children }) {
+  const [
+    profileRes,
+    educationRes,
+    experienceRes,
+    projectsRes,
+    skillsRes,
+    blogsRes,
+    socialsRes,
+    leetcodeRes,
+    gfgRes,
+    leetcodeHeatmapRes,
+    leetcodeProblemsRes,
+    gfgProblemsRes,
+  ] = await Promise.all([
+    getProfileAPI(),
+    getEducationAPI(),
+    getExperienceAPI(),
+    getProjectsAPI(),
+    getSkillsAPI(),
+    getBlogsAPI(),
+    getSocialLinksAPI(),
+    getLeetCodeStateAPI(),
+    getGfgStateAPI(),
+    getLeetcodeHeatmapAPI(),
+    getLeetcodeProblemsAPI(),
+    getGfgProblemsAPI(),
+  ]);
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  const initialData = {
+    profile: (await profileRes.json()).profile?.[0],
+    education: (await educationRes.json()).education,
+    experience: (await experienceRes.json()).experience,
+    projects: (await projectsRes.json()).projects,
+    skills: (await skillsRes.json()).skills,
+    blogs: (await blogsRes.json()).blogs,
+    socials: (await socialsRes.json()).socialLinks,
+    leetcodeState: (await leetcodeRes.json()).leetcodeState,
+    gfgState: (await gfgRes.json()).gfgStats,
+    leetcodeHeatmap: (await leetcodeHeatmapRes.json()).leetcodeHeatmap,
+    leetcodeProblems: (await leetcodeProblemsRes.json()).leetcodeProblems,
+    gfgProblems: (await gfgProblemsRes.json()).gfgProblems,
+  };
 
-export const metadata = {
-  title: "Mohd Ismaeel's Portfolio",
-  description: "Welcome to my personal portfolio website.",
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-    other: ["/favicon.svg"],
-  },
-};
-
-export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Provider>
+    <html lang="en">
+      <body>
+        <Provider initialData={initialData}>
           <Navbar />
           <main>{children}</main>
         </Provider>

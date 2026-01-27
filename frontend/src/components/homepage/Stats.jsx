@@ -6,15 +6,7 @@ import { Trophy, Star, Code2, Flame, Award, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 function Stats() {
-  const { getLeetcodeState, leetcodeState, getGfgStats, gfgState } = useUser();
-
-  useEffect(() => {
-    if (!leetcodeState || !gfgState) {
-      getGfgStats();
-      getLeetcodeState();
-    }
-  }, []);
-
+  const { leetcodeState, gfgState } = useUser();
   return (
     <section className="w-full px-6 py-16 bg-transparent">
       <div className="max-w-7xl mx-auto">

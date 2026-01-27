@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
 import { SquareTerminal, House, BotMessageSquare } from "lucide-react";

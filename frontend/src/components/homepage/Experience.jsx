@@ -7,17 +7,17 @@ import { useInView } from "react-intersection-observer";
 function Experience() {
   const [expanded, setExpanded] = useState({});
   const { ref, inView } = useInView({ triggerOnce: true });
-  const { getExperience, experience } = useUser();
+  const { experience } = useUser();
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
 
-  useEffect(() => {
-    if (inView && !fetched && !experience) {
-      setLoading(true);
-      getExperience().finally(() => setLoading(false));
-      setFetched(true);
-    }
-  }, [inView, fetched, getExperience]);
+  // useEffect(() => {
+  //   if (inView && !fetched && !experience) {
+  //     setLoading(true);
+  //     getExperience().finally(() => setLoading(false));
+  //     setFetched(true);
+  //   }
+  // }, [inView, fetched, getExperience]);
 
   const toggleExpand = (index) => {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
