@@ -39,13 +39,13 @@ router.post(
   "/add/project",
   verifyToken,
   upload.single("thumbnail"),
-  addProject
+  addProject,
 );
 router.put(
   "/update/project/:id",
   verifyToken,
   upload.single("thumbnail"),
-  updateProject
+  updateProject,
 );
 router.delete("/delete/project/:id", verifyToken, deleteProject);
 router.post("/create/experience", verifyToken, createExperience);
@@ -55,13 +55,13 @@ router.post(
   "/create/blog",
   verifyToken,
   upload.single("coverImage"),
-  createBlog
+  createBlog,
 );
 router.put(
   "/update/blog/:id",
   verifyToken,
   upload.single("coverImage"),
-  updateBlog
+  updateBlog,
 );
 router.delete("/delete/blog/:id", verifyToken, deleteBlog);
 router.put(
@@ -71,7 +71,12 @@ router.put(
     { name: "resume", maxCount: 1 },
     { name: "images", maxCount: 5 },
   ]),
-  upsertAdminProfile
+  (err, req, res, next) => {
+    return res.status(400).json({
+      message: err.message || "Upload failed",
+    });
+  },
+  upsertAdminProfile,
 );
 router.get("/get-new-contact-message", verifyToken, getNewMessage);
 router.get("/get-all-contact-message", verifyToken, getAllMessage);

@@ -14,7 +14,6 @@ const storage = new CloudinaryStorage({
       resourceType = "auto";
       format = "pdf";
     }
-
     return {
       folder: "smart_portfolio",
       resource_type: resourceType,

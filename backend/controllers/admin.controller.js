@@ -54,7 +54,7 @@ export const updateSkill = async (req, res) => {
     const skill = await Skill.findByIdAndUpdate(
       id,
       { name, level, rating, icon },
-      { new: true }
+      { new: true },
     );
     return res
       .status(200)
@@ -175,7 +175,7 @@ export const updateProject = async (req, res) => {
     }
 
     Object.keys(updateData).forEach(
-      (key) => updateData[key] === undefined && delete updateData[key]
+      (key) => updateData[key] === undefined && delete updateData[key],
     );
 
     const updatedProject = await Project.findByIdAndUpdate(id, updateData, {
@@ -241,7 +241,7 @@ export const upsertAdminProfile = async (req, res) => {
 
     // Clean undefined
     Object.keys(updateData).forEach(
-      (key) => updateData[key] === undefined && delete updateData[key]
+      (key) => updateData[key] === undefined && delete updateData[key],
     );
 
     const profile = await Profile.findOneAndUpdate({}, updateData, {
@@ -455,7 +455,7 @@ export const updateSocialLink = async (req, res) => {
     const socialLink = await Social.findByIdAndUpdate(
       id,
       { platform, url, icon },
-      { new: true }
+      { new: true },
     );
     return res
       .status(200)

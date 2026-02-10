@@ -8,12 +8,12 @@ const username = "pmohd2";
 const fetchedGfgData = async () => {
   try {
     const data = await getGFGDetails(username);
-    console.log(data);
+   
     // Helper function to convert streak string like "12 Days" to number
     const parseStreak = (streakStr) => {
       if (!streakStr) return 0;
       const match = streakStr.match(/\d+/); // Extract number
-      console.log(match);
+      
       return match ? parseInt(match[0]) : 0;
     };
 
@@ -76,14 +76,12 @@ const fetchedGfgData = async () => {
   }
 };
 (async () => {
-  console.log("Initial GFG fetch on server start");
   await fetchedGfgData();
 })();
 
 cron.schedule(
   "0 0 * * *",
   async () => {
-    console.log("Fetching GeeksforGeeks Data...");
     await fetchedGfgData();
   },
   {

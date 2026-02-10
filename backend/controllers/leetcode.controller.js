@@ -10,7 +10,7 @@ const username = "Mohd_Ismaeel";
 const fetchLeetCodeData = async () => {
   try {
     const user = await leetcode.user(username);
-    console.log(user.matchedUser.badges);
+
     const existingUser = await LeetcodeState.findOne({
       username: user.matchedUser.username,
     });
@@ -46,7 +46,7 @@ const fetchLeetCodeData = async () => {
             difficulty: item.difficulty,
             count: item.count,
             submissions: item.submissions,
-          })
+          }),
         ),
         badges: user.matchedUser.badges.map((badge) => ({
           id: badge.id,
@@ -55,7 +55,7 @@ const fetchLeetCodeData = async () => {
           creationDate: new Date(badge.creationDate),
         })),
       });
-      savedUser = await savedUser.save();
+      await savedUser.save();
     }
     const recentSolvedProblems = user.recentSubmissionList;
     for (const problem of recentSolvedProblems) {
@@ -89,7 +89,7 @@ const fetchLeetCodeData = async () => {
       await LeetcodeHeatmap.updateOne(
         { date: formattedDate },
         { $set: { submissions: Number(submissions) } },
-        { upsert: true }
+        { upsert: true },
       );
     }
   } catch (err) {
@@ -97,16 +97,14 @@ const fetchLeetCodeData = async () => {
   }
 };
 (async () => {
-  console.log("Initial leetcode fetch on server start");
   await fetchLeetCodeData();
 })();
 cron.schedule(
   "0 0 * * *",
   async () => {
-    console.log("Fetching LeetCode Data...");
     await fetchLeetCodeData();
   },
   {
     timezone: "Asia/Kolkata",
-  }
+  },
 );
