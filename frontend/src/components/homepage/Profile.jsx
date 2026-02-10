@@ -6,7 +6,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { useUser } from "../../context/Context";
 import Loader from "../buttons/Loader";
-import { Code2, Sparkles, Download } from "lucide-react";
+import {
+  Code2,
+  Sparkles,
+  Download,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 function HighlightedText({ text, highlights = [] }) {
   if (!highlights.length) return <span>{text}</span>;
@@ -85,6 +91,24 @@ function Profile() {
   const handleResumeDownload = () => {
     if (profile?.resume) {
       window.open(profile.resume, "_blank");
+    }
+  };
+
+  const handlePrevStory = () => {
+    if (storyIndex > 0) {
+      setStoryIndex((i) => i - 1);
+      setProgress(0);
+    }
+  };
+
+  const handleNextStory = () => {
+    if (storyIndex < img.length - 1) {
+      setStoryIndex((i) => i + 1);
+      setProgress(0);
+    } else {
+      setStoryOpen(false);
+      setStoryIndex(0);
+      setProgress(0);
     }
   };
 
@@ -217,15 +241,61 @@ function Profile() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center"
           >
+            {/* Progress bars */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4 flex gap-1">
+              {img.map((_, idx) => (
+                <div
+                  key={idx}
+                  className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden"
+                >
+                  <div
+                    className="h-full bg-white transition-all duration-100"
+                    style={{
+                      width:
+                        idx < storyIndex
+                          ? "100%"
+                          : idx === storyIndex
+                            ? `${progress}%`
+                            : "0%",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
             <motion.button
               onClick={() => {
                 setStoryOpen(false);
                 setProgress(0);
               }}
-              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white text-2xl"
+              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white text-2xl hover:bg-white/20 transition-colors cursor-pointer"
             >
               ✕
             </motion.button>
+
+            {/* Previous button */}
+            {storyIndex > 0 && (
+              <motion.button
+                onClick={handlePrevStory}
+                className="absolute left-4 w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors cursor-pointer"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </motion.button>
+            )}
+
+            {/* Next button */}
+            {storyIndex < img.length - 1 && (
+              <motion.button
+                onClick={handleNextStory}
+                className="absolute right-4 w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors cursor-pointer"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <ChevronRight className="w-6 h-6" />
+              </motion.button>
+            )}
 
             <motion.div
               key={storyIndex}
