@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Provider } from "@/context/Context";
+import ChatWidget from "@/components/ChatWidget";
 import {
   getProfileAPI,
   getEducationAPI,
@@ -14,7 +15,6 @@ import {
   getLeetcodeHeatmapAPI,
   getLeetcodeProblemsAPI,
   getGfgProblemsAPI,
-  getProjectDetailAPI
 } from "@/services/api";
 
 export default async function RootLayout({ children }) {
@@ -66,6 +66,7 @@ export default async function RootLayout({ children }) {
       <body>
         <Provider initialData={initialData}>
           <Navbar />
+          <ChatWidget />
           <main>{children}</main>
         </Provider>
       </body>
