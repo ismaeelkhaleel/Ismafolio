@@ -17,7 +17,7 @@ function TypingMessage({ text, animate }) {
       setWordIndex((i) => i + 1);
     }, 60);
     return () => clearTimeout(timeout);
-  }, [wordIndex, animate]);
+  }, [wordIndex, animate, words]);
 
   return <span>{displayed}</span>;
 }
