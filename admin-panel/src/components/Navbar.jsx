@@ -12,7 +12,8 @@ import {
   LogIn,
   LogOut,
   Mail,
-  Link2
+  Link2,
+  Bot
 } from "lucide-react";
 
 function Navbar() {
@@ -48,6 +49,7 @@ function Navbar() {
     { href: "/blogs", label: "Blogs", icon: <FileText /> },
     { href: "/messages", label: "Messages", icon: <Mail /> },
     { href: "/social", label: "Social Media", icon: <Link2 /> },
+    {href:"/bot", label:"bot", icon:<Bot/>}
   ];
 
   return (

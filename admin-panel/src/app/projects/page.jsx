@@ -54,7 +54,7 @@ function Page() {
   };
 
   const openEditModal = (proj) => {
-    console.log(proj);
+   
     setSelectedProject(proj);
     setFormData({
       title: proj.title,

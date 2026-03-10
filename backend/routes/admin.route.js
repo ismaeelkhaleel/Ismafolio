@@ -24,6 +24,7 @@ import {
   addSocialLink,
   updateSocialLink,
   deleteSocialLink,
+  addBotContent,
 } from "../controllers/admin.controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
@@ -84,5 +85,5 @@ router.put("/seen-contact-message/:id", verifyToken, seenMessage);
 router.post("/add/social-link", verifyToken, addSocialLink);
 router.put("/update/social-link/:id", verifyToken, updateSocialLink);
 router.delete("/delete/social-link/:id", verifyToken, deleteSocialLink);
-
+router.post("/bot/save-content", verifyToken, addBotContent);
 export default router;

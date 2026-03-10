@@ -31,6 +31,7 @@ import {
   updateSocialAPI,
   deleteSocialAPI,
   getSocialAPI,
+  addBotContentAPI
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -79,7 +80,6 @@ export const Provider = ({ children }) => {
         toast.error(data.message || "Skill can not be added");
       }
     } catch (err) {
-      console.log(err);
       toast.error("Some error while adding skill");
     }
   };
@@ -159,7 +159,6 @@ export const Provider = ({ children }) => {
   };
   const addEducation = async (formData) => {
     try {
-      console.log("Called add");
       const res = await addEducationAPI(formData);
       const data = await res.json();
       if (res.ok) {
@@ -174,7 +173,6 @@ export const Provider = ({ children }) => {
   };
   const updateEducation = async (educationId, formData) => {
     try {
-      console.log("called update");
       const res = await updateEducationAPI(educationId, formData);
       const data = await res.json();
       if (res.ok) {
@@ -273,7 +271,6 @@ export const Provider = ({ children }) => {
   };
   const addProject = async (formData) => {
     try {
-      console.log(formData);
       const res = await addProjectAPI(formData);
       const data = await res.json();
       if (res.ok) {
@@ -378,7 +375,6 @@ export const Provider = ({ children }) => {
     try {
       const res = await getNewMessageAPI();
       const data = await res.json();
-      console.log(data);
       if (res.ok) {
         setMessages(data.messages);
       } else {
@@ -473,6 +469,21 @@ export const Provider = ({ children }) => {
     }
   };
 
+  const addBotContent = async(content) => {
+    try {
+      const res = await addBotContentAPI(content);
+      const data = await res.json();
+      if(res.ok) {
+        toast.success(data.message || "Content uploaded");
+      } else {
+        toast.error(data.message || "content can not be uploaded");
+      }
+
+    } catch(err) {
+      toast.error("Some error while uploding content");
+    }
+  }
+
   return (
     <Context.Provider
       value={{
@@ -514,6 +525,7 @@ export const Provider = ({ children }) => {
         getSocial,
         updateSocial,
         deleteSocial,
+        addBotContent
       }}
     >
       {children}

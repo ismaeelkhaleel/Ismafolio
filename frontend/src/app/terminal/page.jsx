@@ -18,7 +18,6 @@ export default function WebTerminal() {
     socials,
   } = useUser();
 
-  console.log(profile);
   const availableCommands = [
     "help",
     "bio",

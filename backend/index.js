@@ -8,6 +8,7 @@ import userRoutes from "./routes/user.route.js";
 import stateRoutes from "./routes/states.route.js";
 import "./controllers/leetcode.controller.js";
 import "./controllers/gfg.controller.js";
+import botRoutes from "./routes/bot.route.js";
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(uploadRoutes);
 app.use(contactRoutes);
 app.use(userRoutes);
 app.use(stateRoutes);
+app.use(botRoutes);
 
 const startServer = async () => {
   await connectDB();

@@ -163,7 +163,7 @@ export const updateExperienceAPI = async (experienceId, formData) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(formData),
-    }
+    },
   );
   return response;
 };
@@ -178,7 +178,7 @@ export const deleteExperienceAPI = async (experienceId) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   return response;
 };
@@ -307,7 +307,7 @@ export const seenMessageAPI = async (messageId) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   return response;
 };
@@ -355,6 +355,20 @@ export const deleteSocialAPI = async (socialId) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+  });
+  return response;
+};
+
+export const addBotContentAPI = async (content) => {
+  console.log("called....", content);
+  const token = localStorage.getItem("Token");
+  const response = await fetch(`${BASE_URL}/bot/save-content`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ content }),
   });
   return response;
 };

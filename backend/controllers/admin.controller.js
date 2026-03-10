@@ -8,6 +8,7 @@ import Experience from "../models/experience.model.js";
 import Blog from "../models/blog.model.js";
 import ContactMessage from "../models/contactMessage.model.js";
 import Social from "../models/social.model.js";
+import Bot from "../models/bot.model.js";
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -477,5 +478,18 @@ export const deleteSocialLink = async (req, res) => {
   } catch (e) {
     console.error(e);
     return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const addBotContent = async (req, res) => {
+  try {
+    await Bot.findOneAndUpdate({}, { $set: req.body }, { upsert: true });
+
+    return res.status(200).json({
+      success: true,
+      message: "content saved successfully",
+    });
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
   }
 };
