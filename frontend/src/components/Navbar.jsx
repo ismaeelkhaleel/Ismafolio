@@ -14,7 +14,6 @@ function Navbar() {
       <div className="hidden md:block">
         <h3 className="text-lg font-bold dark:text-white">Ismafolio</h3>
       </div>
-
       <div className="flex items-center gap-6 justify-center md:justify-end w-full md:w-auto">
         <Link
           href="/"
