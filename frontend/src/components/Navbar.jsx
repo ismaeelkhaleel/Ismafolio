@@ -12,7 +12,7 @@ function Navbar() {
                  max-w-lg md:max-w-4xl"
     >
       <div className="hidden md:block">
-        <h3 className="text-lg font-bold dark:text-white">Ismafolio</h3>
+        <h3 className="text-lg font-bold dark:text-white">Isma</h3>
       </div>
 
       <div className="flex items-center gap-6 justify-center md:justify-end w-full md:w-auto">
