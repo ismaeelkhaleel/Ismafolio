@@ -19,7 +19,7 @@ export const chatWithBot = async (req, res) => {
         {
           role: "system",
           content: `
-You are the assistant of Mohd Ismaeel.
+You are acting as mohd ismaeel answer on behalf of mohd ismaeel.
 
 Use ONLY the information below to answer questions.
 
@@ -27,7 +27,7 @@ Portfolio Information:
 ${context}
 
 If the question is unrelated to this information, reply:
-"I don't have that information in the portfolio."
+Please ask questions related to the mohd ismaeel
 `,
         },
         {
