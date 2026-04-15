@@ -1,6 +1,7 @@
 import Bot from "../models/bot.model.js";
 import { llm } from "../services/groqClient.js";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+
+import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { BufferMemory } from "langchain/memory";
@@ -29,18 +30,18 @@ export const chatWithBot = async (req, res) => {
       docs,
       new OpenAIEmbeddings({
         apiKey: process.env.OPENAI_API_KEY,
-      }),
+      })
     );
 
     const retriever = vectorStore.asRetriever();
 
     // 3. Get relevant context
-    const relevantDocs = await retriever.getRelevantDocuments(message);
+    const relevantDocs = await retriever.invoke(message);
     const context = relevantDocs.map((d) => d.pageContent).join("\n");
 
     // 4. Get memory history
-    const history = await memory.loadMemoryVariables({});
-    const chatHistory = history.history || "";
+    const memoryVars = await memory.loadMemoryVariables({});
+    const chatHistory = memoryVars.history || "";
 
     // 5. Call LLM
     const response = await llm.invoke([
@@ -66,9 +67,13 @@ If answer not found, say:
     ]);
 
     // 6. Save memory
-    await memory.saveContext({ input: message }, { output: response.content });
+    await memory.saveContext(
+      { input: message },
+      { output: response.content }
+    );
 
     res.json({ reply: response.content });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
