@@ -1,5 +1,5 @@
 import Bot from "../models/bot.model.js";
-import llm  from "../services/groqClient.js";
+import groq from "../services/groqClient.js";
 
 const sessionHistories = new Map();
 
@@ -24,20 +24,29 @@ export const chatWithBot = async (req, res) => {
     }
 
     const lines = portfolioData.content.split("\n").filter(Boolean);
+
     const matched = lines.filter((line) =>
-      line.toLowerCase().includes(message.toLowerCase()),
+      line.toLowerCase().includes(message.toLowerCase())
     );
-    const context = matched.length > 0 ? matched.join("\n") : lines.join("\n");
+
+    const context =
+      matched.length > 0 ? matched.join("\n") : lines.join("\n");
 
     const history = getHistory(sessionId);
+
     const chatHistory = history
       .map((h) => `User: ${h.input}\nAssistant: ${h.output}`)
       .join("\n");
 
-    const response = await llm.invoke([
-      {
-        role: "system",
-        content: `You are Mohd Ismaeel's portfolio assistant. Answer questions only about Mohd Ismaeel using the context below.
+    // ✅ FIXED GROQ CALL
+    const response = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {
+          role: "system",
+          content: `You are Mohd Ismaeel's portfolio assistant.
+
+Answer ONLY using the context below.
 
 Context:
 ${context}
@@ -45,16 +54,18 @@ ${context}
 Chat History:
 ${chatHistory}
 
-If the question is not related to Mohd Ismaeel, respond with:
+If not related, say:
 "Please ask questions related to Mohd Ismaeel."`,
-      },
-      {
-        role: "user",
-        content: message,
-      },
-    ]);
+        },
+        {
+          role: "user",
+          content: message,
+        },
+      ],
+    });
 
-    const reply = response.content;
+    // ✅ FIXED RESPONSE PARSING
+    const reply = response.choices[0].message.content;
 
     history.push({ input: message, output: reply });
     if (history.length > 10) history.shift();
