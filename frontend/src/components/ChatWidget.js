@@ -50,6 +50,8 @@ function LoadingDots() {
 }
 
 export default function ChatWidget() {
+  const historyMap = useRef(new Map());
+  const sessionId = "default";
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -59,29 +61,54 @@ export default function ChatWidget() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+  function getHistory() {
+    if (!historyMap.current.has(sessionId)) {
+      historyMap.current.set(sessionId, []);
+    }
+    return historyMap.current.get(sessionId);
+  }
 
   const sendMessage = async () => {
     if (!message.trim() || loading) return;
+
+    const userMsg = { role: "user", content: message };
+
+    // UI update
     setMessages((prev) => [...prev, { role: "user", text: message }]);
     setMessage("");
     setLoading(true);
+
+    // ✅ get history
+    const history = getHistory();
+    history.push(userMsg);
 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({
+          message,
+          history: history.slice(-6), // ✅ last 6 messages only
+        }),
       });
+
       const data = await res.json();
+
+      const botMsg = {
+        role: "assistant",
+        content: data.reply,
+      };
+
+      // ✅ save in map
+      history.push(botMsg);
+
       const wordCount = data.reply.split(" ").length;
 
-      // Add with animate:true (word-by-word this time)
       setMessages((prev) => [
         ...prev,
         { role: "bot", text: data.reply, animate: true },
       ]);
 
-      // After animation completes, flip animate to false so re-opens are instant
       setTimeout(
         () => {
           setMessages((prev) =>
@@ -104,6 +131,7 @@ export default function ChatWidget() {
         },
       ]);
     }
+
     setLoading(false);
   };
 
