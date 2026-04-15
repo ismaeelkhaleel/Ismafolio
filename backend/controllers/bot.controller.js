@@ -1,5 +1,5 @@
 import Bot from "../models/bot.model.js";
-import { llm } from "../services/llm.js";
+import { llm } from "../services/groqClient.js";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { OpenAIEmbeddings } from "@langchain/openai";
