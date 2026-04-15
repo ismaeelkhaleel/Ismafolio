@@ -1,5 +1,5 @@
 import Bot from "../models/bot.model.js";
-import { llm } from "../services/groqClient.js";
+import llm  from "../services/groqClient.js";
 
 const sessionHistories = new Map();
 
