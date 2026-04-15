@@ -1,64 +1,52 @@
 import Bot from "../models/bot.model.js";
-import { llm } from "../services/groqClient.js";
+import  llm  from "../services/groqClient.js";
+import { BufferMemory } from "langchain/memory"; // ✅ 0.2 mein kaam karta hai
 
-import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { BufferMemory } from "langchain/memory";
+const sessionMemories = new Map();
 
-const memory = new BufferMemory();
+function getMemory(sessionId) {
+  if (!sessionMemories.has(sessionId)) {
+    sessionMemories.set(sessionId, new BufferMemory());
+  }
+  return sessionMemories.get(sessionId);
+}
 
 export const chatWithBot = async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, sessionId = "default" } = req.body;
+
+    if (!message || !message.trim()) {
+      return res.status(400).json({ error: "Message is required" });
+    }
 
     const portfolioData = await Bot.findOne();
     if (!portfolioData) {
       return res.status(404).json({ error: "Portfolio not found" });
     }
 
-    // 1. Split content
-    const splitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 500,
-      chunkOverlap: 50,
-    });
-
-    const docs = await splitter.createDocuments([portfolioData.content]);
-
-    // 2. Create vector store
-    const vectorStore = await MemoryVectorStore.fromDocuments(
-      docs,
-      new OpenAIEmbeddings({
-        apiKey: process.env.OPENAI_API_KEY,
-      })
+    const lines = portfolioData.content.split("\n").filter(Boolean);
+    const matched = lines.filter((line) =>
+      line.toLowerCase().includes(message.toLowerCase()),
     );
+    const context = matched.length > 0 ? matched.join("\n") : lines.join("\n");
 
-    const retriever = vectorStore.asRetriever();
-
-    // 3. Get relevant context
-    const relevantDocs = await retriever.invoke(message);
-    const context = relevantDocs.map((d) => d.pageContent).join("\n");
-
-    // 4. Get memory history
+    const memory = getMemory(sessionId);
     const memoryVars = await memory.loadMemoryVariables({});
     const chatHistory = memoryVars.history || "";
 
-    // 5. Call LLM
     const response = await llm.invoke([
       {
         role: "system",
-        content: `
-You are Mohd Ismaeel.
+        content: `You are Mohd Ismaeel's portfolio assistant. Answer questions only about Mohd Ismaeel using the context below.
 
-Answer ONLY using this context:
+Context:
 ${context}
 
-Conversation history:
+Chat History:
 ${chatHistory}
 
-If answer not found, say:
-"Please ask questions related to Mohd Ismaeel"
-`,
+If the question is not related to Mohd Ismaeel, respond with:
+"Please ask questions related to Mohd Ismaeel."`,
       },
       {
         role: "user",
@@ -66,15 +54,13 @@ If answer not found, say:
       },
     ]);
 
-    // 6. Save memory
-    await memory.saveContext(
-      { input: message },
-      { output: response.content }
-    );
+    const reply = response.content;
 
-    res.json({ reply: response.content });
+    await memory.saveContext({ input: message }, { output: reply });
 
+    res.json({ reply });
   } catch (error) {
+    console.error("chatWithBot error:", error);
     res.status(500).json({ error: error.message });
   }
 };
