@@ -1,7 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-// animate: true = word-by-word (first time only), false = instant
 function TypingMessage({ text, animate }) {
   const words = text.split(" ");
   const [displayed, setDisplayed] = useState(animate ? "" : text);
@@ -78,7 +77,6 @@ export default function ChatWidget() {
     setMessage("");
     setLoading(true);
 
-    // ✅ get history
     const history = getHistory();
     history.push(userMsg);
 
@@ -88,7 +86,7 @@ export default function ChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message,
-          history: history.slice(-6), // ✅ last 6 messages only
+          history: history,
         }),
       });
 

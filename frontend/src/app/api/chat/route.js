@@ -2,13 +2,13 @@ const BASE_URL = process.env.BACKEND_BASE_URL;
 
 export async function POST(req) {
   try {
-    const { message } = await req.json();
+    const { message, history } = await req.json();
     const res = await fetch(`${BASE_URL}/bot/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, history }),
     });
 
     console.log("response status:", res.status);

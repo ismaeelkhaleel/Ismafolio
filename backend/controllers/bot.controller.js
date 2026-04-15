@@ -4,6 +4,7 @@ import groq from "../services/groqClient.js";
 export const chatWithBot = async (req, res) => {
   try {
     const { message, history = [] } = req.body;
+    console.log("Received message:", history);
 
     if (!message || !message.trim()) {
       return res.status(400).json({ error: "Message is required" });
