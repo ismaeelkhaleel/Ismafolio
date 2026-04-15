@@ -1,14 +1,13 @@
 import Bot from "../models/bot.model.js";
-import  llm  from "../services/groqClient.js";
-import { BufferMemory } from "langchain/memory"; // ✅ 0.2 mein kaam karta hai
+import { llm } from "../services/groqClient.js";
 
-const sessionMemories = new Map();
+const sessionHistories = new Map();
 
-function getMemory(sessionId) {
-  if (!sessionMemories.has(sessionId)) {
-    sessionMemories.set(sessionId, new BufferMemory());
+function getHistory(sessionId) {
+  if (!sessionHistories.has(sessionId)) {
+    sessionHistories.set(sessionId, []);
   }
-  return sessionMemories.get(sessionId);
+  return sessionHistories.get(sessionId);
 }
 
 export const chatWithBot = async (req, res) => {
@@ -30,9 +29,10 @@ export const chatWithBot = async (req, res) => {
     );
     const context = matched.length > 0 ? matched.join("\n") : lines.join("\n");
 
-    const memory = getMemory(sessionId);
-    const memoryVars = await memory.loadMemoryVariables({});
-    const chatHistory = memoryVars.history || "";
+    const history = getHistory(sessionId);
+    const chatHistory = history
+      .map((h) => `User: ${h.input}\nAssistant: ${h.output}`)
+      .join("\n");
 
     const response = await llm.invoke([
       {
@@ -56,7 +56,8 @@ If the question is not related to Mohd Ismaeel, respond with:
 
     const reply = response.content;
 
-    await memory.saveContext({ input: message }, { output: reply });
+    history.push({ input: message, output: reply });
+    if (history.length > 10) history.shift();
 
     res.json({ reply });
   } catch (error) {
