@@ -8,12 +8,12 @@ const username = "pmohd2";
 const fetchedGfgData = async () => {
   try {
     const data = await getGFGDetails(username);
-   
+    console.log("Fetched GFG data:", data);
     // Helper function to convert streak string like "12 Days" to number
     const parseStreak = (streakStr) => {
       if (!streakStr) return 0;
       const match = streakStr.match(/\d+/); // Extract number
-      
+
       return match ? parseInt(match[0]) : 0;
     };
 
@@ -36,11 +36,11 @@ const fetchedGfgData = async () => {
         instituteRank: parseInt(data["Institute Rank"]) || 0,
         currentStreak: parseStreak(data["Current POTD Streak"]),
         codingScore: parseInt(data["Coding Score"]) || 0,
-        maxStreak : parseStreak(data["Longest Streak"]),
-        potdSolved : parseInt(data["POTDs Solved"]),
+        maxStreak: parseStreak(data["Longest Streak"]),
+        potdSolved: parseInt(data["POTDs Solved"]),
         totalProblemsSolved: parseInt(data["Problems Solved"]) || 0,
         profileUrl: `https://www.geeksforgeeks.org/profile/${username}`,
-        picUrl:data.profile.dp,
+        picUrl: data.profile.dp,
       });
       await existingUser.save();
     }
@@ -50,7 +50,9 @@ const fetchedGfgData = async () => {
       if (!problems || !Array.isArray(problems)) return;
       for (const problem of problems) {
         if (!problem || !problem.question || !problem.questionUrl) continue;
-        const existingProblem = await GfgProblem.findOne({ titleSlug: problem.questionUrl });
+        const existingProblem = await GfgProblem.findOne({
+          titleSlug: problem.questionUrl,
+        });
         if (!existingProblem) {
           const newProblem = new GfgProblem({
             title: problem.question,
@@ -70,7 +72,6 @@ const fetchedGfgData = async () => {
     await saveProblems("hard", data.problems.hard);
 
     console.log("Fetched and saved GFG data successfully!");
-
   } catch (err) {
     console.error("Error fetching GFG data:", err.message);
   }
@@ -86,5 +87,5 @@ cron.schedule(
   },
   {
     timezone: "Asia/Kolkata",
-  }
+  },
 );
