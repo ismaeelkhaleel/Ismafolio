@@ -76,9 +76,6 @@ const fetchedGfgData = async () => {
     console.error("Error fetching GFG data:", err.message);
   }
 };
-(async () => {
-  await fetchedGfgData();
-})();
 
 cron.schedule(
   "0 0 * * *",

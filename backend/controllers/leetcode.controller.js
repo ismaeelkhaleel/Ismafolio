@@ -96,9 +96,6 @@ const fetchLeetCodeData = async () => {
     console.log(err.message);
   }
 };
-(async () => {
-  await fetchLeetCodeData();
-})();
 cron.schedule(
   "0 0 * * *",
   async () => {
