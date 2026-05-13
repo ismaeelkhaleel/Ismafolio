@@ -25,22 +25,22 @@ export default function ClientLayout({ children }) {
         className={`
           fixed top-0 left-0 h-full 
           w-3/4 sm:w-1/2 md:w-1/4 
-         backdrop-blur-xl shadow-[4px_0_15px_rgba(0,0,0,0.2)]
+          glass-sidebar
           transform transition-transform duration-300 ease-in-out
           z-50
           ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
         <div className="md:hidden flex justify-end p-4">
-          <button onClick={() => setOpen(false)}>
+          <button onClick={() => setOpen(false)} className="text-white">
             <X size={28} />
           </button>
         </div>
 
         <Navbar />
       </aside>
-      <main className="w-full md:w-3/4 flex justify-center items-center p-6 ml-0 md:ml-[25%]">
-        <div className="max-w-3xl w-full">{children}</div>
+      <main className="w-full md:w-3/4 flex justify-center items-start pt-12 pb-12 px-6 ml-0 md:ml-[25%] min-h-screen">
+        <div className="max-w-5xl w-full">{children}</div>
       </main>
     </div>
   );

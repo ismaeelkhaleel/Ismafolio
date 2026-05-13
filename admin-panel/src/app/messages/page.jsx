@@ -26,25 +26,25 @@ function Page() {
   return (
     <div className="p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Messages</h1>
-        <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <h1 className="text-2xl font-bold text-white">Messages</h1>
+        <div className="flex bg-white/5 p-1 rounded-xl border border-white/10 w-full sm:w-auto">
           <button
             onClick={() => setAll(true)}
-            className={`cursor-pointer px-4 py-2 rounded-lg transition ${
+            className={`flex-1 sm:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 ${
               all
-                ? "bg-emerald-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "bg-emerald-500 text-white shadow-lg"
+                : "text-emerald-100/40 hover:text-white"
             }`}
           >
             All
           </button>
           <button
             onClick={() => setAll(false)}
-            className={`cursor-pointer px-4 py-2 rounded-lg transition ${
+            className={`flex-1 sm:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 ${
               !all
-                ? "bg-emerald-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "bg-emerald-500 text-white shadow-lg"
+                : "text-emerald-100/40 hover:text-white"
             }`}
           >
             New
@@ -52,9 +52,9 @@ function Page() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col gap-4">
+      <div className="space-y-4">
         {messages?.length === 0 && (
-          <div className="col-span-full text-center text-gray-500">
+          <div className="glass-card p-12 text-center text-emerald-100/30 font-medium">
             No messages found
           </div>
         )}
@@ -62,36 +62,36 @@ function Page() {
         {messages?.map((msg) => (
           <div
             key={msg._id}
-            className="bg-emerald-500 shadow-md rounded-xl p-5 flex flex-col justify-between hover:shadow-lg transition"
+            className={`glass-card p-6 flex flex-col hover:scale-[1.01] transition-all duration-300 ${
+              !msg.seen ? "border-l-4 border-l-red-500" : "border-l-4 border-l-emerald-500/30"
+            }`}
           >
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <h2 className="font-bold text-lg">{msg.name}</h2>
-                {msg.seen ? (
-                  <MailOpen className="text-emerald-600" size={20} />
-                ) : (
-                  <Mail className="text-red-500" size={20} />
-                )}
+            <div className="flex justify-between items-start mb-4">
+              <div className="flex items-center gap-3">
+                <div className={`p-2 rounded-full ${!msg.seen ? "bg-red-500/20 text-red-400" : "bg-emerald-500/20 text-emerald-400"}`}>
+                  {!msg.seen ? <Mail size={18} /> : <MailOpen size={18} />}
+                </div>
+                <div>
+                  <h2 className="font-bold text-white">{msg.name}</h2>
+                  <p className="text-xs text-emerald-100/40 font-medium">{msg.email}</p>
+                </div>
               </div>
-              <p className="text-sm text-gray-600">{msg.email}</p>
-              <p className="mt-3 text-gray-800 text-sm">{msg.message}</p>
+              <span className="text-[10px] font-bold text-emerald-100/30 uppercase tracking-widest">
+                {new Date(msg.createdAt).toLocaleDateString("en-US", { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
 
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-xs text-gray-500">
-                {new Date(msg.createdAt).toLocaleString()}
-              </p>
+            <p className="text-sm text-emerald-100/70 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5 italic">
+              "{msg.message}"
+            </p>
 
-              {msg.seen ? (
-                <span className="px-3 py-1 bg-gray-200 text-gray-600 text-sm rounded-md">
-                  Seen
-                </span>
-              ) : (
+            <div className="flex justify-end mt-4">
+              {!msg.seen && (
                 <button
                   onClick={() => seenHandler(msg._id)}
-                  className="px-3 py-1 bg-emerald-600 text-white text-sm rounded-md hover:bg-emerald-700 transition"
+                  className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-lg transition-all shadow-lg shadow-emerald-500/20"
                 >
-                  Mark as Seen
+                  Mark as Read
                 </button>
               )}
             </div>

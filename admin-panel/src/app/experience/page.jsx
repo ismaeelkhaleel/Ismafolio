@@ -82,10 +82,10 @@ function Page() {
     <div className="p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Experience</h1>
+        <h1 className="text-2xl font-bold text-white">Experience</h1>
         <button
           onClick={openAddModal}
-          className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
+          className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
         >
           <Plus size={18} />
           Add Experience
@@ -93,41 +93,44 @@ function Page() {
       </div>
 
       {/* Cards */}
-      <div className="p-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {experience?.map((exp, index) => (
           <div
             key={index}
-            className="bg-emerald-500 shadow-md rounded-2xl p-5 flex flex-col justify-between hover:shadow-lg transition"
+            className="glass-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-all duration-300"
           >
             <div className="flex justify-between items-start mb-4">
-              <div>
-                <h2 className="font-bold text-lg truncate">
+              <div className="min-w-0">
+                <h2 className="font-bold text-white text-lg truncate">
                   {exp.jobTitle}
                 </h2>
-                <h3 className="font-semibold text-lg truncate">
+                <h3 className="font-semibold text-emerald-400 text-md truncate mb-1">
                   {exp.companyName}
                 </h3>
-                <p className="text-gray-700">{exp.location}</p>
-                <p className="text-sm text-gray-600">
-                  {new Date(exp.startDate).toLocaleDateString()} -{" "}
-                  {exp.endDate
-                    ? new Date(exp.endDate).toLocaleDateString()
-                    : "Present"}
-                </p>
-                <p className="text-sm text-gray-800 mt-2">{exp.description}</p>
+                <div className="flex items-center gap-2 text-emerald-100/40 text-xs mb-3">
+                  <span className="bg-white/5 px-2 py-0.5 rounded-lg border border-white/5">{exp.location}</span>
+                  <span>•</span>
+                  <span>
+                    {new Date(exp.startDate).toLocaleDateString("en-US", { month: 'short', year: 'numeric' })} -{" "}
+                    {exp.endDate
+                      ? new Date(exp.endDate).toLocaleDateString("en-US", { month: 'short', year: 'numeric' })
+                      : "Present"}
+                  </span>
+                </div>
+                <p className="text-sm text-emerald-100/70 leading-relaxed line-clamp-3">{exp.description}</p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-1">
                 <button
                   onClick={() => openEditModal(exp)}
-                  className="p-2 rounded-full hover:bg-emerald-100 text-emerald-700 transition cursor-pointer"
+                  className="p-2 rounded-xl hover:bg-white/10 text-emerald-400 transition-all cursor-pointer"
                 >
-                  <SquarePen size={20} />
+                  <SquarePen size={18} />
                 </button>
                 <button
                   onClick={() => deleteExperience(exp._id)}
-                  className="p-2 rounded-full hover:bg-red-100 text-red-500 transition cursor-pointer"
+                  className="p-2 rounded-xl hover:bg-red-500/10 text-red-400 transition-all cursor-pointer"
                 >
-                  <Trash2 size={20} />
+                  <Trash2 size={18} />
                 </button>
               </div>
             </div>
@@ -137,86 +140,104 @@ function Page() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
-          {/* Close icon */}
-          <button
-            type="button"
-            onClick={() => setIsModalOpen(false)}
-            className="cursor-pointer fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
-          >
-            <X size={24} />
-          </button>
-
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
           <form
-            className="relative w-96 bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
+            className="relative w-full max-w-lg glass-card p-8 space-y-6 animate-in zoom-in-95 duration-300"
             onSubmit={handleSubmit}
           >
-            <h2 className="text-xl font-semibold text-gray-800 text-center">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-emerald-100/50 hover:text-white transition-colors cursor-pointer"
+            >
+              <X size={20} />
+            </button>
+
+            <h2 className="text-2xl font-bold text-white text-center">
               {selectedExperience ? "Edit Experience" : "Add Experience"}
             </h2>
 
-            <input
-              type="text"
-              placeholder="Company Name"
-              value={formData.companyName}
-              onChange={(e) =>
-                setFormData({ ...formData, companyName: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Company</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Google"
+                  value={formData.companyName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, companyName: e.target.value })
+                  }
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+                />
+              </div>
 
-            <input
-              type="text"
-              placeholder="Job Title"
-              value={formData.jobTitle}
-              onChange={(e) =>
-                setFormData({ ...formData, jobTitle: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-            />
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Job Title</label>
+                <input
+                  type="text"
+                  placeholder="e.g. SDE-1"
+                  value={formData.jobTitle}
+                  onChange={(e) =>
+                    setFormData({ ...formData, jobTitle: e.target.value })
+                  }
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+                />
+              </div>
+            </div>
 
-            {/* Date Fields */}
-            <input
-              type="date"
-              placeholder="Start Date"
-              value={formData.startDate}
-              onChange={(e) =>
-                setFormData({ ...formData, startDate: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Start Date</label>
+                <input
+                  type="date"
+                  value={formData.startDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, startDate: e.target.value })
+                  }
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all [color-scheme:dark]"
+                />
+              </div>
 
-            <input
-              type="date"
-              placeholder="End Date (optional)"
-              value={formData.endDate}
-              onChange={(e) =>
-                setFormData({ ...formData, endDate: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-            />
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">End Date</label>
+                <input
+                  type="date"
+                  value={formData.endDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, endDate: e.target.value })
+                  }
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all [color-scheme:dark]"
+                />
+              </div>
+            </div>
 
-            <input
-              type="text"
-              placeholder="Location"
-              value={formData.location}
-              onChange={(e) =>
-                setFormData({ ...formData, location: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-            />
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Location</label>
+              <input
+                type="text"
+                placeholder="e.g. Remote / New York"
+                value={formData.location}
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+              />
+            </div>
 
-            <textarea
-              placeholder="Description"
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-              rows="3"
-            />
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Description</label>
+              <textarea
+                placeholder="Briefly describe your roles and achievements..."
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all min-h-[100px]"
+                rows="3"
+              />
+            </div>
 
-            <div className="pt-2 text-center">
+            <div className="pt-2">
               <Button
                 name={
                   selectedExperience ? "Update Experience" : "Add Experience"

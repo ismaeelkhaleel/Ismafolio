@@ -12,28 +12,35 @@ const Button = ({name}) => {
 
 const StyledWrapper = styled.div`
   button {
-    margin: 12px;
-    height: 50px;
-    width: 120px;
-    border-radius: 10px;
-    background: #333;
+    margin: 12px 0;
+    height: 48px;
+    width: 100%;
+    min-width: 140px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #444,
-      inset -5px -5px 10px #222;
-    font-family: "Damion", cursive;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
     cursor: pointer;
-    border: none;
-    font-size: 16px;
-    color: rgb(161, 161, 161);
-    transition: 500ms;
+    font-size: 15px;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 
   button:hover {
-    box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #222,
-      inset -5px -5px 10px #444;
-    color: #d6d6d6;
-    transition: 500ms;
-  }`;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+`;
 
 export default Button;

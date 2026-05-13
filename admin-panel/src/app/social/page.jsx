@@ -77,10 +77,10 @@ function Page() {
     <div className="p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">All Social Links</h1>
+        <h1 className="text-2xl font-bold text-white">All Social Links</h1>
         <button
           onClick={openAddModal}
-          className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
+          className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
         >
           <Plus size={18} />
           Add Social
@@ -91,50 +91,50 @@ function Page() {
         {socials?.map((soc, index) => (
           <div
             key={index}
-            className="bg-emerald-500 shadow-md rounded-2xl p-5 flex flex-col justify-between hover:shadow-lg transition"
+            className="glass-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-all duration-300"
           >
             {/* Row 1: Icon + Platform Name */}
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-6">
               <a
                 href={soc.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-shrink-0"
+                className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center p-3 border border-white/10 shadow-inner group"
               >
                 <img
                   src={soc.icon}
                   alt={soc.platform}
-                  className="w-14 h-14 object-contain rounded-full border hover:scale-110 transition"
+                  className="w-full h-full object-contain transition-transform group-hover:scale-110"
                 />
               </a>
-              <div className="flex flex-col overflow-hidden">
-                
+              <div className="flex flex-col min-w-0">
+                <h2 className="font-bold text-white text-lg truncate">
+                  {soc.platform}
+                </h2>
                 <a
                   href={soc.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm hover:underline break-all text-black-500 mb-1"
+                  className="text-xs text-emerald-100/40 hover:text-emerald-400 truncate transition-colors"
                 >
-                 <h2 className="font-semibold text-lg truncate">
-                  {soc.platform}
-                </h2>
+                  {soc.url.replace(/^https?:\/\//, "")}
                 </a>
               </div>
             </div>
 
             {/* Row 2: Edit (left) + Delete (right) */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center pt-4 border-t border-white/5">
               <button
                 onClick={() => openEditModal(soc)}
-                className="p-2 rounded-full hover:bg-emerald-100 text-emerald-700 transition cursor-pointer"
+                className="p-2 rounded-xl hover:bg-white/10 text-emerald-400 transition-all cursor-pointer"
               >
-                <SquarePen size={20} />
+                <SquarePen size={18} />
               </button>
               <button
                 onClick={() => deleteSocial(soc._id)}
-                className="p-2 rounded-full hover:bg-red-100 text-red-500 transition cursor-pointer"
+                className="p-2 rounded-xl hover:bg-red-500/10 text-red-400 transition-all cursor-pointer"
               >
-                <Trash2 size={20} />
+                <Trash2 size={18} />
               </button>
             </div>
           </div>
@@ -143,75 +143,81 @@ function Page() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
-          <button
-            type="button"
-            onClick={() => setIsModalOpen(false)}
-            className="cursor-pointer fixed top-5 right-5 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition z-50"
-          >
-            <X size={24} />
-          </button>
-
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
           <form
-            className="relative w-96 bg-emerald-500 rounded-2xl shadow-xl p-6 space-y-5"
+            className="relative w-full max-w-md glass-card p-8 space-y-6 animate-in zoom-in-95 duration-300"
             onSubmit={handleSubmit}
           >
-            <h2 className="text-xl font-semibold text-gray-800 text-center">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-emerald-100/50 hover:text-white transition-colors cursor-pointer"
+            >
+              <X size={20} />
+            </button>
+
+            <h2 className="text-2xl font-bold text-white text-center">
               {selectedSocial ? "Edit Social" : "Add Social"}
             </h2>
 
-            {/* Platform */}
-            <div className="w-full">
-              <Combobox value={selectedPlatform} onChange={setSelectedPlatform}>
-                <ComboboxInput
-                  aria-label="Select Platform"
-                  displayValue={(s) => s?.platform || ""}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-                  placeholder="Select Platform"
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Platform</label>
+                <Combobox value={selectedPlatform} onChange={setSelectedPlatform}>
+                  <div className="relative">
+                    <ComboboxInput
+                      aria-label="Select Platform"
+                      displayValue={(s) => s?.platform || ""}
+                      onChange={(e) => setQuery(e.target.value)}
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+                      placeholder="Select Platform"
+                    />
+                    <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-4">
+                       <Plus size={16} className="text-emerald-100/30" />
+                    </ComboboxButton>
+                  </div>
+                  <Transition
+                    as={React.Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <ComboboxOptions className="no-scrollbar absolute mt-2 w-full max-h-60 overflow-y-auto bg-emerald-900/90 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl z-50">
+                      {filteredPlatforms.map((s) => (
+                        <ComboboxOption
+                          key={s.platform}
+                          value={s}
+                          className="flex items-center gap-3 px-4 py-3 text-emerald-100 hover:bg-white/10 cursor-pointer transition-colors"
+                        >
+                          <img
+                            src={s.icon}
+                            alt={s.platform}
+                            className="w-5 h-5"
+                          />
+                          <span className="text-sm font-medium">{s.platform}</span>
+                        </ComboboxOption>
+                      ))}
+                    </ComboboxOptions>
+                  </Transition>
+                </Combobox>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Profile Link</label>
+                <input
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="https://linkedin.com/in/..."
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
                 />
-                <Transition
-                  as={React.Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <ComboboxOptions className="no-scrollbar absolute mt-1 w-9/10 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-50">
-                    {filteredPlatforms.map((s) => (
-                      <ComboboxOption
-                        key={s.platform}
-                        value={s}
-                        className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-emerald-100 transition"
-                      >
-                        <img
-                          src={s.icon}
-                          alt={s.platform}
-                          className="w-5 h-5"
-                        />
-                        <span className="truncate">{s.platform}</span>
-                      </ComboboxOption>
-                    ))}
-                  </ComboboxOptions>
-                </Transition>
-              </Combobox>
+              </div>
             </div>
 
-            {/* URL Input */}
-            <div>
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="Enter profile link"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
-              />
-            </div>
-
-            {/* Submit */}
-            <div className="pt-2 text-center">
+            <div className="pt-2">
               <Button
                 name={selectedSocial ? "Update Social" : "Add Social"}
                 type="submit"

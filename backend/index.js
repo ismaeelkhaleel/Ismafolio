@@ -21,6 +21,10 @@ app.use(userRoutes);
 app.use(stateRoutes);
 app.use(botRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
+
 const startServer = async () => {
   await connectDB();
 

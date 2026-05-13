@@ -2,7 +2,7 @@ import Blog from "../models/blog.model.js";
 import Education from "../models/education.model.js";
 import Experience from "../models/experience.model.js";
 import Project from "../models/project.model.js";
-import Skill from "../models/skill.model.js";
+import Skill, { SKILL_CATEGORIES } from "../models/skill.model.js";
 import Profile from "../models/profile.model.js";
 import LeetCodeState from "../models/leetcodeState.model.js";
 import LeetcodeProblem from "../models/leetcodeProblem.model.js";
@@ -73,8 +73,15 @@ export const getProjectDetail = async (req, res) => {
 
 export const getSkills = async (req, res) => {
   try {
-    const skills = await Skill.find();
-    return res.status(201).json({ message: "Skills fetched", skills });
+    const skills = await Skill.find().sort({ category: 1, name: 1 });
+    const skillsByCategory = SKILL_CATEGORIES.reduce((grouped, category) => {
+      grouped[category] = skills.filter((skill) => skill.category === category);
+      return grouped;
+    }, {});
+
+    return res
+      .status(201)
+      .json({ message: "Skills fetched", skills, skillsByCategory });
   } catch (error) {
     console.log(error);
     return res

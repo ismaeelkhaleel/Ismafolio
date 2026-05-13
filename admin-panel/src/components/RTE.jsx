@@ -35,8 +35,8 @@ function ToolbarButton({ onClick, active, children, title }) {
       title={title}
       className={`p-2 rounded-lg transition-all ${
         active
-          ? "bg-blue-100 text-blue-700 hover:bg-blue-200"
-          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+          ? "bg-emerald-500/30 text-emerald-200 border border-emerald-500/40"
+          : "text-emerald-100/60 hover:bg-white/10 hover:text-white"
       }`}
     >
       {children}
@@ -45,7 +45,7 @@ function ToolbarButton({ onClick, active, children, title }) {
 }
 
 function Divider() {
-  return <div className="w-px h-6 bg-gray-200" />;
+  return <div className="w-px h-6 bg-white/10" />;
 }
 
 export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
@@ -114,11 +114,11 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
   };
 
   return (
-    <div>
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+    <div className="w-full">
+      <div className="max-w-none">
+        <div className="glass-card overflow-hidden border border-white/10">
           {/* Toolbar */}
-          <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+          <div className="bg-white/5 border-b border-white/10 px-4 py-3">
             <div className="flex flex-wrap gap-1 items-center">
               {/* Block Type Selector */}
               <select
@@ -132,7 +132,8 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                     : "paragraph"
                 }
                 onChange={(e) => setBlockType(e.target.value)}
-                className="px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-1.5 rounded-lg border border-white/20 bg-emerald-900/50 text-xs font-bold text-white hover:bg-emerald-800/50 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all appearance-none pr-8 relative"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '12px' }}
               >
                 <option value="paragraph">Normal</option>
                 <option value="heading-1">Heading 1</option>
@@ -149,34 +150,14 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={editor.isActive("bold")}
                   title="Bold (Ctrl+B)"
                 >
-                  <Bold size={18} />
+                  <Bold size={16} />
                 </ToolbarButton>
                 <ToolbarButton
                   onClick={() => editor.chain().focus().toggleItalic().run()}
                   active={editor.isActive("italic")}
                   title="Italic (Ctrl+I)"
                 >
-                  <Italic size={18} />
-                </ToolbarButton>
-                <ToolbarButton
-                  onClick={() => editor.chain().focus().toggleUnderline().run()}
-                  active={editor.isActive("underline")}
-                  title="Underline (Ctrl+U)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M6 4v6a6 6 0 0 0 12 0V4" />
-                    <line x1="4" x2="20" y1="20" y2="20" />
-                  </svg>
+                  <Italic size={16} />
                 </ToolbarButton>
               </div>
 
@@ -191,7 +172,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={editor.isActive("bulletList")}
                   title="Bullet List"
                 >
-                  <List size={18} />
+                  <List size={16} />
                 </ToolbarButton>
                 <ToolbarButton
                   onClick={() =>
@@ -200,7 +181,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={editor.isActive("orderedList")}
                   title="Numbered List"
                 >
-                  <ListOrdered size={18} />
+                  <ListOrdered size={16} />
                 </ToolbarButton>
                 <ToolbarButton
                   onClick={() =>
@@ -209,7 +190,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={editor.isActive("blockquote")}
                   title="Quote"
                 >
-                  <Quote size={18} />
+                  <Quote size={16} />
                 </ToolbarButton>
               </div>
 
@@ -224,7 +205,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={textAlignActive("left")}
                   title="Align Left"
                 >
-                  <AlignLeft size={18} />
+                  <AlignLeft size={16} />
                 </ToolbarButton>
                 <ToolbarButton
                   onClick={() =>
@@ -233,7 +214,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={textAlignActive("center")}
                   title="Align Center"
                 >
-                  <AlignCenter size={18} />
+                  <AlignCenter size={16} />
                 </ToolbarButton>
                 <ToolbarButton
                   onClick={() =>
@@ -242,16 +223,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   active={textAlignActive("right")}
                   title="Align Right"
                 >
-                  <AlignRight size={18} />
-                </ToolbarButton>
-                <ToolbarButton
-                  onClick={() =>
-                    editor.chain().focus().setTextAlign("justify").run()
-                  }
-                  active={textAlignActive("justify")}
-                  title="Justify"
-                >
-                  <AlignJustify size={18} />
+                  <AlignRight size={16} />
                 </ToolbarButton>
               </div>
 
@@ -262,7 +234,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                 onClick={() => setShowLinkPopup(true)}
                 title="Insert Link"
               >
-                <Link2 size={18} />
+                <Link2 size={16} />
               </ToolbarButton>
 
               <Divider />
@@ -273,43 +245,45 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                   onClick={() => editor.chain().focus().undo().run()}
                   title="Undo (Ctrl+Z)"
                 >
-                  <Undo size={18} />
+                  <Undo size={16} />
                 </ToolbarButton>
                 <ToolbarButton
                   onClick={() => editor.chain().focus().redo().run()}
                   title="Redo (Ctrl+Y)"
                 >
-                  <Redo size={18} />
+                  <Redo size={16} />
                 </ToolbarButton>
               </div>
             </div>
           </div>
 
           {/* Editor Area */}
-          <EditorContent
-            editor={editor}
-            className="prose prose-slate max-w-none p-8 min-h-[400px] focus:outline-none bg-white"
-          />
+          <div className="bg-white/5 p-4 min-h-[300px]">
+            <EditorContent
+              editor={editor}
+              className="prose prose-invert prose-emerald max-w-none focus:outline-none min-h-[300px] text-white"
+            />
+          </div>
         </div>
       </div>
 
       {/* Link Popup Modal */}
       {showLinkPopup && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
-              <h3 className="text-xl font-semibold text-white">Insert Link</h3>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100] p-4">
+          <div className="glass-card w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
+            <div className="bg-white/10 px-6 py-4 border-b border-white/10">
+              <h3 className="text-xl font-bold text-white">Insert Link</h3>
             </div>
 
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs font-bold text-emerald-100/50 uppercase tracking-wider mb-2 ml-1">
                   Display Text
                 </label>
                 <input
                   type="text"
                   placeholder="Enter link text"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
                   value={linkData.text}
                   onChange={(e) =>
                     setLinkData({ ...linkData, text: e.target.value })
@@ -318,13 +292,13 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs font-bold text-emerald-100/50 uppercase tracking-wider mb-2 ml-1">
                   URL
                 </label>
                 <input
                   type="url"
                   placeholder="https://example.com"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-emerald-100/30 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
                   value={linkData.href}
                   onChange={(e) =>
                     setLinkData({ ...linkData, href: e.target.value })
@@ -333,9 +307,9 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
               </div>
             </div>
 
-            <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3">
+            <div className="bg-white/5 px-6 py-4 flex justify-end gap-3 border-t border-white/10">
               <button
-                className="px-5 py-2.5 rounded-lg font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition-colors"
+                className="px-5 py-2.5 rounded-xl font-bold text-emerald-100/70 hover:bg-white/10 hover:text-white transition-all"
                 onClick={() => {
                   setShowLinkPopup(false);
                   setLinkData({ href: "", text: "" });
@@ -344,7 +318,7 @@ export default function RTE({ value = "<p>Start writing...</p>", onChange }) {
                 Cancel
               </button>
               <button
-                className="px-5 py-2.5 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg"
+                className="px-6 py-2.5 rounded-xl font-bold text-white bg-emerald-500 hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20"
                 onClick={handleInsertLink}
               >
                 Insert Link

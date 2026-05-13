@@ -69,9 +69,9 @@ export const Provider = ({ children }) => {
       toast.error("Some error while fetching skills");
     }
   };
-  const addSkill = async (name, level, rating, icon) => {
+  const addSkill = async (name, level, rating, icon, category) => {
     try {
-      const res = await addSkillAPI(name, level, rating, icon);
+      const res = await addSkillAPI(name, level, rating, icon, category);
       const data = await res.json();
       if (res.ok) {
         toast.success(data.message || "Skill added");
@@ -83,9 +83,9 @@ export const Provider = ({ children }) => {
       toast.error("Some error while adding skill");
     }
   };
-  const updateSkill = async (skillId, name, level, rating, icon) => {
+  const updateSkill = async (skillId, name, level, rating, icon, category) => {
     try {
-      const res = await updateSkillAPI(skillId, name, level, rating, icon);
+      const res = await updateSkillAPI(skillId, name, level, rating, icon, category);
       const data = await res.json();
       if (!res.ok) {
         toast.error(data.message || "Failed to update skill");
@@ -188,7 +188,7 @@ export const Provider = ({ children }) => {
   const deleteEducation = async (educationId) => {
     try {
       const res = await deleteEducationAPI(educationId);
-      const data = res.json();
+      const data = await res.json();
       if (res.ok) {
         toast.success(data.message || "Education deleted");
         getEducation();
@@ -344,7 +344,7 @@ export const Provider = ({ children }) => {
   const updateBlog = async (blogId, formData) => {
     try {
       const res = await updateBlogAPI(blogId, formData);
-      const data = res.json();
+      const data = await res.json();
       if (res.ok) {
         toast.success(data.message || "Blog updated");
         getBlog();

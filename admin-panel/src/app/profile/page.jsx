@@ -106,117 +106,161 @@ function Page() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6 bg-emerald-500 shadow-md rounded-2xl">
-      <h1 className="text-3xl font-bold text-emerald-700 mb-6 text-center">
-        Admin Profile
-      </h1>
+    <div className="max-w-4xl mx-auto p-6 space-y-8 animate-in fade-in duration-500">
+      <header className="text-center space-y-2">
+        <h1 className="text-3xl font-bold text-white tracking-tight">Admin Profile</h1>
+        <p className="text-emerald-100/40 text-sm">Manage your professional identity and public information</p>
+      </header>
 
-      {/* Multiple Images */}
-      <div className="space-y-3">
-        <h2 className="text-lg font-semibold text-emerald-800">
-          Portfolio Images (up to 5)
-        </h2>
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-          {previewUrls.length > 0 ? (
-            previewUrls.map((url, i) => (
-              <img
-                key={i}
-                src={url}
-                alt={`Preview ${i}`}
-                className="w-24 h-24 rounded-lg object-cover border shadow"
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column: Media */}
+        <div className="lg:col-span-1 space-y-6">
+          {/* Portfolio Images */}
+          <div className="glass-card p-6 space-y-4">
+            <h2 className="text-sm font-bold text-emerald-100/50 uppercase tracking-wider">
+              Portfolio Images
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              {previewUrls.length > 0 ? (
+                previewUrls.map((url, i) => (
+                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 group">
+                    <img
+                      src={url}
+                      alt={`Preview ${i}`}
+                      className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-2 aspect-square rounded-xl bg-white/5 border border-dashed border-white/10 flex items-center justify-center text-emerald-100/20 text-xs text-center p-4">
+                  No images uploaded
+                </div>
+              )}
+            </div>
+            <label className="block">
+              <span className="sr-only">Choose profile photo</span>
+              <input
+                type="file"
+                name="images"
+                multiple
+                accept="image/*"
+                onChange={handleFileChange}
+                className="block w-full text-xs text-emerald-100/50
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-lg file:border-0
+                  file:text-xs file:font-bold
+                  file:bg-emerald-500 file:text-white
+                  hover:file:bg-emerald-600 transition-all cursor-pointer"
               />
-            ))
-          ) : (
-            <p className="text-gray-500">No images uploaded</p>
-          )}
+            </label>
+            <p className="text-[10px] text-emerald-100/20 text-center italic">Up to 5 images allowed</p>
+          </div>
+
+          {/* Resume Link */}
+          <div className="glass-card p-6 space-y-4 text-center">
+             <h2 className="text-sm font-bold text-emerald-100/50 uppercase tracking-wider">
+              Resume / CV
+            </h2>
+            {formData.resume ? (
+              <a
+                href={formData.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-emerald-400 text-sm font-bold transition-all"
+              >
+                View Current Resume
+              </a>
+            ) : (
+              <p className="text-emerald-100/20 text-xs italic">No resume uploaded</p>
+            )}
+            <input
+              type="file"
+              name="resume"
+              onChange={handleFileChange}
+              className="block w-full text-xs text-emerald-100/50
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-lg file:border-0
+                  file:text-xs file:font-bold
+                  file:bg-white/10 file:text-white
+                  hover:file:bg-white/20 transition-all cursor-pointer"
+            />
+          </div>
         </div>
-        <input
-          type="file"
-          name="images"
-          multiple
-          accept="image/*"
-          onChange={handleFileChange}
-          className="block text-sm text-gray-600"
-        />
-      </div>
 
-      {/* Resume */}
-      <div className="space-y-2">
-        {formData.resume ? (
-          <a
-            href={formData.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-emerald-600 underline font-medium"
-          >
-            Download Resume
-          </a>
-        ) : (
-          <p className="text-gray-500">No resume uploaded</p>
-        )}
-        <input
-          type="file"
-          name="resume"
-          onChange={handleFileChange}
-          className="block text-sm text-gray-600"
-        />
-      </div>
+        {/* Right Column: Text Fields */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="glass-card p-8 space-y-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                placeholder="Mohd Ismaeel"
+                onChange={handleChange}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-emerald-100/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
+              />
+            </div>
 
-      {/* Text fields */}
-      <div className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          placeholder="Enter your name"
-          onChange={handleChange}
-          className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          placeholder="Enter your email"
-          onChange={handleChange}
-          className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
-        />
-        <textarea
-          name="description"
-          value={formData.description}
-          placeholder="Write about yourself"
-          onChange={handleChange}
-          className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
-        />
-        <input
-          type="text"
-          name="title"
-          value={titleInput}
-          placeholder="Enter titles (comma separated)"
-          onChange={(e) => {
-            setTitleInput(e.target.value);
-            setIsEdited(true);
-          }}
-          className="w-full border-b-2 border-gray-300 focus:border-emerald-500 outline-none px-2 py-2"
-        />
-      </div>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                placeholder="ismaeel@example.com"
+                onChange={handleChange}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-emerald-100/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
+              />
+            </div>
 
-      {/* Buttons */}
-      {isEdited && (
-        <div className="flex gap-4 justify-end mt-6">
-          <button
-            onClick={handleCancel}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleUpdate}
-            className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 shadow"
-          >
-            Update
-          </button>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Professional Titles</label>
+              <input
+                type="text"
+                name="title"
+                value={titleInput}
+                placeholder="Full Stack Developer, UI Designer..."
+                onChange={(e) => {
+                  setTitleInput(e.target.value);
+                  setIsEdited(true);
+                }}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-emerald-100/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
+              />
+              <p className="text-[10px] text-emerald-100/30 italic ml-1">* Separate multiple titles with commas</p>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-emerald-100/50 uppercase tracking-wider ml-1">Bio / Description</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                placeholder="Tell the world about yourself..."
+                onChange={handleChange}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-emerald-100/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium min-h-[150px] leading-relaxed"
+              />
+            </div>
+
+            {/* Sticky Actions Bar */}
+            {isEdited && (
+              <div className="flex gap-4 justify-end pt-4 border-t border-white/5 animate-in slide-in-from-bottom-2">
+                <button
+                  onClick={handleCancel}
+                  className="px-6 py-2.5 rounded-xl font-bold text-emerald-100/60 hover:bg-white/10 hover:text-white transition-all"
+                >
+                  Discard
+                </button>
+                <button
+                  onClick={handleUpdate}
+                  className="px-8 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-emerald-500/20"
+                >
+                  Save Changes
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

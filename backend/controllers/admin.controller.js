@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import Skill from "../models/skill.model.js";
+import Skill, { SKILL_CATEGORIES } from "../models/skill.model.js";
 import Education from "../models/education.model.js";
 import Project from "../models/project.model.js";
 import Profile from "../models/profile.model.js";
@@ -30,16 +30,26 @@ export const login = async (req, res) => {
 };
 
 export const addSkill = async (req, res) => {
-  const { name, level, rating, icon } = req.body;
+  const { name, category = "Other", level, rating, icon } = req.body;
 
   try {
     if (!name) return res.status(400).json({ message: "Name is required" });
-    if (!rating) return res.status(400).json({ message: "Rating is required" });
-    const existingSkill = await Skill.findOne({ name: name });
-    if (existingSkill) {
-      return res.status(409).json({ message: "Skill already exist" });
+    if (rating === undefined || rating === null)
+      return res.status(400).json({ message: "Rating is required" });
+    if (!SKILL_CATEGORIES.includes(category)) {
+      return res.status(400).json({
+        message: "Invalid skill category",
+        categories: SKILL_CATEGORIES,
+      });
     }
-    const skill = await Skill.create({ name, level, rating, icon });
+
+    const existingSkill = await Skill.findOne({ name, category });
+    if (existingSkill) {
+      return res
+        .status(409)
+        .json({ message: "Skill already exists in this category" });
+    }
+    const skill = await Skill.create({ name, category, level, rating, icon });
 
     return res.status(201).json({ message: "Skill added successfully", skill });
   } catch (e) {
@@ -50,13 +60,26 @@ export const addSkill = async (req, res) => {
 
 export const updateSkill = async (req, res) => {
   const { id } = req.params;
-  const { name, level, rating, icon } = req.body;
+  const { name, category, level, rating, icon } = req.body;
   try {
+    if (category && !SKILL_CATEGORIES.includes(category)) {
+      return res.status(400).json({
+        message: "Invalid skill category",
+        categories: SKILL_CATEGORIES,
+      });
+    }
+
+    const updateData = { name, category, level, rating, icon };
+    Object.keys(updateData).forEach(
+      (key) => updateData[key] === undefined && delete updateData[key],
+    );
+
     const skill = await Skill.findByIdAndUpdate(
       id,
-      { name, level, rating, icon },
+      updateData,
       { new: true },
     );
+    if (!skill) return res.status(404).json({ message: "Skill not found" });
     return res
       .status(200)
       .json({ message: "Skill updated successfully", skill });

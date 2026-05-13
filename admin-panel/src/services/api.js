@@ -11,7 +11,7 @@ export const loginAPI = async (username, password) => {
   return response;
 };
 
-export const addSkillAPI = async (name, level, rating, icon) => {
+export const addSkillAPI = async (name, level, rating, icon, category) => {
   const token = localStorage.getItem("Token");
   const response = await fetch(`${BASE_URL}/addSkill`, {
     method: "POST",
@@ -19,7 +19,7 @@ export const addSkillAPI = async (name, level, rating, icon) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name, level, rating, icon }),
+    body: JSON.stringify({ name, level, rating, icon, category }),
   });
   return response;
 };
@@ -34,7 +34,7 @@ export const getSKillAPI = async () => {
   return response;
 };
 
-export const updateSkillAPI = async (skillId, name, level, rating, icon) => {
+export const updateSkillAPI = async (skillId, name, level, rating, icon, category) => {
   const token = localStorage.getItem("Token");
   const response = await fetch(`${BASE_URL}/update/skill/${skillId}`, {
     method: "PUT",
@@ -42,7 +42,7 @@ export const updateSkillAPI = async (skillId, name, level, rating, icon) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name, level, rating, icon }),
+    body: JSON.stringify({ name, level, rating, icon, category }),
   });
   return response;
 };
